@@ -1,24 +1,21 @@
-/*4_Escriba un programa que defina una matriz de enteros de tamaño 10x10. 
-    Inicialice la matriz con números aleatorios entre 0 y 200. 
-    Luego realice las siguientes operaciones: 
-        - Mostrar el contenido de la matriz en consola. 
-        - Calcular e informar la suma de todos los elementos almacenados entre las 
-        filas 2 y 9 y las columnas 0 y 3
-        - Generar un vector de 10 posiciones donde cada posición i contiene la suma 
-        de los elementos de la columna i de la matriz.
-        - Lea un valor entero e indique si se encuentra o no en la matriz. En caso de 
-        encontrarse indique su ubicación (fila y columna) en caso contrario 
-        imprima “No se encontró el elemento”.
+/*
+4_Escriba un programa que defina una matriz de enteros de tamaño 10x10. 
+Inicialice la matriz con números aleatorios entre 0 y 200. 
+Luego realice las siguientes operaciones: 
+    - Mostrar el contenido de la matriz en consola. 
+    - Calcular e informar la suma de todos los elementos almacenados entre las 
+    filas 2 y 9 y las columnas 0 y 3
+    - Generar un vector de 10 posiciones donde cada posición i contiene la suma 
+    de los elementos de la columna i de la matriz.
+    - Lea un valor entero e indique si se encuentra o no en la matriz. En caso de 
+    encontrarse indique su ubicación (fila y columna) en caso contrario 
+    imprima “No se encontró el elemento”.
  */
 package tema1;
 
 import PaqueteLectura.GeneradorAleatorio;
 import PaqueteLectura.Lector;
 
-/**
- *
- * @author Ernesto
- */
 public class Ejercicio4_MatrizDeEnteros {
     
     public static void main(String[] args) {

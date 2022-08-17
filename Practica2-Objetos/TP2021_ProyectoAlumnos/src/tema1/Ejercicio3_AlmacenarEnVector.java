@@ -1,16 +1,15 @@
-/*3_Escriba un programa que lea las alturas de los 15 jugadores de un equipo de 
-    básquet y las almacene en un vector. Luego informe: 
-        - la altura promedio
-        - la cantidad de jugadores con altura por encima del promedio
+/*
+3_Escriba un programa que lea las alturas de los 15 jugadores de un equipo de 
+básquet y las almacene en un vector. Luego informe: 
+    - la altura promedio
+    - la cantidad de jugadores con altura por encima del promedio
 */
 package tema1;
-    import PaqueteLectura.Lector;
-/**
- *
- * @author Ernesto
- */
+import PaqueteLectura.Lector;
+
 public class Ejercicio3_AlmacenarEnVector {
-     public static void main(String[] args) {
+    
+    public static void main(String[] args) {
         double [] vecAltura;//Paso 2: Declarar la variable vector de double 
         int maxAlturas = 3;
         
@@ -36,6 +35,5 @@ public class Ejercicio3_AlmacenarEnVector {
                 cant = cant + 1;
         
         System.out.println("La cantidad de alturas mayores al promedio son: " +cant);//Paso 9: Informar la cantidad.
-    
     }
 }

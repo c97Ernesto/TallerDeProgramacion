@@ -1,16 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+1_Escriba un programa que imprima en consola el factorial de un número N 
+(ingresado por teclado, N > 0). Ejemplo: para N=5 debería imprimir 5! = 120
  */
 package tema1;
 
 import PaqueteLectura.Lector;
 
-/**
- *
- * @author Ernesto
- */
 public class Ejercicio1_Factorial {
     
 public static void main(String[] args) {
