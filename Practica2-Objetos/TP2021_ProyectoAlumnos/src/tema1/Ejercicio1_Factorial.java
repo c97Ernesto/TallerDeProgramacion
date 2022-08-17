@@ -11,23 +11,17 @@ import PaqueteLectura.Lector;
  *
  * @author Ernesto
  */
-public class POO_Ej2P1 {
-public static void main(String[] args) {
-        
-    int i;
-    int fact;
-    int j;
+public class Ejercicio1_Factorial {
     
-    for (i = 9; i > 0; i = i-2) {
-        
-        fact = 1;
-         
-        for (j = i; j > 0; j--)
-            fact = fact * j;
-            
-        System.out.println("El factorial de "+ i +" es: " + fact);
-            
-        
-    }
+public static void main(String[] args) {
+    int i;
+    
+    System.out.println("Ingrese un Numero");
+    int n = Lector.leerInt();
+    
+    for (i = (n-1); i > 0; i--)
+        n = n * i;
+    System.out.println("El factorial del numero ingresado es: " + n);
+    
 }
 }

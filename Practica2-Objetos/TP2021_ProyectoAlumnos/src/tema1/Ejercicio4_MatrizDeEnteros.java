@@ -12,7 +12,7 @@ import PaqueteLectura.Lector;
  *
  * @author Ernesto
  */
-public class POO_Ej4P1 {
+public class Ejercicio4_MatrizDeEnteros {
     
     public static void main(String[] args) {
      

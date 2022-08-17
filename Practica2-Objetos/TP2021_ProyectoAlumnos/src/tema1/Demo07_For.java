@@ -8,7 +8,7 @@ package tema1;
  *
  * @author vsanz
  */
-public class Demo07For {
+public class Demo07_For {
 
     /**
      * @param args the command line arguments

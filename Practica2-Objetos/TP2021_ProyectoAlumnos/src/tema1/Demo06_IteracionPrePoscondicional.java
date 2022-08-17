@@ -12,7 +12,7 @@ import PaqueteLectura.Lector;
  *
  * @author vsanz
  */
-class Demo06IteracionPrePoscondicional {
+class Demo06_IteracionPrePoscondicional {
     public static void main(String[] args){
         int num, suma; 
               

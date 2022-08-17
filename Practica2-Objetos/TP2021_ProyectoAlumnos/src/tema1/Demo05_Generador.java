@@ -13,7 +13,7 @@ import PaqueteLectura.GeneradorAleatorio;
  *
  * @author vsanz
  */
-public class Demo05Generador {
+public class Demo05_Generador {
 
     /**
      * @param args the command line arguments

@@ -10,7 +10,7 @@ package tema1;
  * @author vsanz
  */
 import PaqueteLectura.Lector; 			// Importar funcionalidad para lectura
-public class Demo05Entrada 
+public class Demo05_Entrada 
 {
     public static void main(String[] args) {
         System.out.println("Ingrese nombre");

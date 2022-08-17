@@ -9,7 +9,7 @@ package tema1;
  *
  * @author Ernesto
  */
-public class POO_Ej3P1 {
+public class Ejercicio3_AlmacenarEnVector {
      public static void main(String[] args) {
         double [] vecAltura;//Paso 2: Declarar la variable vector de double 
         

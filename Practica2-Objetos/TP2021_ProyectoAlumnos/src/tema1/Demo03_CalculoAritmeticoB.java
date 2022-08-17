@@ -6,7 +6,7 @@
 package tema1;
 
 
-public class Demo03CalculoAritmeticoB {
+public class Demo03_CalculoAritmeticoB {
 
     /**
      * @param args the command line arguments

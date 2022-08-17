@@ -8,7 +8,7 @@ package tema1;
  * @author vsanz
  */
 
-class Demo03CalculoAritmeticoA {
+class Demo03_CalculoAritmeticoA {
     public static void main (String[] args) {
         int result = 1 + 2;        // result es 3
         System.out.println("1 + 2 = " + result);

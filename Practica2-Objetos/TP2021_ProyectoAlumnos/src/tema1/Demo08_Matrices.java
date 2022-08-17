@@ -6,7 +6,7 @@
 package tema1;
 import PaqueteLectura.GeneradorAleatorio;
 
-public class Demo08Matrices {
+public class Demo08_Matrices {
 
 public static void main(String[] args) {
     int[][] tabla = new int[3][4];

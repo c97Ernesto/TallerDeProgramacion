@@ -9,7 +9,7 @@ package tema1;
  *
  * @author vsanz
  */
-public class Demo04Salida {
+public class Demo04_Salida {
 
    public static void main(String[] args) {
         System.out.print("Hola Mundo! "); 

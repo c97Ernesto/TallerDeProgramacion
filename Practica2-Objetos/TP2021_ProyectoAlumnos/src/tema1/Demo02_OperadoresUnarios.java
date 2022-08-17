@@ -8,7 +8,7 @@ package tema1;
  *
  * @author vsanz
  */
-public class Demo02OperadoresUnarios {
+public class Demo02_OperadoresUnarios {
 
     /**
      * @param args the command line arguments
