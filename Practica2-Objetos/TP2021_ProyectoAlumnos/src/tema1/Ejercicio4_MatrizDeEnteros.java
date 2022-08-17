@@ -28,7 +28,7 @@ public class Ejercicio4_MatrizDeEnteros {
 
         for (i = 0; i < 10; i++) //2. mostrar el contenido de la matriz en consola
             for (j = 0; j < 10; j++){
-                System.out.println("Elemento de la Posicion: " +i+j);
+                System.out.print("Elemento en la posicion '" +i+j+ "' : ");
                 System.out.println(tabla[i][j] + " ");
             }
 
