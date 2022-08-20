@@ -1,17 +1,7 @@
-/*
-Programa que muestra el uso del while y do-while. 
-Primero lee numeros hasta ingresar uno mayor a 10. Imprime la suma. El ultimo numero no lo incluye. 
-Luego lee numeros hasta ingresar uno mayor a 10. Imprime la suma. El ultimo lo incluye. 
-
- */
 package tema1;
 
 import PaqueteLectura.Lector;
 
-/**
- *
- * @author vsanz
- */
 class Demo06_IteracionPrePoscondicional {
     public static void main(String[] args){
         int num, suma; 

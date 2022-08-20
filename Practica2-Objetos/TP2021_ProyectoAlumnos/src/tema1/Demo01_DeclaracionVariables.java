@@ -1,12 +1,5 @@
-/*
-Ejemplo de declaración de variables y asignación. 
- */
 package tema1;
 
-/**
- *
- * @author vsanz
- */
 public class Demo01_DeclaracionVariables {
     public static void main(String[] args) {
         boolean encontre = false;

@@ -1,18 +1,8 @@
-/*
-Ejemplos uso for vistos en clase.
-
- */
 package tema1;
 
-/**
- *
- * @author vsanz
- */
+
 public class Demo07_For {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
          System.out.println("Primer for");
          int i;

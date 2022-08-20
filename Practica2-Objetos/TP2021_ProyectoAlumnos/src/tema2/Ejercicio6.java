@@ -11,7 +11,7 @@ import PaqueteLectura.Lector;
  *
  * @author Ernesto
  */
-public class POO_Ej6P2 {
+public class Ejercicio6 {
     public static void main(String[] args) {    
         
         int dimF = 20;

@@ -1,12 +1,5 @@
-/*
-Ejemplo operadores aritméticos
- */
 package tema1;
 
-/**
- *
- * @author vsanz
- */
 
 class Demo03_CalculoAritmeticoA {
     public static void main (String[] args) {

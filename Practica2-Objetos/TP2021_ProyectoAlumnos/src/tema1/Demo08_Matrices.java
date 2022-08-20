@@ -1,8 +1,6 @@
-
 /**
  * Ejemplo de operaciones típicas con matrices: inicializar, recorrer, sumar, imprimir
  */
-
 package tema1;
 import PaqueteLectura.GeneradorAleatorio;
 

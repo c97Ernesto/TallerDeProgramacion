@@ -1,10 +1,5 @@
-
 package tema2;
 
-/**
- *
- * @author vsanz
- */
 public class Ej03QueImprimeA {
     public static void main(String[] args) {
         String saludo1=new String("hola");
