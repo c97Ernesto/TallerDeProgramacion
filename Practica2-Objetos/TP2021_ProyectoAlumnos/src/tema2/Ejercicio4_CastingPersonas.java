@@ -14,7 +14,7 @@ package tema2;
 
 import PaqueteLectura.Lector;
 
-public class Ejercicio4 {
+public class Ejercicio4_CastingPersonas {
     public static void main(String[] args) {    
         
         int dimFdias = 5, dimFturnos = 8;
@@ -30,7 +30,6 @@ public class Ejercicio4 {
         
         while ((dimLdias < dimFdias) != (nombre.equals(zzz))){
             while ((dimLturnos < dimFturnos) != (nombre.equals(zzz))){
-
                 persona = new Persona();
                
                 persona.setNombre(nombre);
