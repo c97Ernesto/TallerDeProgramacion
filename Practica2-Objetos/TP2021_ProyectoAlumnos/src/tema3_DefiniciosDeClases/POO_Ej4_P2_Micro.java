@@ -7,11 +7,8 @@ package tema3_DefiniciosDeClases;
 
 import PaqueteLectura.Lector;
 
-/**
- *
- * @author Ernesto
- */
-/*B- Realice un programa que cree un micro con patente “ABC123”, destino “Mar 
+/*
+B_Realice un programa que cree un micro con patente “ABC123”, destino “Mar 
 del Plata” y hora de salida 5:00. Cargue pasajeros al micro de la siguiente 
 manera. Leer nros. de asientos desde teclado que corresponden a pedidos de 
 personas. La lectura finaliza cuando se ingresa el nro. de asiento -1 o cuando 
@@ -19,7 +16,8 @@ se llenó el micro. Para cada nro. de asiento leído debe: validar el nro; en
 caso que esté libre, ocuparlo e informar a la persona el éxito de la operación; 
 en caso que esté ocupado informar a la persona la situación y mostrar el nro. 
 del primer asiento libre. Al finalizar, informe la cantidad de asientos 
-ocupados del micro.*/
+ocupados del micro.
+*/
 public class POO_Ej4_P2_Micro {
     
     public static void main(String[] args) {
