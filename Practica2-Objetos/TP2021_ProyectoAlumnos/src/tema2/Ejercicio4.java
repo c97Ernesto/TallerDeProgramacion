@@ -1,33 +1,35 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+4_Se realizará un casting para un programa de TV. El casting durará a lo sumo 5 días y en 
+cada día se entrevistarán a 8 personas en distinto turno.
+    a) Simular el proceso de inscripción de personas al casting. A cada persona se le pide
+    nombre, DNI y edad y se la debe asignar en un día y turno de la siguiente manera: las
+    personas primero completan el primer día en turnos sucesivos, luego el segundo día y así 
+    siguiendo. La inscripción finaliza al llegar una persona con nombre “ZZZ” o al cubrirse los 
+    40 cupos de casting.
+    Una vez finalizada la inscripción: 
+    b) Informar para cada día y turno el nombre de la persona a entrevistar.
+NOTA: utilizar la clase Persona y pensar en la estructura de datos a utilizar
  */
 package tema2;
 
 import PaqueteLectura.Lector;
 
-/**
- *
- * @author Ernesto
- */
 public class Ejercicio4 {
     public static void main(String[] args) {    
         
-        int dimFfil = 5, dimFcol = 8;
-        int dimLfil = 0, dimLcol = 0;
-        Persona matriz[][] = new Persona [dimFfil][dimFcol];
+        int dimFdias = 5, dimFturnos = 8;
+        int dimLdias = 0, dimLturnos = 0;
+        Persona matriz[][] = new Persona [dimFdias][dimFturnos];
         
         Persona persona;
         
-        String zzz = new String ("ZZZ") ;
+        String zzz = "ZZZ" ;
         
         System.out.println("Ingrese nombre");
         String nombre = Lector.leerString();
         
-        while ((dimLfil < dimFfil) != (nombre.equals(zzz))){
-            
-            while ((dimLcol < dimFcol) != (nombre.equals(zzz))){
+        while ((dimLdias < dimFdias) != (nombre.equals(zzz))){
+            while ((dimLturnos < dimFturnos) != (nombre.equals(zzz))){
 
                 persona = new Persona();
                
@@ -37,23 +39,23 @@ public class Ejercicio4 {
                 System.out.println("Ingrese Edad");
                 persona.setEdad(Lector.leerInt());
                 
-                matriz[dimLfil][dimLcol] = persona;   
+                matriz[dimLdias][dimLturnos] = persona;   
                 
-                dimLcol++;
+                dimLturnos++;
                 
-                System.out.println("Fin Cupo "+ dimLcol);
+                System.out.println("Fin Cupo "+ dimLturnos);
                 
                 System.out.println("Ingrese nombre");
                 nombre = Lector.leerString();
             }
-            dimLfil++;
+            dimLdias++;
         }
         
         int i, j;
         
-        for (i = 0; i < dimFfil; i++){
+        for (i = 0; i < dimFdias; i++){
             System.out.println("TURNO"+ (i + 1));
-            for (j = 0; j < dimFcol; j++){
+            for (j = 0; j < dimFturnos; j++){
                 System.out.println("CUPO"+ (j + 1));
                 System.out.println(matriz[i][j].toString());
             }
