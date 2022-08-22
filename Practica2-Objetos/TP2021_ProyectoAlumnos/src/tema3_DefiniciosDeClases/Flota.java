@@ -1,17 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ 5_A.Definir una clase para representar flotas de micros. Una flota se 
+caracteriza por conocer a los micros que la componen (a lo sumo 15). Defina 
+un constructor para crear una flota vacía (sin micros).
  */
 package tema3_DefiniciosDeClases;
 
-/**
- *
- * @author Ernesto
- */
-/*5-A- Definir una clase para representar flotas de micros. Una flota se 
-caracteriza por conocer a los micros que la componen (a lo sumo 15). Defina 
-un constructor para crear una flota vacía (sin micros).*/
 public class Flota {
     private int dimF;
     private int dimL;
@@ -28,7 +21,6 @@ public class Flota {
     public Flota(){
         this.iniciar();
     }
-    
     private void iniciar(){
         this.dimF = 15;
         this.dimL = 0;

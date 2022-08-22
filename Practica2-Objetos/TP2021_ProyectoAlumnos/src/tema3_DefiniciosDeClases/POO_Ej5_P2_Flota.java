@@ -1,22 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package tema3_DefiniciosDeClases;
-
-import PaqueteLectura.Lector;
-/**
- *
- * @author Ernesto
- * 
- */
-/*B- Genere un programa que cree una flota vacía. Cargue micros (sin pasajeros) 
+B_Genere un programa que cree una flota vacía. Cargue micros (sin pasajeros) 
 a la flota con información leída desde teclado (hasta que se ingresa la patente 
 “ZZZ000” o hasta completar la flota). Luego lea una patente y elimine de la 
 flota el micro con esa patente; busque el micro con dicha patente para 
 comprobar que ya no está en la flota. Para finalizar, lea un destino e informe 
-la patente del micro que va a dicho destino.*/
+la patente del micro que va a dicho destino. 
+ */
+package tema3_DefiniciosDeClases;
+
+import PaqueteLectura.Lector;
+
 public class POO_Ej5_P2_Flota {
     
     public static void main(String[] args) {

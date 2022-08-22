@@ -2,7 +2,7 @@ package tema3_DefiniciosDeClases;
 
 import PaqueteLectura.Lector;
 
-public class POO_Ej3B_P1 {
+public class Ejercicio3B_InstanciarEntrenador {
     
     public static void main(String[] args) {
         

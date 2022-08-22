@@ -1,19 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+4_A.Definir una clase para representar micros. Un micro conoce su patente, destino, hora 
+salida, el estado de sus 20 asientos (es decir si está o no ocupado) y la cantidad de asientos 
+ocupados al momento. Lea detenidamente a) y b) y luego implemente
  */
 package tema3_DefiniciosDeClases;
 
-/**
- *
- * @author Ernesto
- * 
- * 4-A- Definir una clase para representar micros. Un micro conoce su patente, 
- * destino, hora salida, el estado de sus 20 asientos (es decir si está o no 
- * ocupado) y la cantidad de asientos ocupados al momento. Lea detenidamente a)
- * y b) y luego implemente.
- */
 public class Micro {
     private String patente;
     private String destino;
@@ -36,9 +27,6 @@ destino y una hora de salida (recibidas por parámetro) y sin pasajeros.*/
         this.dimF = 20;
         this.vecAsiento = new boolean[this.dimF];
         this.cantOcupados = 0;
-        
-        
-                
     }
 //b) Implemente métodos para:    
     
