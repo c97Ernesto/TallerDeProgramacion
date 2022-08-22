@@ -1,14 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+1_A.Agregar la clase Triángulo a la jerarquía de figuras vista en clase (paquete tema5 del 
+proyecto). Triángulo debe heredar de Figura todo lo que es común y definir su constructor 
+y sus atributos y métodos propios. Además debe redefinir el método toString.
+*/
 package tema5_HerenciaYPolimorfismo;
 
-/**
- *
- * @author Ernesto
- */
 public class Triangulo extends Figura {    
 /*Heredamos de Figura atributos y metodos(ColorRelleno, ColorLinea, etc*/
     private double lado;
