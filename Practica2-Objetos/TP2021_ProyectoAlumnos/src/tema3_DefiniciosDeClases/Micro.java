@@ -54,40 +54,40 @@ destino y una hora de salida (recibidas por parámetro) y sin pasajeros.*/
     }
     
     //ii. devolver la cantidad de asientos ocupados
-    public int AsientosOcup(){
+    public int asientosOcup(){
         return cantOcupados;
     }
     //iii. devolver si el micro está lleno
-    public boolean EstaLLeno(){
+    public boolean estaLLeno(){
         return (cantOcupados == dimF);
     }
     
     //iv. validar un número de asiento recibido como parámetro (es decir, 
     //devolver si está en rango o no).
-    public boolean ValidarAsiento(int n){
+    public boolean validarAsiento(int n){
         return ((1 <= n) && (n <= dimF));
     } 
     
     //v. devolver el estado de un nro. de asiento válido recibido como parámetro
-    public boolean EstadoAsiento(int n){
+    public boolean estadoAsiento(int n){
        return (vecAsiento[n-1]);
        
     }
     
     //vi. ocupar un nro. de asiento válido recibido como parámetro
-    public void Ocupar(int n){
+    public void ocupar(int n){
         vecAsiento[n-1] = true;
         cantOcupados ++;
     }
     
     //vii. liberar un nro. de asiento válido recibido como parámetro
-    public void Liberar(int n){
+    public void liberar(int n){
         vecAsiento[n-1] = false;
         cantOcupados --;
     }
     
     //viii. devolver el nro. del primer asiento libre
-    public int PrimerAsientoLibre(){
+    public int primerAsientoLibre(){
         int i = 0;
         while ((i < dimF) && vecAsiento[i])
             i++;

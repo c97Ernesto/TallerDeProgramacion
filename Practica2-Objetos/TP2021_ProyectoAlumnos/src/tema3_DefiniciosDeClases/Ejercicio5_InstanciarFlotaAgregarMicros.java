@@ -10,7 +10,7 @@ package tema3_DefiniciosDeClases;
 
 import PaqueteLectura.Lector;
 
-public class POO_Ej5_P2_Flota {
+public class Ejercicio5_InstanciarFlotaAgregarMicros {
     
     public static void main(String[] args) {
         
@@ -23,7 +23,7 @@ public class POO_Ej5_P2_Flota {
         
         String destino, horaSalida;
         
-        while ((! patente.equals(fin)) && (! flota.FlotaCompleta())){
+        while ((! patente.equals(fin)) && (! flota.flotaCompleta())){
             
             System.out.println("Ingrese Destino del Micro: ");
             destino = Lector.leerString();
@@ -32,7 +32,7 @@ public class POO_Ej5_P2_Flota {
             horaSalida = Lector.leerString();
             
             Micro micro = new Micro(patente, destino, horaSalida);
-            flota.AgregarMicro(micro);
+            flota.agregarMicro(micro);
             
             System.out.println("Ingrese Patente del Micro: ");
             patente = Lector.leerString();
@@ -40,20 +40,20 @@ public class POO_Ej5_P2_Flota {
         
         System.out.println("Ingrese Patente del Micro a Eliminar");
         patente = Lector.leerString();
-        if(flota.EliminarMicro(patente))
+        if(flota.eliminarMicro(patente))
             System.out.println("El micro se Eliminó");
         else
             System.out.println("No se encontró el Micro");
             
-        if (flota.BuscarMicroPatente(patente) == null)
+        if (flota.buscarMicroPatente(patente) == null)
             System.out.println("El Micro no se encuentra");
         
         System.out.println("Ingrese Destino");
         destino = Lector.leerString();
         
-        if (flota.BuscarMicroDestino(destino) != null)
+        if (flota.buscarMicroDestino(destino) != null)
             System.out.println("El Micro con Destino a: " + destino + 
-                    "es: " + flota.BuscarMicroDestino(destino).getPatente());
+                    "es: " + flota.buscarMicroDestino(destino).getPatente());
         
 
     }
