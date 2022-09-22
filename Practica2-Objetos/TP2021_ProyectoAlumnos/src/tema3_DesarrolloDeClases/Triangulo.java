@@ -37,7 +37,8 @@ public class Triangulo {
     
     
     /*DECLARACION DE COMPORTAMIENTO. METODOS (CARACTERISTICAS)*/
-    /*
+    /*  
+    Métodos: equivalente a Funciones y Procedimientos,
     public: indica que el método forma parte de la interfaz.
     TipoRetorno: tipo de dato primitivo / nombre de clase / void (no retorna dato).
     nombreMetodo: verbo seguido de palabras. Convención de nombres.
