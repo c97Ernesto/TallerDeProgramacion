@@ -1,12 +1,16 @@
 {
-* ORDENACIÓN-SELECCIÓN
+* ORDENACIÓN-SELECCIÓN (en cada recorrido seleccionamos el más chico)
 * Dado un arreglo (v) y una dimensión lógica (dimL), el algoritmo repite "dimL-1" veces
 * buscar el elemento mínimo y ubicarlo en la posición correspondiente. Es decir, en la
 * primera vuelta busca el mínimo desde la posición 1 hasta la "dimL" y ubica al mínimo
 * en la primera posición. En la vuelta "i" busca el mínimo desde la posición "i" hasta 
 * la "dimL" y lo ubica en la posición "i".
+* Consideraciones:
+* 	- Implementación sencilla
+* 	- Orden(n²), siendo n el tamaño del arreglo.
+* 	- Si el vector está previamente ordenado, no habría diferencia.
 * }
-Procedure OrdenarSeleccion(var v: vector; dimL: indice);
+Procedure OrdenarPorSeleccion(var v: vector; dimL: indice);
 var
 	i, j, p: indice;
 	item: tipoElem;
