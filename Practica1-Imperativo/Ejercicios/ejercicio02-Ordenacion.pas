@@ -150,7 +150,6 @@ End;
 
 //______________________________________P.P______________________________________
 VAR
-
 	generosPeliculas: vec_generos_peliculas;
     generosPuntajes: vec_generos_puntajes;
 	

@@ -16,11 +16,15 @@ Implementar un programa modularizado que:
 }
 PROGRAM ejercicio03_Libreria;
 CONST
-    MAX_rubro = 8;
+    MAX_rubros = 8;
     FIN = 0;
+    MAX_productos = 30;
+
 TYPE
 
-    rng_rubros = 1..MAX_rubro;
+    rng_rubros = 1..MAX_rubros;
+    
+    rng_productos = 0..MAX_productos;
 
     reg_producto = record
         codProducto: integer;
@@ -35,6 +39,17 @@ TYPE
     end;
 
     vec_rubros = array [rng_rubros] of lista_productos;
+
+    vec_productos = array [rng_productos] of reg_producto;
+
+//______________________________InicilizarListas_______________________________
+Procedure InicializarListasDelVector(var v: vec_rubros);
+Var
+    i: rng_rubros;
+Begin
+    for i:= 1 to MAX_rubros do 
+        v[i]:= nil;
+End;
 
 //______________________________GenerarVectorDeListas_______________________________
 Procedure GenerarVectorDeListas(var vRubros: vec_rubros);
@@ -77,7 +92,6 @@ Procedure GenerarVectorDeListas(var vRubros: vec_rubros);
 		punteroNodoNuevo^.sig:= punteroNodoAct; //si nodo nuevo es el primero el campo sig tendrá nil, sino el que le sigue
 	end;
 
-
 Var
     producto: reg_producto;
 Begin
@@ -91,9 +105,47 @@ Begin
 
 End;
 
+//______________________________GenerarVecRubro3_______________________________
+Procedure GenerarVectorProductos(l: lista_productos; var v: vec_productos; var dimL: rng_productos);
+Begin
+    dimL:= 0;
+    while ((l <> nil) and (dimL < MAX_productos)) do begin
+        dimL:= dimL + 1;
+        v[dimL]:= l^.datos;
+        l:= l^.sig;
+    end;
+End;
+
+//______________________________OrdenarVectorProductos_______________________________
+Procedure OrdenarVectorProductos(var v: vec_productos);
+Var
+    i, j, minPos: rng_productos;
+    regAux: reg_producto;
+Begin
+    
+    for i:= 1 to MAX_productos-1 do begin
+        minPos:= i;
+        
+        for j:= i+1 to MAX_productos do begin
+            if (v[minPos].precio < v[j].precio) then
+                minPos:= j;
+        end;
+        
+        regAux:= v[minPos];
+        v[minPos]:= v[i];
+        v[i]:= regAux;
+    
+    end;
+End;
+
 //______________________________P.P_______________________________
 VAR
-    vectorDeRubros: vec_rubros;
+    vecDeRubros: vec_rubros;
+    vectorProductos: vec_productos;
+    dimLogica: rng_productos;
+
 BEGIN
-    GenerarVectorDeListas(vectorDeRubros);
+    InicializarListasDelVector(vecDeRubros);
+    GenerarVectorDeListas(vecDeRubros);
+    GenerarVectorProductos(vecDeRubros[3] ,vectorProductos, dimLogica);
 END.
