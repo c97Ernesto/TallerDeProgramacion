@@ -1,141 +1,99 @@
-{3. Una librería requiere el procesamiento de la información de sus productos. De cada
+{
+3. Una librería requiere el procesamiento de la información de sus productos. De cada
 producto se conoce el código del producto, código de rubro (del 1 al 8) y precio.
 Implementar un programa modularizado que:
-a. Lea los datos de los productos y los almacene ordenados por código de producto y
-agrupados por rubro, en una estructura de datos adecuada. El ingreso de los productos
-finaliza cuando se lee el precio 0.
-Una vez almacenados, muestre los códigos de los productos pertenecientes a cada rubro.
-b. Genere un vector (de a lo sumo 30 elementos) con los productos del rubro 3.
-Considerar que puede haber más o menos de 30 productos del rubro 3. Si la cantidad de
-productos del rubro 3 es mayor a 30, almacenar los primeros 30 que están en la lista e
-ignore el resto.
-c. Ordene, por precio, los elementos del vector generado en b) utilizando alguno de
-los dos métodos vistos en la teoría.
-d. Muestre los precios del vector ordenado.
+    a. Lea los datos de los productos y los almacene ordenados por código de producto y
+    agrupados por rubro, en una estructura de datos adecuada. El ingreso de los productos
+    finaliza cuando se lee el precio 0.
+    Una vez almacenados, muestre los códigos de los productos pertenecientes a cada rubro.
+    b. Genere un vector (de a lo sumo 30 elementos) con los productos del rubro 3.
+    Considerar que puede haber más o menos de 30 productos del rubro 3. Si la cantidad de
+    productos del rubro 3 es mayor a 30, almacenar los primeros 30 que están en la lista e
+    ignore el resto.
+    c. Ordene, por precio, los elementos del vector generado en b) utilizando alguno de
+    los dos métodos vistos en la teoría.
+    d. Muestre los precios del vector ordenado.
 }
-
-PROGRAM ejercicio03;
+PROGRAM ejercicio03_Libreria;
 CONST
-	MAXrubro = 8;
-	MAXrubro3 = 30;
-
+    MAX_rubro = 8;
+    FIN = 0;
 TYPE
-	rng_Rubros = 1..MAXrubro;
-	rng_Rubro3 = 1..MAXrubro3;
-	reg_Producto = record
-		codProducto: integer;
-		codRubro: rng_Rubros;
-		precio: real;
-	end;
-	
-	Lista = ^nodo;
-	nodo = record
-		datos: reg_Producto;
-		sig: lista;
-	end;
-	
-	vec_Rubros = array[rng_Rubros] of lista;
-	vec_Rubro3 = array[1..MAXrubro3] of reg_Producto;
-	
-	
-//_______________________InicializarVectorRubros_______________________
-Procedure IniVecRubros (var v: vec_Rubros);
-Var
-	i: rng_Rubros;
-Begin
-	for i:= 1 to MAXrubro do
-		v[i]:= nil
-end;
 
-//_______________________LeerDatos_Almacenar_______________________
-Procedure CargarProductos (var v: vec_Rubros);
-{a. Lea los datos de los productos y los almacene •ordenados por código de producto y
-agrupados por rubro•, en una estructura de datos adecuada. El ingreso de los productos
-finaliza cuando se lee el precio 0.}
-	procedure leerProducto(var r: reg_Producto);
+    rng_rubros = 1..MAX_rubro;
+
+    reg_producto = record
+        codProducto: integer;
+        codRubro: integer;
+        precio: real;    
+    end;    
+
+    lista_productos = ^nodo;
+    nodo = record
+        datos: reg_producto;
+        sig: lista_productos;
+    end;
+
+    vec_rubros = array [rng_rubros] of lista_productos;
+
+//______________________________GenerarVectorDeListas_______________________________
+Procedure GenerarVectorDeListas(var vRubros: vec_rubros);
+
+    procedure leerRegistro(var registro: reg_producto);
 	begin
-		with r do begin
-			readln(precio);
-			if (precio <> 0) then begin
-				readln(codProducto);
+		with registro do begin
+			write('Ingrese precio: ');
+			readln(precio);			
+
+			if (precio <> FIN) then begin
+			    write('Ingrese código de producto: ');
+			    readln(codProducto);
+				write('Ingrese código de rubro: ');
 				readln(codRubro);
+
 			end;
 		end;
 	end;
 	
-	procedure insertarOrdenado (var l: Lista; r: reg_Producto);
+	procedure insertarOrdenado(var punteroNodoInicial: lista_productos; registro: reg_producto);
 	var
-		ant, nodo, act: lista;
+		punteroNodoAct, punteroNodoNuevo, punteroNodoAnterior: lista_productos;
 	begin
-		new(nodo);
-		nodo^.datos:= r;
-		act:= l;
-		while (act <> nil) and (r.codProducto > l^.datos.codProducto) do begin
-			ant:= act;
-			act:= act^.sig;
+		new(punteroNodoNuevo);
+		punteroNodoNuevo^.datos:= registro;
+		punteroNodoAct:= punteroNodoInicial;
+		while ((punteroNodoAct <> nil) and (punteroNodoAct^.datos.codProducto <= registro.codProducto)) do begin
+			punteroNodoAnterior:= punteroNodoAct;
+			punteroNodoAct:= punteroNodoAct^.sig;
 		end;
-		if (act = l) then
-			l:= nodo
+		{si apuntan a la misma dirección (nil) -> lista solamente inicializada}
+		if (punteroNodoAct = punteroNodoInicial) then
+			punteroNodoInicial:= punteroNodoNuevo	//hago que el primer elemento de la lista sea el nodo creado
+			
+		{si no era el primer elemento}	
 		else
-			ant^.sig:= nodo;
-		nodo^.sig:= act;
+			punteroNodoAnterior^.sig:= punteroNodoNuevo;
+			
+		punteroNodoNuevo^.sig:= punteroNodoAct; //si nodo nuevo es el primero el campo sig tendrá nil, sino el que le sigue
 	end;
-	
+
+
 Var
-	producto: reg_Producto;
+    producto: reg_producto;
 Begin
-	leerProducto(producto);
-	while (producto.precio <> 0) do begin
-		insertarOrdenado(v[producto.codRubro], producto);
-		leerProducto(producto);
-	end;
+
+    leerRegistro(producto);
+
+    while (producto.precio <> FIN) do begin
+        insertarOrdenado(vRubros[producto.codRubro], producto);
+        leerRegistro(producto);
+    end;
+
 End;
 
-//_______________________GenerarVectorRubro3_______________________
-{b. Genere un vector (de a lo sumo 30 elementos) con los productos del rubro 3.
-Considerar que puede haber más o menos de 30 productos del rubro 3. Si la cantidad de
-productos del rubro 3 es mayor a 30, almacenar los primeros 30 que están en la lista e
-ignore el resto.}
-Procedure GenerarVecRubro3(l: Lista; var vRubro3: vec_Rubro3; var dl: integer);
-Begin
-	dl:= 0;
-	while ((l <> nil) or (dl <= MAXrubro3)) do begin
-		dl:= dl + 1;
-		vRubro3[dl]:= l^.datos;	
-		l:= l^.sig;
-	end;
-End;
-
-//_______________________OrdenarVectorRubro3_______________________
-{c. Ordene, por precio, los elementos del vector generado en b) utilizando alguno de
-los dos métodos vistos en la teoría.}
-Procedure OrdenarVecRubro3(var v: vec_Rubro3; dimL: integer);
-Var
-	i, j, x : rng_Rubro3;
-	aux: reg_Producto;
-Begin
-	for i:= 1 to dimL-1 do begin	{buscamos el minimo y lo guardamos en la pos x}
-		x:= i;
-		
-		for j:= i+1 to dimL do
-			if (v[j].codProducto < v[x].codProducto) then
-				x:= j;
-				
-		{intercambiamos elementos con variable auxiliar}
-		aux:= v[x];	
-		v[x]:= v[i];
-		v[i]:= aux;
-	end;
-End;
-//_______________________P.P_______________________
+//______________________________P.P_______________________________
 VAR
-	vecRubros: vec_Rubros;
-	vecRubro3: vec_Rubro3;
-	dl: integer;
+    vectorDeRubros: vec_rubros;
 BEGIN
-	IniVecRubros(vecRubros);
-	CargarProductos(vecRubros);
-	GenerarVecRubro3(vecRubros[3], vecRubro3, dl);
+    GenerarVectorDeListas(vectorDeRubros);
 END.
-
-

@@ -18,27 +18,40 @@
 PROGRAM ejercicio02;
 CONST
 	FIN = -1;
-	MAXgenero = 8;
+	MAX_genero = 8;
 	
 TYPE
-	rng_genero = 1..MAXgenero;
+	rng_generos = 1..MAX_genero;
 	
 	reg_pelicula = record
 		codPelicula: integer;
-		codGenero: rng_genero;
+		codGenero: rng_generos;
 		puntajeProm: real;
-	end;
-	
+	end;	
 	lista_peliculas = ^nodo;
 	nodo = record
 		datos: reg_pelicula;
 		sig: lista_peliculas;
 	end;
-	
-	vec_generos = array [rng_genero] of reg_pelicula;
+	vec_generos_peliculas = array [rng_generos] of lista_peliculas;
+
+	reg_pelicula2 = record
+		codPelicula: integer;
+		puntajeProm: real;
+	end;    
+    vec_generos_puntajes = array [rng_generos] of reg_pelicula2;
+
+//______________________________InicializarVector_______________________________
+Procedure InicializarVectorListas(var vectorPeliculas: vec_generos_peliculas);
+Var
+    i: rng_generos;
+Begin
+    for i:= 1 to MAX_genero do 
+        vectorPeliculas[i]:= nil;
+End;
 
 //______________________________Procedimientos_______________________________
-Procedure CargarPeliculas(var l: lista_peliculas);
+Procedure CargarPeliculas(var vecPeliculas: vec_generos_peliculas);
 
 	procedure leerRegistro(var registro: reg_pelicula);
 	begin
@@ -55,78 +68,77 @@ Procedure CargarPeliculas(var l: lista_peliculas);
 		end;
 	end;
 	
-	procedure insertarOrdenado(var nodoInicial: lista_peliculas; registro: reg_pelicula);
+	procedure agregarAlFinal(var punteroNodoInicial: lista_peliculas; registro: reg_pelicula);
 	var
-		act, nodo, ant: lista_peliculas;
+		punteroNodoAct, punteroNodoNuevo: lista_peliculas;
 	begin
-		new(nodo);
-		nodo^.datos:= registro;
-		act:= nodoInicial;
-		while ((act <> nil) and (act^.datos.codGenero <= registro.codGenero)) do begin
-			ant:= act;
-			act:= act^.sig;
-		end;
-		{si apuntan a la misma dirección (nil) -> lista solamente inicializada}
-		if (act = nodoInicial) then
-			nodoInicial:= nodo	//hago que el primer elemento de la lista sea el nodo creado
-			
-		{si no era el primer elemento}	
-		else
-			ant^.sig:= nodo;
-			
-		nodo^.sig:= act; //si "nodo" es el primero el campo sig tendrá nil, sino el que le sigue
+		new(punteroNodoNuevo);
+		punteroNodoNuevo^.datos:= registro;
+        punteroNodoNuevo^.sig:= nil;
+        
+        if (punteroNodoInicial <> nil) then begin     //si la lista no está vacía
+            punteroNodoAct:= punteroNodoInicial;
+    
+            while (punteroNodoAct <> nil) do       //vamos hasta el final
+                punteroNodoAct:= punteroNodoAct^.sig;
+            punteroNodoAct^.sig:= punteroNodoNuevo;
+        end
+        else
+            punteroNodoInicial:= punteroNodoNuevo;
 	end;
 
 Var
 	pelicula: reg_pelicula;
 Begin
-	l:= nil;
 	
 	leerRegistro(pelicula);
 	
 	while (pelicula.codPelicula <> FIN) do begin
-		insertarOrdenado(l, pelicula);
+		agregarAlFinal(vecPeliculas[pelicula.codGenero], pelicula);
 		leerRegistro(pelicula)
 	end;
 	
 End;
 
 //______________________________________Cargar Vector______________________________________
-Procedure CargarVectorGeneros(l: lista_peliculas; var v: vec_generos);
+Procedure CargarPuntajes(vPeliculas: vec_generos_peliculas; var vPuntajes: vec_generos_puntajes);
+        
+    procedure obtenerMejorPelicula(nodo: lista_peliculas; var pelicula: reg_pelicula2);
+    begin
+        pelicula.puntajeProm:= FIN;
+        while (nodo <> nil) do begin    //lista ordenada por codPelicula (no interesa)
+            if (nodo^.datos.puntajeProm > pelicula.puntajeProm) then begin
+                pelicula.codPelicula:= nodo^.datos.codPelicula;
+                pelicula.puntajeProm:= nodo^.datos.puntajeProm;
+            end;
+            nodo:= nodo^.sig;
+        end;
+    end;
+
 Var
-	mejorPelicula: reg_pelicula;
-	codAct: rng_genero;
+	mejorPelicula: reg_pelicula2;
+	i: rng_generos;
 	
 Begin
-	mejorPelicula.puntajeProm:= 0;
 	
-	while (l <> nil) do begin
-		codAct:= l^.datos.codGenero;
-	
-		while (l <> nil) and (codAct = l^.datos.codGenero) do begin
-		
-			if (l^.datos.puntajeProm > mejorPelicula.puntajeProm) then
-				mejorPelicula:= l^.datos;
-				
-			l:= l^.sig;
-		end;
-		
-		v[mejorPelicula.codGenero]:= mejorPelicula;	
-	end;
+    for i:= 1 to MAX_genero do begin
+        obtenerMejorPelicula(vPeliculas[i], mejorPelicula);
+        vPuntajes[i]:= mejorPelicula;
+    end;
 	
 End;
 
-//______________________________________Cargar Vector______________________________________
-Procedure OrdenarVectorGeneros(var v: vec_generos);
+//______________________________________Ordenar Vector______________________________________
+Procedure OrdenarPuntajes(var v: vec_generos_puntajes);
 Var
-	i, j, min: rng_genero;
-	regAux: reg_pelicula;
+	i, j, min: rng_generos;
+	regAux: reg_pelicula2;
 Begin
 
-	for i:= 1 to MAXgenero-1 do begin
+	for i:= 1 to MAX_genero-1 do begin
 		min:= i;
 		
-		for j:= i+1 to MAXgenero do 
+		for j:= i+1 to MAX_genero do 
 			if v[j].puntajeProm < v[min].puntajeProm then
 				min:= j;
 				
@@ -138,11 +150,12 @@ End;
 
 //______________________________________P.P______________________________________
 VAR
-	L: lista_peliculas;
-	generos: vec_generos;
+
+	generosPeliculas: vec_generos_peliculas;
+    generosPuntajes: vec_generos_puntajes;
 	
 BEGIN
-	CargarPeliculas(L);
-	CargarVectorGeneros(L, generos);
-	OrdenarVectorGeneros(generos);
+	CargarPeliculas(generosPeliculas);
+	CargarPuntajes(generosPeliculas, generosPuntajes);
+	OrdenarPuntajes(generosPuntajes);
 END.

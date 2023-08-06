@@ -18,9 +18,9 @@ CONST
 	
 TYPE
 	
-	rng_oficinas = [1..dimF];
+	rng_oficinas = 0..dimF;
 
-	reg_oficina = record;
+	reg_oficina = record
 		codIdentificacion: integer;
 		dniPropietario: integer;
 		valorExpensa: real;
@@ -29,15 +29,15 @@ TYPE
 	vec_oficinas = array [rng_oficinas] of reg_oficina;
 	
 //______________________________P.P_______________________________
-Procedure GenerarVector(var v: vec_oficinas; var dL: rng_genero);
+Procedure GenerarVector(var v: vec_oficinas; var dL: rng_oficinas);
 	
 	procedure leerRegistro(var registro: reg_oficina);
 	begin
 		write('Ingresar código: ');
-		readln(registro.codigo);
-		if (registro.codigo <> FIN) then begin
+		readln(registro.codIdentificacion);
+		
+		if (registro.codIdentificacion <> FIN) then begin
 			with (registro) do begin
-				registro.codIdentificacion:= c;
 				write('Ingresar Dni propietario: ');
 				readln(registro.dniPropietario);
 				write('Valor Expensa: ');
@@ -57,7 +57,7 @@ Begin
 		v[dL]:= oficina;
 		leerRegistro(oficina);
 	end;
-End.
+End;
 
 //______________________________P.P_______________________________
 Procedure OrdenarPorInsercion(var v: vec_oficinas; dimL: rng_oficinas);
@@ -78,7 +78,7 @@ begin
 end;
 
 //______________________________P.P_______________________________
-Procedure OrdenarPorInsercion(var v: vec_oficinas; dimL: rng_oficinas);
+Procedure OrdenarPorSeleccion(var v: vec_oficinas; dimL: rng_oficinas);
 var
 	i, j, min: rng_oficinas;
 	regAux: reg_oficina;
@@ -102,7 +102,7 @@ end;
 //______________________________P.P_______________________________
 VAR
 	oficinas: vec_oficinas;
-	dimL: rng_genero;
+	dimL: rng_oficinas;
 	
 BEGIN
 	GenerarVector(oficinas, dimL);
