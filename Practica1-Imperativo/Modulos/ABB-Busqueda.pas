@@ -11,6 +11,4 @@ begin
 				Buscar:= Buscar(a^.HI, x)
 			else
 				Buscar:= Buscar(a^.HD, x)
-	
-
 end;
