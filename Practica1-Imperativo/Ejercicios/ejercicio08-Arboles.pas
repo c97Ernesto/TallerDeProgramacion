@@ -1,96 +1,140 @@
-{8. Escribir un programa que:
-a. Implemente un módulo que lea números enteros y los almacene en un árbol
-binario de búsqueda. La lectura finaliza con el valor 0.
+{
+8.Escribir un programa que:
+a. Implemente un módulo que lea números enteros y los almacene en 
+un árbol binario de búsqueda. La lectura finaliza con el valor 0.
 b. Una vez generado el árbol, realice módulos independientes para:
-i. Obtener el número más grande.
-ii. Obtener el número más chico.
-iii. Obtener la cantidad de elementos.
-iv. Informar los números en orden creciente.
-v. Informar los números pares en orden decreciente.
-Nota: Tener en cuenta que cada número debe aparecer una única vez en el árbol.}
+	i. Obtener el número más grande.
+	ii. Obtener el número más chico.
+	iii. Obtener la cantidad de elementos.
+	iv. Informar los números en orden creciente.
+	v. Informar los números pares en orden decreciente.
+}
+
 PROGRAM ejercicio08;
+CONST
+	FIN = 0;
+
 TYPE
-	Arbol = ^nodo;
+	
+	arbol = ^nodo;
 	nodo = record
 		dato: integer;
-		HI: Arbol;
-		HD: Arbol;
+		hi: arbol;
+		hd: arbol;
 	end;
-//______________________GenerarABB_________________________
-Procedure GenerarABB(var A: Arbol);
-{a. Implemente un módulo que lea números enteros y los almacene en un árbol
-binario de búsqueda. La lectura finaliza con el valor 0.}
-	procedure crear(var a: Arbol; n: integer);
+
+//________________________Generar Arbol________________________
+Procedure GenerarArbol(var abb: arbol);
+
+	procedure crearNodo(var nodo: arbol; n: integer);
 	begin
-		if (a = nil) then begin
-			new(a);
-			a^.dato:= n;
-			a^.HI:= nil;
-			a^.HD:= nil;
+		if (nodo = nil) then begin
+			new(nodo);
+			nodo^.dato:= n;
+			nodo^.hi:= nil;
+			nodo^.hd:= nil;
 		end
 		else begin
-			if (n < a^.dato) then
-				crear(a^.HI, n)
+			if (n < nodo^.dato) then
+				crearNodo(nodo^.hi, n)
 			else
-				if (n > a^.dato) then
-					crear(a^.HD, n);
+				crearNodo(nodo^.hd, n);
 		end;
 	end;
+
 Var
 	num: integer;
 Begin
-	write('Ingrese un num (0 para finalizar): ');
-	readln(num);
+	abb:= nil;
+	
+	write('Ingresar número (0 finalizar): '); readln(num);
 	while (num <> 0) do begin
-		crear(A, num);
-		readln(num);
+		crearNodo(abb, num);
+		write('Ingresar número (0 finalizar): '); readln(num);
 	end;
 End;
-//______________________MostrarElementos_________________________
-{iv. Informar los números en orden creciente.}
-Procedure MostrarElementos(A: Arbol);
+
+//________________________Mostrar Arbol________________________
+Procedure MostrarArbolEnOrdenCreciente(abb: arbol);
 Begin
-	if (A <> nil) then begin
-		MostrarElementos(A^.HI);
-		writeln(A^.dato);
-		MostrarElementos(A^.HD);
+	if (abb <> nil)	then begin
+		MostrarArbolEnOrdenCreciente(abb^.hi);
+		writeln(abb^.dato);
+		MostrarArbolEnOrdenCreciente(abb^.hd);
 	end;
 End;
-//______________________CantElementos_________________________
-{iii. Obtener la cantidad de elementos.}
-Function CantElementos(A: Arbol): integer;
+
+Procedure MostrarArbolEnOrdenDecreciente(abb: arbol);
 Begin
-	if (A <> nil) then 
-		CantElementos:= (CantElementos(A^.HI) + CantElementos(A^.HD) + 1)
-	else
-		CantElementos:= 0;
+	if (abb <> nil)	then begin
+		MostrarArbolEnOrdenDecreciente(abb^.hd);
+		writeln(abb^.dato);
+		MostrarArbolEnOrdenDecreciente(abb^.hi);
+	end;
 End;
-//______________________Maximo_________________________
-{i. Obtener el número más grande.}
-Function Maximo(A: Arbol): Arbol;
-	function calcular(a: Arbol): Arbol;
+
+//________________________Obtener Mayor________________________
+//	i. Obtener el número más grande.
+Function obtenerMax(abb: arbol): arbol;
+
+	function max(a: arbol): arbol;
 	begin
-		if (a^.HD = nil) then
-			calcular:= a
+		if (a^.hd = nil) then //caso base si el hd del nodo es nil
+			max:= a
 		else
-			calcular:= calcular(a^.HD);
+			max:= max(a^.hd);
 	end;
+
 Begin
-	if (a = nil) then
-		Maximo:= nil
-	else
-		Maximo:= calcular(a);
+	if (abb <> nil) then
+		ObtenerMax:= max(abb^.hd)
+		
+	else	//caso base si solo el árbol tiene un nodo
+		ObtenerMax:= nil;
 End;
-//______________________P.P_________________________
-VAR
-	ABB: Arbol;
-BEGIN
-	GenerarABB(ABB);
-	MostrarElementos(ABB);
-	if (ABB <> nil) then begin
-		writeln('El Maximo del ABB es: ', Maximo(ABB)^.dato);
-		writeln('La cantidad de elementos es: ',CantElementos(ABB));
-	end
+
+//________________________Obtener Menor________________________
+//	i. Obtener el número más chico.
+Function obtenerMin(abb: arbol): arbol;
+
+	function min(a: arbol): arbol;
+	begin
+		if (a^.hi = nil) then //caso base si el hd del nodo es nil
+			min:= a
+		else
+			min:= min(a^.hi);
+	end;
+
+Begin
+	if (abb <> nil) then
+		ObtenerMin:= min(abb^.hi)
+		
+	else	//caso base si solo el árbol tiene un nodo
+		ObtenerMin:= nil;
+End;
+
+//________________________Obtener CantElementos________________________
+//	iii. Obtener la cantidad de elementos.
+Function totalElementos(a: arbol): integer;
+begin
+	if (a = nil) then
+		totalElementos:= 0
 	else
-		writeln('No hay Elementos');
+		totalElementos:= (totalElementos(a^.hi) + totalElementos(a^.hd) + 1);
+end;
+//________________________P.P________________________
+VAR
+	arbolBinarioBusqueda: arbol;
+BEGIN
+	GenerarArbol(arbolBinarioBusqueda);
+	MostrarArbolEnOrdenCreciente(arbolBinarioBusqueda);
+    
+    if (arbolBinarioBusqueda <> nil) then begin
+	    writeln('El elemento máximo del árbol es: ', obtenerMax(arbolBinarioBusqueda)^.dato);
+	    writeln('El elemento mínimo del árbol es: ', obtenerMin(arbolBinarioBusqueda)^.dato);
+	end;
+	
+	writeln('La cantidad total de elementos es: ', totalElementos(arbolBinarioBusqueda));
+	
+	MostrarArbolEnOrdenDecreciente(arbolBinarioBusqueda);
 END.

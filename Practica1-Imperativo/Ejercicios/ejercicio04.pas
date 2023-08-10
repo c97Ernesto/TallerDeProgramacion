@@ -59,6 +59,19 @@ Begin
 	end
 End;
 
+//________________________Devolver Máximo________________________
+Procedure DevolverMaximo(l: lista_enteros; var max: integer);
+Begin
+	
+	if (l <> nil) then begin
+	    
+		if (l^.entero > max) then
+			max:= l^.entero;
+		
+		DevolverMinimo(l^.sig, max);	
+	end
+End;
+
 //________________________Devolver Encontrado________________________
 //Procedure DevolverEncontrado(l: lista_enteros; var ok: boolean; n: integer);
 //Begin
@@ -71,7 +84,7 @@ End;
 //________________________P.P________________________
 VAR
 	enteros: lista_enteros;
-	intMin: integer;
+	intMin, intMax: integer;
 BEGIN
 
 	
@@ -80,6 +93,10 @@ BEGIN
 	intMin:= 999;	
 	DevolverMinimo(enteros, intMin);
 	writeln('El elemento mínimo de la lista fue: ', intMin);
+	
+	intMax:= -999;
+	DevolverMaximo(enteros, intMax);
+	writeln('El elemento máximo de la lista fue: ', intMax);
 	
 //	write('Ingresar el elemento a buscar: ');
 //	readln(int);
