@@ -1,5 +1,5 @@
 {Creacion}
-Procedure Crear(var a: Arbol; num: integer);
+Procedure Crear(var a: Arbol; num: dato);
 begin
 	if (a = nil) then begin
 		new(a);
