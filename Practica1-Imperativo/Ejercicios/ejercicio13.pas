@@ -48,7 +48,8 @@ Procedure GenerarVec(var vec: vec_Dias);
 			end;
 		end;
 	end;
-		procedure insertarOrdenado(var l: Lista; r: reg_Entrada);		//Ordenar por Código de Obra
+	
+	procedure insertarOrdenado(var l: Lista; r: reg_Entrada);		//Ordenar por Código de Obra
 	var
 		ant, nodo, act: Lista;
 	begin
