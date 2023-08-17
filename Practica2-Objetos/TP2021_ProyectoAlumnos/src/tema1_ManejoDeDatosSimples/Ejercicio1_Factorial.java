@@ -7,16 +7,16 @@ package tema1_ManejoDeDatosSimples;
 import PaqueteLectura.Lector;
 
 public class Ejercicio1_Factorial {
-    
-public static void main(String[] args) {
-    int i;
-    
-    System.out.println("Ingrese un Numero");
-    int n = Lector.leerInt();
-    
-    for (i = (n-1); i > 0; i--)
-        n = n * i;
-    System.out.println("El factorial del numero ingresado es: " + n);
-    
-}
+
+    public static void main(String[] args) {
+
+        System.out.println("Ingrese un Numero");
+        int n = Lector.leerInt();
+
+        for (int i = (n - 1); i > 0; i--) {
+            n = n * i;
+        }
+        System.out.println("El factorial del numero ingresado es: " + n);
+
+    }
 }

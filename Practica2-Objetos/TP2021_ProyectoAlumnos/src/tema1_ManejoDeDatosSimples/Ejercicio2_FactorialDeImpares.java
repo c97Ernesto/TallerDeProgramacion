@@ -15,9 +15,9 @@ public class Ejercicio2_FactorialDeImpares {
 
         for (i = 9; i > 0; i = i-2) {
 
-            fact = 1;
+            fact = i;
 
-            for (j = i; j > 0; j--)
+            for (j = (fact-1); j > 0; j--)
                 fact = fact * j;
 
             System.out.println("El factorial de "+ i +" es: " + fact);

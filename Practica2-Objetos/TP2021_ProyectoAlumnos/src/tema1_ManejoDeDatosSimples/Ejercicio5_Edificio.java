@@ -15,26 +15,27 @@ public class Ejercicio5_Edificio {
     public static void main(String[] args){
         
         final int MAX_PISOS = 8;
-        final int MAX_OFFICE = 4;
+        final int MAX_OFICINAS = 4;
         
-        int matriz_Edificio[][] = new int [MAX_PISOS][MAX_OFFICE];
+        int matriz_Edificio[][] = new int [MAX_PISOS][MAX_OFICINAS];
         
         System.out.print("Ingresar piso(0..7): ");
         int piso = Lector.leerInt();
-        int office;
+        int oficina;
+        
         while(piso != 9){
             System.out.print("Ingresar oficina(0..3): ");
-            office = Lector.leerInt();
+            oficina = Lector.leerInt();
             
-            matriz_Edificio[piso][office] += 1; 
+            matriz_Edificio[piso][oficina] += 1; 
             
             System.out.print("Ingresar piso(0..7): ");
             piso = Lector.leerInt();
         }
         
-        for (int i = 0; i < MAX_PISOS; i++){
-            for (int j = 0; j < MAX_OFFICE; j++){
-                System.out.println("Cantidad de Personas en piso " +i+ " y oficina " +j+ " es de " +matriz_Edificio[i][j]);
+        for ( piso = 0; piso < MAX_PISOS; piso++){
+            for ( oficina = 0; oficina < MAX_OFICINAS; oficina++){
+                System.out.println("Cantidad de Personas en piso " +piso+ " y oficina " +oficina+ " es de " +matriz_Edificio[piso][oficina]);
             }
         }
     }
