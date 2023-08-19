@@ -42,12 +42,12 @@ public class Ejercicio4_CastingPersonas {
                 
                 dimLturnos++;
                 
-                System.out.println("Fin Cupo "+ dimLturnos);
                 
                 System.out.println("Ingrese nombre");
                 nombre = Lector.leerString();
             }
             dimLdias++;
+            System.out.println("Fin del día: "+ dimLdias);
         }
         
         int i, j;

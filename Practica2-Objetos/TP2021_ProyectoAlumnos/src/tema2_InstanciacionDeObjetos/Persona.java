@@ -3,13 +3,13 @@ package tema2_InstanciacionDeObjetos;
 
 public class Persona {
     private String nombre;
-    private int DNI;
+    private int dni;
     private int edad; 
     
     public Persona(String unNombre, int unDNI, int unaEdad){
-        nombre = unNombre;
-        DNI = unDNI;
-        edad = unaEdad; 
+        this.nombre = unNombre;
+        this.dni = unDNI;
+        this.edad = unaEdad; 
     }
     
     public Persona(){
@@ -17,32 +17,36 @@ public class Persona {
     }
 
     public int getDNI() {
-        return DNI;
+        return this.dni;
     }
 
     public int getEdad() {
-        return edad;
+        return this.edad;
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setDNI(int unDNI) {
-        DNI = unDNI;
+        this.dni = unDNI;
     }
 
     public void setEdad(int unaEdad) {
-        edad = unaEdad;
+        this.edad = unaEdad;
     }
 
     public void setNombre(String unNombre) {
-        nombre = unNombre;
+        this.nombre = unNombre;
     }
     
+    @Override
     public String toString(){
         String aux; 
-        aux = "Mi nombre es " + nombre + ", mi DNI es " + DNI + " y tengo " + edad + " años.";
+        aux = "Mi nombre es " + nombre 
+                + ", mi DNI es " + dni 
+                + " y tengo " + edad 
+                + " años.";
         return aux;
     }
     
