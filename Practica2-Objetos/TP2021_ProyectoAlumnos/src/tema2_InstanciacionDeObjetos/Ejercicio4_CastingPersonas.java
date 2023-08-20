@@ -17,8 +17,8 @@ import PaqueteLectura.Lector;
 public class Ejercicio4_CastingPersonas {
     public static void main(String[] args) {    
         
-        int dimFdias = 5, dimFturnos = 8;
-        int dimLdias = 0, dimLturnos = 0;
+        int dimFdias = 3, dimFturnos = 3;
+        
         Persona matriz[][] = new Persona [dimFdias][dimFturnos];
         
         Persona persona;
@@ -28,8 +28,10 @@ public class Ejercicio4_CastingPersonas {
         System.out.println("Ingrese nombre");
         String nombre = Lector.leerString();
         
-        while ((dimLdias < dimFdias) != (nombre.equals(zzz))){
-            while ((dimLturnos < dimFturnos) != (nombre.equals(zzz))){
+        int i = 0; int j;
+        while ((i < dimFdias) != (nombre.equals(zzz))){
+            j = 0;
+            while ((j < dimFturnos) != (nombre.equals(zzz))){
                 persona = new Persona();
                
                 persona.setNombre(nombre);
@@ -38,19 +40,16 @@ public class Ejercicio4_CastingPersonas {
                 System.out.println("Ingrese Edad");
                 persona.setEdad(Lector.leerInt());
                 
-                matriz[dimLdias][dimLturnos] = persona;   
+                matriz[i][j] = persona;   
                 
-                dimLturnos++;
-                
+                j++;
                 
                 System.out.println("Ingrese nombre");
                 nombre = Lector.leerString();
             }
-            dimLdias++;
-            System.out.println("Fin del día: "+ dimLdias);
+            i++;
+            System.out.println("Fin del día: "+ i);
         }
-        
-        int i, j;
         
         for (i = 0; i < dimFdias; i++){
             System.out.println("TURNO"+ (i + 1));
