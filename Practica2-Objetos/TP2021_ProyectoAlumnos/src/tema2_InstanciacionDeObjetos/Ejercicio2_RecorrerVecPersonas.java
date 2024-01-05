@@ -12,11 +12,11 @@ public class Ejercicio2_RecorrerVecPersonas {
         Persona [] vecPersonas = new Persona [dimF]; 
      
         //var persona tipo Persona
-        Persona persona;        
+        Persona persona; 
         
         for (i = 0; i < dimF; i++){
-            //instanciamos Persona(persona)
-            persona = new Persona();  //instanciamos Persona(persona)
+            //instanciamos Persona
+            persona = new Persona(); 
             
             System.out.println("Ingrese Nombre");
             persona.setNombre(Lector.leerString());

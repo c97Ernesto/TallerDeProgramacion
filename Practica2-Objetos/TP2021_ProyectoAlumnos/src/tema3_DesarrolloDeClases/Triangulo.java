@@ -14,9 +14,10 @@ public class Triangulo {
     encapsulamiento (ocultamiento de la información).
     Las v.i.s. privadas pueden ser accedidas sólo dentro de la clase
     que las declara*/
-    private double lado1, lado2, lado3;
-    private String colorR;
-    private String colorL;
+	private double lado1, lado2, lado3;
+	
+	private String colorRelleno;
+	private String colorLinea;
     /*Los datos correspondientes al estado toman un valor por defecto cuando no se
     inicializan explícitamente.
     (numéricos => 0; boolean => false; char => ''; objetos => null)*/
@@ -27,13 +28,13 @@ public class Triangulo {
         //constructor NULO 
     }
     
-    public Triangulo(double l1, double l2, double l3, String cR, String cL ) {    
-        this.lado1 = l1;
-        this.lado2 = l2;
-        this.lado3 = l3;
-        this.colorR = cR;
-        this.colorL = cL;
-    }
+	public Triangulo(double l1, double l2, double l3, String colorR, String colorL) {
+		this.lado1 = l1;
+		this.lado2 = l2;
+		this.lado3 = l3;
+		this.colorRelleno = colorR;
+		this.colorLinea = colorL;
+	}
     
     
     /*DECLARACION DE COMPORTAMIENTO. METODOS (CARACTERISTICAS)*/
@@ -49,42 +50,53 @@ public class Triangulo {
     Declaración de variables locales. Ámbito. Tiempo de vida. (Declaración idem que en Main)
     Cuerpo. Código puede utilizar estado y modificarlo (v.i.) – devolver resultado return
     */
-    public void setLado1(double lado1) {
+	public void setLado1(double lado1) {
         this.lado1 = lado1;
     }
-    public void setLado2(double lado2) {
-        this.lado2 = lado2;
-    }
-    public void setLado3(double lado3) {
-        this.lado3 = lado3;
-    }
-    public void setColorR(String colorR) {
-        this.colorR = colorR;
-    }
-    public void setColorL(String colorL) {  //this se agrega automaticamente para
-//diferenciar parametro de atributo
-        this.colorL = colorL;
-    }
+    
     public double getLado1() {  //tambien se le puede agregar this al return
         return this.lado1;
     }
-    public double getLado2() {
+    
+    public void setLado2(double lado2) {
+        this.lado2 = lado2;
+    }
+    
+   	public double getLado2() {
         return lado2;
     }
+    
+    public void setLado3(double lado3) {
+        this.lado3 = lado3;
+    }
+    
     public double getLado3() {
         return lado3;
     }
-    public String getColorR() {
-        return colorR;
+    
+    public void setColorRelleno(String colorRelleno) {
+        this.colorRelleno = colorRelleno;
     }
-    public String getColorL() {
-        return colorL;
+    
+    public String getColorRelleno() {
+        return colorRelleno;
     }
-    public double area(){
+    
+    public void setColorLinea(String colorLinea) { 
+    //this se agrega automaticamente para diferenciar parametro de atributo
+        this.colorLinea = colorLinea;
+    }
+    
+    public String getColorLinea() {
+        return colorLinea;
+    }
+
+    public double calcularArea(){
         double s = (this.getLado1() + this.getLado2() + this.getLado3()) / 2;
         return (Math.sqrt(s*(s-this.getLado1())*(s-this.getLado2())*(s-this.getLado3())));
     }
-    public double perimetro(){
+    
+    public double calcularPerimetro(){
         return(this.getLado1() + this.getLado2() + this.getLado3());
     }
     /*

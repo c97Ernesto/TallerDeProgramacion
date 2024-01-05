@@ -17,46 +17,56 @@ import PaqueteLectura.Lector;
 public class Ejercicio4_CastingPersonas {
     public static void main(String[] args) {    
         
-        int dimFdias = 3, dimFturnos = 3;
-        
-        Persona matriz[][] = new Persona [dimFdias][dimFturnos];
-        
-        Persona persona;
-        
-        String zzz = "ZZZ" ;
-        
-        System.out.println("Ingrese nombre");
-        String nombre = Lector.leerString();
-        
-        int i = 0; int j;
-        while ((i < dimFdias) != (nombre.equals(zzz))){
-            j = 0;
-            while ((j < dimFturnos) != (nombre.equals(zzz))){
-                persona = new Persona();
-               
-                persona.setNombre(nombre);
-                System.out.println("Ingrese DNI");
-                persona.setDNI(Lector.leerInt());
-                System.out.println("Ingrese Edad");
-                persona.setEdad(Lector.leerInt());
-                
-                matriz[i][j] = persona;   
-                
-                j++;
-                
-                System.out.println("Ingrese nombre");
-                nombre = Lector.leerString();
-            }
-            i++;
-            System.out.println("Fin del día: "+ i);
-        }
-        
-        for (i = 0; i < dimFdias; i++){
-            System.out.println("TURNO"+ (i + 1));
-            for (j = 0; j < dimFturnos; j++){
-                System.out.println("CUPO"+ (j + 1));
-                System.out.println(matriz[i][j].toString());
-            }
-        }
-    }
+    	int dimDias = 5;	//filas
+		int dimTurnos = 8;	//columnas
+		
+		Persona [][] casting = new Persona [dimDias][dimTurnos];
+		
+		Persona p;
+		
+		System.out.println("Ingresar nombre: ");
+		String nombre = Lector.leerString();
+		
+		int cantDias = 0;
+		int cantTurnos = 0;
+		while ((cantDias < dimDias) && (!nombre.equals("ZZZ"))) {
+			
+			cantTurnos = 0;
+			while ((cantTurnos < dimTurnos) && (!nombre.equals("ZZZ"))){
+				
+				p = new Persona();
+				
+				p.setNombre(nombre);
+				
+				System.out.println("Ingresar Dni: ");
+				p.setDNI(Lector.leerInt());
+				
+				System.out.println("Ingresar Edad: ");
+				p.setEdad(Lector.leerInt());
+				
+				casting[cantDias][cantTurnos] = p;
+								
+				System.out.println("Ingresar nombre: ");
+				nombre = Lector.leerString();
+				
+				cantTurnos ++;
+			}
+			
+			cantDias ++;
+			System.out.println("Fin del día "+ cantDias);
+		}
+		
+		for (int dia = 0; dia < cantDias; dia ++) {
+		
+			System.out.println("Día"+ (dia+1));
+			
+			for (int turno = 0; turno < cantTurnos; turno ++) {
+				
+				System.out.print("Turno"+ (turno+1) +": ");
+				System.out.println(casting[dia][turno].getNombre());
+			
+			}
+			System.out.println("");
+		}
+	}	
 }
