@@ -31,6 +31,13 @@ public class Ejercicio1B_InstanciacionTriangulo {
 		System.out.println("El Área es: "+ triangulo.calcularArea());
 		
 		System.out.println("El Perímetro es: "+ triangulo.calcularPerimetro());
+		
+		
+		Triangulo triangulo2 = new Triangulo(3, 3, 3, "rojo", "amarillo");
+		
+		System.out.println("El Área es: "+ triangulo2.calcularArea());
+		
+		System.out.println("El Perímetro es: "+ triangulo2.calcularPerimetro());		
 					
     }		
 }

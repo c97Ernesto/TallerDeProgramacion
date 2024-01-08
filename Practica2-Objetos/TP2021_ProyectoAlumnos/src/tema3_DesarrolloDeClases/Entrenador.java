@@ -13,58 +13,57 @@ definimos la clase como pública para poder usarla desde otro lugar*/
 public class Entrenador { 
     /*Atributos: los definimos como privados para que solo sean 
     accedidos desde ésta clase*/
-    private String nombre;
-    private double sueldo;
-    private int campeonatos;
+	private String nombre;
+	private double sueldoBasico;
+	private int campeonatosG;
+
     
     /*IMPLEMENTAR CONTRUCTOR
     método que nos dará una instancia(un objeto) de 
     la clase a la que pertenece*/
     //Constructor NULO
     public Entrenador (){}
-    public Entrenador (String nombre, double sueldo, int campeonatos){
+	public Entrenador(String nombre, double sueldoBasico, int campeonatosGanados) {
         /*Construccion del objeto con los parametros que le pasamos*/
-        this.iniciar(nombre, sueldo, campeonatos);
-    }
-    private void iniciar(String nombre, double sueldo, int campeonatos){
-        this.nombre = nombre;
-        this.sueldo = sueldo;
-        this.campeonatos = campeonatos;
+		this.nombre = nombre;
+		this.sueldoBasico = sueldoBasico;
+		this.campeonatosG = campeonatosGanados;
     }
     
-    public void  setNombre(String nombre){
-        this.nombre = nombre;
-    }
-    public String getNombre(){
-        return nombre;
-    }
-    public void setSueldo(double sueldo){
-        this.sueldo = sueldo;
-    }
-    public double getSueldo(){
-        return sueldo;
-    }
-    public void setCampeonatos(int campeonatos){
-        this.campeonatos = campeonatos;
-    }
-    public int getCampeonatos(){
-        return campeonatos;
-    }
-    
-    public String toString() {
-        return "Nombre: " +nombre+ " Sueldo: " +sueldo+ "Campeonatos:"+campeonatos; 
-    }
-    
+	public void setNombre(String cadena) {
+		this.nombre = cadena;
+	}
+	
+	public String getNombre() {
+		return this.nombre;
+	}
+	
+	public void setSueldoBasico(double real) {
+		this.sueldoBasico = real;
+	}
+	
+	public double getSueldoBasico() {
+		return this.sueldoBasico;
+	}
+	
+	public void setCampeonatosG(int entero) {
+		this.campeonatosG = entero;
+	}
+	
+	public int getCampeonatosG() {
+		return this.campeonatosG;
+	}
+	
     public double calcularSueldoACobrar(){
-        if (campeonatos < 11)
-            if (campeonatos < 5) 
-                if (campeonatos < 1)
-                    return (sueldo);
+        if (this.campeonatosG < 11)
+            if (this.campeonatosG < 5) 
+                if (this.campeonatosG < 1)
+                    return (this.sueldoBasico);
                 else
-                    return(sueldo + 5000);
+                    return(this.sueldoBasico + 5000);
             else
-                return(sueldo + 30000);
+                return(this.sueldoBasico + 30000);
         else
-            return (sueldo + 50000);    
+            return (this.sueldoBasico + 50000);    
     }
 }

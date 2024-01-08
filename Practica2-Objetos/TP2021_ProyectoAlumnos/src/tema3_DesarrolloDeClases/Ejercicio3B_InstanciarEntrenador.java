@@ -16,17 +16,17 @@ public class Ejercicio3B_InstanciarEntrenador {
         
         
         System.out.println("Ingrese Sueldo");
-        entrenador.setSueldo(Lector.leerDouble());
-        System.out.println(entrenador.getSueldo());
+        entrenador.setSueldoBasico(Lector.leerDouble());
+        System.out.println(entrenador.getSueldoBasico());
         
         System.out.println("Ingrese cantidad de Campeonatos");
-        entrenador.setCampeonatos(Lector.leerInt());
-        System.out.println(entrenador.getCampeonatos());
+        entrenador.setCampeonatosG(Lector.leerInt());
+        System.out.println(entrenador.getCampeonatosG());
         
         System.out.println(entrenador.toString());
         
-        System.out.println("Nombre del entrenador " +entrenador.getNombre());
-        System.out.println("El Total del Sueldo es: " +entrenador.calcularSueldoACobrar());
+        System.out.println("Nombre del entrenador " + entrenador.getNombre());
+        System.out.println("El Total del Sueldo es: " + entrenador.calcularSueldoACobrar());
     }
     
 }
