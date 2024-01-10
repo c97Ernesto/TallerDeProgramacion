@@ -16,34 +16,40 @@ import PaqueteLectura.Lector;
 
 public class Ejercicio4B_InstanciarMicroCargarPasajeros {
     
-    public static void main(String[] args) {  
-        Micro micro = new Micro("ABC123", "Mar del Plata", "5:00");
-        
-        System.out.println("Ingrese Nro de Asiento: ");
-        int nroAsiento = Lector.leerInt();
-        
-        while ((nroAsiento != -1) && (! micro.estaLLeno())){
-            if (micro.validarAsiento(nroAsiento))
-                if (! micro.estadoAsiento(nroAsiento)){
-                    micro.ocupar(nroAsiento);
-                    System.out.println("El asiento es suyo");
-                }
-                else{
-                    System.out.println("Asiento Ocupado");
-                    int x = micro.primerAsientoLibre();
-                    if (x !=  -1)
-                        System.out.println("El primero asiento disponible es: " +x);
-                    else
-                        System.out.println("No hay asientos Disponibles");
-                }
-            else
-                System.out.println("Nro Asiento Invalido");
-            System.out.println("Ingrese otro Asiento");
-            nroAsiento = Lector.leerInt();
-        }
-        if (micro.estaLLeno())
-            System.out.println("El micro se llenó");
-        System.out.println("La cantidad de Asientos Ocupados es: " +micro.asientosOcup());
-    }
+	public static void main(String[] args) {	
+		
+		Micro micro = new Micro("ABC123", "Mar del Plata", "5:00");
+		
+
+		System.out.print("Ingresar un número de asiento: ");
+		int nroAsiento = Lector.leerInt();
+		
+		while ((nroAsiento != -1) && (!micro.estaLleno())) {
+			
+			if (micro.validarAsiento(nroAsiento)) {
+				
+				if (!micro.estadoAsiento(nroAsiento)) {
+					micro.ocupar(nroAsiento);
+					System.out.println("El asiento fue reservado con éxito.");
+					
+				} 
+				else {
+					System.out.println("El asiento" + nroAsiento + " se encuentra ocupado.");
+					System.out.println("El primero asiento disponible es el: " + micro.primerAsientoLibre() + ".");
+				}
+				
+				
+			} else System.out.println("El nro de asiento ingresado no pertenece al micro.");
+
+			System.out.print("Ingresar un número de asiento: ");
+			nroAsiento = Lector.leerInt();
+		}
+		if (micro.estaLleno())
+            System.out.println("El micro se encuentra lleno");
+		
+		System.out.println("La cantidad de asientos ocupados es: " + micro.asientosOcupados());
+
+	
+	}
     
 }

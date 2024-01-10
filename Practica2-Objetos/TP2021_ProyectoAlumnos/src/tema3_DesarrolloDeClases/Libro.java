@@ -14,7 +14,7 @@ public class Libro {
    private String editorial;
    private int añoEdicion;
    private String ISBN; 
-   private double precio; /*en dolares*/
+   private double precio;
      
     public String getTitulo(){
         return titulo;
