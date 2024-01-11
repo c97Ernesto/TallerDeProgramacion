@@ -12,7 +12,7 @@ import tema4_ObjetosAPartirDeConstructores.Flota;
 import tema4_ObjetosAPartirDeConstructores.Micro;
 import PaqueteLectura.Lector;
 
-public class Ejercicio5B_InstanciarFlotaAgregarMicros {
+public class Ejercicio5B_Flota {
     
     public static void main(String[] args) {
         
@@ -47,15 +47,15 @@ public class Ejercicio5B_InstanciarFlotaAgregarMicros {
         else
             System.out.println("No se encontró el Micro");
             
-        if (flota.buscarMicroPatente(patente) == null)
+        if (flota.buscarMicroPorPatente(patente) == null)
             System.out.println("El Micro no se encuentra");
         
         System.out.println("Ingrese Destino");
         destino = Lector.leerString();
         
-        if (flota.buscarMicroDestino(destino) != null)
+        if (flota.buscarMicroPorDestino(destino) != null)
             System.out.println("El Micro con Destino a: " + destino + 
-                    "es: " + flota.buscarMicroDestino(destino).getPatente());
+                    "es: " + flota.buscarMicroPorDestino(destino).getPatente());
         
 
     }
