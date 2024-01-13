@@ -16,98 +16,90 @@ public class Proyecto {
         this.nombreProyecto = nombreProyecto;
         this.codigo = codigoProyecto;
         this.maxInvestigadores = 50;
+        this.dimL = 0;
         
         this.iniciarInvestigadores();
     }
 
     private void iniciarInvestigadores() {
+        this.investigadores = new Investigador[this.getMaxInvestigadores()];
         for (int i = 0; i < this.getMaxInvestigadores(); i++) {
             this.investigadores[i] = null;
         }
     }
-
-    /**
-     * @return the nombreProyecto
-     */
+    
     public String getNombreProyecto() {
         return nombreProyecto;
     }
 
-    /**
-     * @param nombreProyecto the nombreProyecto to set
-     */
+    
     public void setNombreProyecto(String nombreProyecto) {
         this.nombreProyecto = nombreProyecto;
     }
-
-    /**
-     * @return the codigo
-     */
+    
     public int getCodigo() {
         return codigo;
     }
 
-    /**
-     * @param codigo the codigo to set
-     */
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
-    /**
-     * @return the nombreDirector
-     */
     public String getNombreDirector() {
         return nombreDirector;
     }
 
-    /**
-     * @param nombreDirector the nombreDirector to set
-     */
+    
     public void setNombreDirector(String nombreDirector) {
         this.nombreDirector = nombreDirector;
     }
-
-    /**
-     * @return the apellidoDirector
-     */
     public String getApellidoDirector() {
         return apellidoDirector;
     }
 
-    /**
-     * @param apellidoDirector the apellidoDirector to set
-     */
+    
     public void setApellidoDirector(String apellidoDirector) {
         this.apellidoDirector = apellidoDirector;
     }
 
-    /**
-     * @return the maxInvestigadores
-     */
     public int getMaxInvestigadores() {
         return maxInvestigadores;
     }
 
-    /**
-     * @param maxInvestigadores the maxInvestigadores to set
-     */
     public void setMaxInvestigadores(int maxInvestigadores) {
         this.maxInvestigadores = maxInvestigadores;
     }
 
-    /**
-     * @return the dimL
-     */
     public int getDimL() {
         return dimL;
     }
 
-    /**
-     * @param dimL the dimL to set
-     */
     public void setDimL(int dimL) {
         this.dimL = dimL;
+    }
+    
+    public void agregarInvestigador(Investigador i) {
+        this.investigadores[dimL] = i;
+        this.dimL++;
+    }
+    
+    public double dineroTotalOtorgado(){
+        double total = 0;
+        for(int investigador = 0; investigador < this.getDimL(); investigador++) {
+            total += this.investigadores[investigador].dineroTotalSubsidios();
+        }
+        
+        return total;
+    }
+    
+    public int cantSubsidios(String nombre, String apellido) {
+        for (int i = 0; i < this.getDimL(); i++) {
+            
+            if ((investigadores[i].getApellido().equals(apellido)) && (investigadores[i].getNombre().equals(nombre))) {
+                return investigadores[i].cantSubsidios();
+            }       
+        }
+        return -1;
     }
     
 }
