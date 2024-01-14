@@ -7,16 +7,16 @@ public class Subsidio {
     private boolean otorgado;
     
     public Subsidio(double montoPedido, String motivo){
-        this.setMontoSolicitado(montoPedido);
-        this.setMotivo(motivo);
-        this.setOtorgado(false);
+        this.montoSolicitado = montoPedido;
+        this.motivo = motivo;
+        this.otorgado = false;
     }
 
     public double getMontoSolicitado() {
         return montoSolicitado;
     }
 
-    private void setMontoSolicitado(double montoSolicitado) {
+    public void setMontoSolicitado(double montoSolicitado) {
         this.montoSolicitado = montoSolicitado;
     }
 
@@ -24,7 +24,7 @@ public class Subsidio {
         return motivo;
     }
 
-    private void setMotivo(String motivo) {
+    public void setMotivo(String motivo) {
         this.motivo = motivo;
     }
 
@@ -32,8 +32,7 @@ public class Subsidio {
         return otorgado;
     }
 
-    private void setOtorgado(boolean otorgado) {
+    public void setOtorgado(boolean otorgado) {
         this.otorgado = otorgado;
     }
-    
 }

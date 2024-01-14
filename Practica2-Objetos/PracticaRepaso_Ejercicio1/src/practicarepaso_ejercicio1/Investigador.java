@@ -70,7 +70,7 @@ public class Investigador {
     }
 
     public int getDimL() {
-        return dimL;
+        return this.dimL;
     }
 
     public void setDimL(int dimL) {
@@ -97,6 +97,21 @@ public class Investigador {
         return this.getDimL();
     }
     
+    public void otorgarSubsidiosPendientes(){
+        for (int i = 0; i < this.getDimL(); i++) {
+            if (!this.subsidios[i].isOtorgado())
+                this.subsidios[i].setOtorgado(true);
+        }
+    }
     
+    
+    
+    @Override
+    public String toString() {
+        return "Nombre y Apellido investigador: "+ this.getNombre() + " " +this.getApellido() +
+                ". Categoría: " + this.getCategoria() +
+                ". Dinero de subsidios otorgados: " + this.dineroTotalSubsidios();
+                
+    }
     
 }

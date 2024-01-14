@@ -93,13 +93,50 @@ public class Proyecto {
     }
     
     public int cantSubsidios(String nombre, String apellido) {
+//        for (int i = 0; i < this.getDimL(); i++) {
+//            
+//            if ((investigadores[i].getApellido().equals(apellido)) && (investigadores[i].getNombre().equals(nombre))) {
+//                return investigadores[i].cantSubsidios();
+//            }       
+//        }
+//        return -1;
+        
+        int indice = 0;
+        while ((indice < this.getDimL()) && !(investigadores[indice].getApellido().equals(apellido)) && (investigadores[indice].getNombre().equals(nombre))) {
+            indice++;
+        }
+        
+        if ((investigadores[indice].getApellido().equals(apellido)) && (investigadores[indice].getNombre().equals(nombre))) {
+            return this.investigadores[indice].cantSubsidios();
+        } else {
+            return -1;
+        }
+        
+    }
+    
+    public void otorgarTodos(String nombre, String apellido) {
         for (int i = 0; i < this.getDimL(); i++) {
-            
             if ((investigadores[i].getApellido().equals(apellido)) && (investigadores[i].getNombre().equals(nombre))) {
-                return investigadores[i].cantSubsidios();
+                this.investigadores[i].otorgarSubsidiosPendientes();
             }       
         }
-        return -1;
     }
+    
+    @Override
+    public String toString() {
+        String investigadoresStr = "";
+        for (int i = 0; i < this.getDimL(); i++) {
+            investigadoresStr += "\n" + investigadores[i].toString();
+        }
+        return "Proyecto: "
+                + "Nombre de proyecto: " + this.getNombreProyecto()
+                + ". Codigo proyecto: " + this.getCodigo()
+                + ". Nombre director: " + this.getNombreDirector()
+                + ". Apellido director: " + this.getApellidoDirector()
+                + ". Dinero otorgado: " + this.dineroTotalOtorgado()
+                + investigadoresStr;
+    }
+
+
     
 }
