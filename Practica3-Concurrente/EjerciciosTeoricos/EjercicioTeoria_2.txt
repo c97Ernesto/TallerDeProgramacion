@@ -1,0 +1,61 @@
+EjercicioTeoria_2
+
+programa teoria2
+
+procesos
+	proceso juntarFlores(ES flores: numero)
+	comenzar
+		mientras (HayFlorEnLaEsquina)
+			tomarFlor
+			flores:= flores + 1
+	fin
+	
+	proceso Reactangulo(E alto: numero; E ancho: numero; ES flores: numero)
+	comenzar
+		flores:= 0
+		repetir 2
+			repetir alto
+				juntarFlores(flores)
+				mover
+			derecha
+			repetir ancho 
+				juntarFlores(flores)
+				mover
+			derecha
+	fin
+	
+areas
+	areaPC: AreaPC(1,1,20,20)
+	
+robots
+	robot peon
+	variables
+		alto, ancho, flores: numero
+	
+	comenzar
+		RecibirMensaje(alto, robot3)
+		RecibirMensaje(ancho, robot3)
+		Rectangulo(alto, ancho, flores)
+		Informar(flores)
+	fin
+	
+	robot patron
+	comenzar
+		EnviarMensaje(5, robot1)
+		EnviarMensaje(3, robot1)
+		EnviarMensaje(8, robot2)
+		EnviarMensaje(2, robot2)
+	fin
+	
+variables
+	robot1: peon
+	robot2: peon
+	robotPatron: patron
+comenzar
+	AsignarArea(robot1, areaPC)
+	AsignarArea(robot2, areaPC)
+	AsignarArea(robotPatron, areaPC)
+	Iniciar(robot1, 2, 2)
+	Iniciar(robot2, 6, 2)
+	Iniciar(robot3, 1, 1)
+fin
