@@ -1,0 +1,202 @@
+1) Realice un programa para que un robot junte todas las flores de la avenida 1 y las deposite al final
+de dicha avenida. Al finalizar, debe informar la cantidad de flores depositadas y la cantidad de
+esquinas sin flores que encontró durante el recorrido.
+
+programa P1Ej1
+
+procesos
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso depositarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaBolsa
+			depositarFlor
+			f:= f - 1
+	fin
+	
+	proceso RecorrerAvenida(ES flores: numero; ES esqV: numero)
+	comenzar
+		si ~HayFlorEnLaEsquina
+			esqV:= esqV + 1
+		sino 
+			juntarFlores(flores)
+		repetir 99
+			mover
+			si ~HayFlorEnLaEsquina
+				esqV:= esqV + 1
+			sino 
+				juntarFlores(flores) 
+  fin
+	
+areas
+	areaP: AreaP(1, 1, 1, 100)
+	
+robots
+	robot recorredorDeAvenida	
+	variables
+		flores, esqVacias: numero
+	comenzar
+		flores:= 0
+		esqVacias:= 0
+		RecorrerAvenida(flores, esqVacias)
+		Informar('FloresJuntadas', flores)
+		depositarFlores(flores)
+		Informar('EsquinasVacias', esqVacias)
+		
+	fin
+
+variables
+	robotRecorredor: recorredorDeAvenida
+	
+comenzar
+	AsignarArea(robotRecorredor, areaP)
+	Iniciar(robotRecorredor, 1, 1)
+fin
+
+
+a) Modifique el programa anterior para que el mismo robot realice lo mismo en las avenidas 1, 3
+y 5.
+
+programa P1Ej1_a
+
+procesos
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso depositarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaBolsa
+			depositarFlor
+			f:= f - 1
+	fin
+	
+	proceso RecorrerAvenida(ES flores: numero; ES esqV: numero)
+	comenzar
+		si ~HayFlorEnLaEsquina
+			esqV:= esqV + 1
+		sino 
+			juntarFlores(flores)
+			
+		repetir 99
+			mover
+			si ~HayFlorEnLaEsquina
+				esqV:= esqV + 1
+			sino 
+				juntarFlores(flores) 
+  fin
+	
+areas
+	areaP: AreaP(1, 1, 1, 100)
+	areaP1: AreaP(3, 1, 3, 100)
+	areaP2: AreaP(5, 1, 5, 100)
+	
+robots
+	robot recorredorDeAvenida	
+	variables
+		flores, esqVacias: numero
+		avenidaInicial: numero
+	comenzar
+		flores:= 0
+		esqVacias:= 0
+		repetir 2
+			RecorrerAvenida(flores, esqVacias)
+			Informar('FloresJuntadas', flores)
+			depositarFlores(flores)
+			Informar('EsquinasVacias', esqVacias)
+			Pos((PosAv + 2), 1)
+			esqVacias:= 0
+		RecorrerAvenida(flores, esqVacias)
+		Informar('FloresJuntadas', flores)
+		depositarFlores(flores)
+		Informar('EsquinasVacias', esqVacias)
+	fin
+
+variables
+	robotRecorredor: recorredorDeAvenida
+	
+comenzar
+	AsignarArea(robotRecorredor, areaP)
+	AsignarArea(robotRecorredor, areaP1)
+	AsignarArea(robotRecorredor, areaP2)
+	Iniciar(robotRecorredor, 1, 1)
+fin
+
+
+b) Modifique el programa anterior para que el trabajo sea realizado por 3 robots: uno realiza la
+avenida 1, otro realiza la avenida 3 y otro la avenida 5. Cada robot debe iniciar en las esquina
+(1,1), (3,1) y (5,1) respectivamente.
+
+programa P1Ej1_b
+
+procesos
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso depositarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaBolsa
+			depositarFlor
+			f:= f - 1
+	fin
+	
+	proceso RecorrerAvenida(ES flores: numero; ES esqV: numero)
+	comenzar
+		si ~HayFlorEnLaEsquina
+			esqV:= esqV + 1
+		sino 
+			juntarFlores(flores)
+			
+		repetir 99
+			mover
+			si ~HayFlorEnLaEsquina
+				esqV:= esqV + 1
+			sino 
+				juntarFlores(flores) 
+  fin
+	
+areas
+	areaP1: AreaP(1, 1, 1, 100)
+	areaP2: AreaP(3, 1, 3, 100)
+	areaP3: AreaP(5, 1, 5, 100)
+	
+robots
+	robot recorredorDeAvenida	
+	variables
+		flores, esqVacias: numero
+		avenidaInicial: numero
+	comenzar
+		flores:= 0
+		esqVacias:= 0
+		
+		RecorrerAvenida(flores, esqVacias)
+		Informar('FloresJuntadas', flores)
+		depositarFlores(flores)
+		Informar('EsquinasVacias', esqVacias)
+	fin
+
+variables
+	robotRecorredor1: recorredorDeAvenida
+	robotRecorredor2: recorredorDeAvenida
+	robotRecorredor3: recorredorDeAvenida
+	
+comenzar
+	AsignarArea(robotRecorredor1, areaP1)
+	AsignarArea(robotRecorredor2, areaP2)
+	AsignarArea(robotRecorredor3, areaP3)
+	Iniciar(robotRecorredor1, 1, 1)
+	Iniciar(robotRecorredor2, 3, 1)
+	Iniciar(robotRecorredor3, 5, 1)
+fin
