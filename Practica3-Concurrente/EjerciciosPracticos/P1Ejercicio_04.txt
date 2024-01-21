@@ -1,0 +1,106 @@
+4) Realice un programa en el que dos robots se encargan de limpiar las ciudad. La ciudad se dividió
+	en 4 áreas: las impares (1 y 3) deben limpiarse de flores; y las pares (2 y 4) deben limpiarse de
+	papeles. Un robot debe encargarse de las áreas impares y otro robot de las pares. Modularice el
+	recorrido de cada área
+		- Área 1: desde la avenida 1 hasta la avenida 25
+		- Área 2: desde la avenida 26 hasta la avenida 50
+		- Área 3: desde la avenida 51 hasta la avenida 75
+		- Área 4: desde la avenida 76 hasta la avenida 100
+		
+programa P1Ej4
+
+procesos
+
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso limpiarAvenidaFlores(ES f: numero)
+	comenzar
+		repetir 99 
+			juntarFlores(f)
+			mover
+	fin
+	
+	proceso RecorrerAreaFlores(ES flores: numero)
+	comenzar
+	
+		repetir 24
+			limpiarAvenidaFlores(flores)
+			Pos((PosAv + 1), 1)
+		limpiarAvenidaFlores(flores)
+	fin
+	
+	proceso juntarPapeles(ES p: numero)
+	comenzar
+		mientras HayPapelEnLaEsquina
+			tomarPapel
+			p:= p + 1
+	fin
+	
+	proceso limpiarAvenidaPapeles(ES p: numero)
+	comenzar
+		repetir 99 
+			juntarPapeles(p)
+			mover
+	fin
+	
+	proceso RecorrerAreaPapeles(ES papeles: numero)
+	comenzar
+	
+		repetir 24
+			limpiarAvenidaPapeles(papeles)
+			Pos((PosAv + 1), 1)
+		limpiarAvenidaPapeles(papeles)
+	fin
+	
+areas
+	areaP1: AreaP(1, 1, 25, 100)
+	areaP2: AreaP(26, 1, 50, 100)
+	areaP3: AreaP(51, 1, 75, 100)
+	areaP4: AreaP(76, 1, 100, 100)
+
+robots
+	robot florero
+	variables
+		flores: numero
+	comenzar
+		flores:= 0
+		
+		RecorrerAreaFlores(flores)
+		Pos((PosAv + 26), 1)
+		RecorrerAreaFlores(flores)
+			
+		
+		
+	fin
+	
+	
+	robot papelero
+	variables
+		papeles: numero
+	comenzar
+		papeles:= 0
+		
+		RecorrerAreaPapeles(papeles)
+		Pos((PosAv + 26), 1)
+		RecorrerAreaPapeles(papeles)
+		
+	fin
+
+variables
+	robotFlorero: florero
+	robotPapelero: papelero
+
+comenzar
+	
+	AsignarArea(robotFlorero, areaP1)
+	AsignarArea(robotFlorero, areaP3)
+	AsignarArea(robotPapelero, areaP2)
+	AsignarArea(robotPapelero, areaP4)
+	Iniciar(robotFlorero, 1, 1)
+	Iniciar(robotPapelero, 26, 1)
+fin
