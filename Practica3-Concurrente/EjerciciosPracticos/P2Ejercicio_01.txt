@@ -1,0 +1,377 @@
+1. Dos robots compiten para ver cuál junta más flores. El primer robot recoge todas las
+	flores de la avenida 1 entre las calles 1 y 10. El segundo robot recoge todas las flores
+	de la avenida 2, entre las calles 11 y 20.
+	Al finalizar el recorrido, el robot que recogió mayor cantidad de flores debe informar la
+	diferencia de flores que obtuvo respecto al robot perdedor (el que obtuvo menos flores).
+	Los robots inician en las esquinas (1, 1) y (2, 11) respectivamente.
+
+programa P2Ej1a
+
+procesos
+
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+
+	proceso LimpiarAvenida(ES flores: numero)
+	comenzar
+		repetir 9
+			juntarFlores(flores)
+			mover
+		juntarFlores(flores)
+	fin
+	
+
+areas
+	areaP1: AreaP(1, 1, 1, 10)
+	areaP2: AreaP(2, 11, 2, 20)
+
+robots
+	robot limpiardor1
+	variables
+		flores, cant: numero
+		diferencia: numero
+		
+	comenzar
+		flores:= 0
+		
+		LimpiarAvenida(flores)
+		
+		EnviarMensaje(flores, robot2)
+		RecibirMensaje(cant, robot2)
+		
+		si (flores > cant)
+			diferencia:= flores - cant
+			Informar('La_diferencia_es_de', diferencia)
+		
+	fin
+	
+	
+	robot limpiardor2
+	variables
+		flores, cant: numero
+		diferencia: numero
+		
+	comenzar
+		flores:= 0
+		
+		LimpiarAvenida(flores)
+		
+		EnviarMensaje(flores, robot1)
+		RecibirMensaje(cant, robot1)
+		
+		si (flores > cant)
+			diferencia:= flores - cant
+			Informar('La_diferencia_es_de', diferencia)
+		
+	fin
+
+variables
+	robot1: limpiardor1
+	robot2: limpiardor2
+
+comenzar
+	AsignarArea(robot1, areaP1)
+	AsignarArea(robot2, areaP2)
+	Iniciar(robot1, 1, 1)
+	Iniciar(robot2, 2, 11)
+
+fin
+
+b. Modifique el ejercicio anterior, considerando que ahora habrá un robot fiscalizador,
+	que será responsable de informar la diferencia de flores que obtuvo el ganador con
+	respecto al perdedor. El robot fiscalizador se ubica en la esquina (2,1)
+
+programa P2Ej1b
+
+procesos
+
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+
+	proceso LimpiarAvenida(ES flores: numero)
+	comenzar
+		repetir 9
+			juntarFlores(flores)
+			mover
+		juntarFlores(flores)
+	fin
+	
+
+areas
+	areaP1: AreaP(1, 1, 1, 10)
+	areaP2: AreaP(2, 11, 2, 20)
+	areaFisco: AreaP(2, 1, 2, 1)
+
+robots
+	robot limpiador
+	variables
+		flores, cant: numero
+		diferencia: numero
+		
+	comenzar
+		flores:= 0
+		
+		LimpiarAvenida(flores)
+		EnviarMensaje(flores, robotFisco)
+	fin
+	
+	robot fiscalizador
+	variables
+		fx, fy, dif: numero
+	comenzar
+		
+		RecibirMensaje(fx, *)
+		RecibirMensaje(fy, *)
+		
+		si (fx > fy)
+			dif:= fx - fy
+		
+		sino 
+			si (fy > fx)
+				dif:= fy - fx
+			
+		Informar('La_diferencia_es_de', dif)
+	fin
+	
+
+variables
+	robot1: limpiador
+	robot2: limpiador
+	robotFisco: fiscalizador
+
+comenzar
+	AsignarArea(robot1, areaP1)
+	AsignarArea(robot2, areaP2)
+	AsignarArea(robotFisco, areaFisco)
+	Iniciar(robot1, 1, 1)
+	Iniciar(robot2, 2, 11)
+	Iniciar(robotFisco, 2, 1)
+
+fin
+
+
+c. Modifique el ejercicio anterior para que ahora participen 6 robots.
+	- Robot 1: Avenida 1, entre las calles 1 y 10
+	- Robot 2: Avenida 2, entre las calles 11 y 20
+	- Robot 3: Avenida 3, entre las calles 21 y 30
+	- Robot 4: Avenida 4, entre las calles 31 y 40
+	- Robot 5: Avenida 5, entre las calles 41 y 50
+	- Robot 6: Avenida 6, entre las calles 51 y 60
+	- Fiscalizador: Avenida 2, calle 1
+
+programa P2Ej1c
+
+procesos
+
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+
+	proceso LimpiarAvenida(ES flores: numero)
+	comenzar
+		repetir 9
+			juntarFlores(flores)
+			mover
+		juntarFlores(flores)
+	fin
+	
+	proceso Maximo(E flores: numero; ES max: numero)
+	comenzar
+		si (flores > max)
+			max:= flores
+	fin
+	
+
+areas
+	areaP1: AreaP(1, 1, 1, 10)
+	areaP2: AreaP(2, 11, 2, 20)
+	areaP3: AreaP(3, 21, 3, 30)
+	areaP4: AreaP(4, 31, 4, 40)
+	areaP5: AreaP(5, 41, 5, 50)
+	areaP6: AreaP(6, 51, 6, 60)
+	areaFisco: AreaP(2, 1, 2, 1)
+
+robots
+	robot limpiador
+	variables
+		flores, cant: numero
+		diferencia: numero
+		
+	comenzar
+		flores:= 0
+		
+		LimpiarAvenida(flores)
+		EnviarMensaje(flores, robotFisco)
+	fin
+	
+	robot fiscalizador
+	variables
+		flores, max: numero
+	comenzar
+		
+		repetir 6
+			RecibirMensaje(flores, *)
+			Maximo(flores, max)
+			
+		Informar('El_ganador_junto', max)
+	fin
+	
+
+variables
+	robot1: limpiador
+	robot2: limpiador
+	robot3: limpiador
+	robot4: limpiador
+	robot5: limpiador
+	robot6: limpiador
+	robotFisco: fiscalizador
+
+comenzar
+	AsignarArea(robot1, areaP1)
+	AsignarArea(robot2, areaP2)
+	AsignarArea(robot3, areaP3)
+	AsignarArea(robot4, areaP4)
+	AsignarArea(robot5, areaP5)
+	AsignarArea(robot6, areaP6)
+	AsignarArea(robotFisco, areaFisco)
+	Iniciar(robot1, 1, 1)
+	Iniciar(robot2, 2, 11)
+	Iniciar(robot3, 3, 21)
+	Iniciar(robot4, 4, 31)
+	Iniciar(robot5, 5, 41)
+	Iniciar(robot6, 6, 51)
+	Iniciar(robotFisco, 2, 1)
+	
+
+fin
+
+
+d. Modifique el inciso anterior para que ahora el fiscalizador informe también, cuál fue el
+robot ganador.
+
+programa P2Ej1d
+
+procesos
+
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+
+	proceso LimpiarAvenida(ES flores: numero)
+	comenzar
+		repetir 9
+			juntarFlores(flores)
+			mover
+		juntarFlores(flores)
+	fin
+	
+	proceso Maximo(E flores: numero; ES max: numero; E id: numero; ES idMax: numero)
+	comenzar
+		si (flores > max)
+			max:= flores
+			idMax:= id
+	fin
+	
+
+areas
+	areaP1: AreaP(1, 1, 1, 10)
+	areaP2: AreaP(2, 11, 2, 20)
+	areaP3: AreaP(3, 21, 3, 30)
+	areaP4: AreaP(4, 31, 4, 40)
+	areaP5: AreaP(5, 41, 5, 50)
+	areaP6: AreaP(6, 51, 6, 60)
+	areaFisco: AreaP(2, 1, 2, 1)
+
+robots
+	robot limpiador
+	variables
+		flores, cant: numero
+		soyNro: numero
+		
+	comenzar
+		flores:= 0
+		
+		RecibirMensaje(soyNro, robotFisco)
+		LimpiarAvenida(flores)
+		EnviarMensaje(soyNro, robotFisco)
+		EnviarMensaje(flores, robotFisco)
+	fin
+	
+	robot fiscalizador
+	variables
+		flores, max: numero
+		id, idMax: numero
+	comenzar
+		EnviarMensaje(1, robot1)
+		EnviarMensaje(2, robot2)
+		EnviarMensaje(3, robot3)
+		EnviarMensaje(4, robot4)
+		EnviarMensaje(5, robot5)
+		EnviarMensaje(6, robot6)
+		
+		repetir 6
+			RecibirMensaje(id, *)
+			si  (id = 1)
+				RecibirMensaje(flores, robot1)
+			sino
+				si (id = 2)
+					RecibirMensaje(flores, robot2)
+				sino
+					si (id = 3)
+						RecibirMensaje(flores, robot3)
+					sino
+						si (id = 4)
+							RecibirMensaje(flores, robot4)
+						sino
+							si (id = 5)
+								RecibirMensaje(flores, robot5)
+							sino
+								si (id = 6)
+									RecibirMensaje(flores, robot6)
+									
+			Maximo(flores, max, id, idMax)
+			
+		Informar('El_ganador_es_robot', idMax)
+		Informar('junto', max)
+	fin
+	
+
+variables
+	robot1: limpiador
+	robot2: limpiador
+	robot3: limpiador
+	robot4: limpiador
+	robot5: limpiador
+	robot6: limpiador
+	robotFisco: fiscalizador
+
+comenzar
+	AsignarArea(robot1, areaP1)
+	AsignarArea(robot2, areaP2)
+	AsignarArea(robot3, areaP3)
+	AsignarArea(robot4, areaP4)
+	AsignarArea(robot5, areaP5)
+	AsignarArea(robot6, areaP6)
+	AsignarArea(robotFisco, areaFisco)
+	Iniciar(robot1, 1, 1)
+	Iniciar(robot2, 2, 11)
+	Iniciar(robot3, 3, 21)
+	Iniciar(robot4, 4, 31)
+	Iniciar(robot5, 5, 41)
+	Iniciar(robot6, 6, 51)
+	Iniciar(robotFisco, 2, 1)
+fin

@@ -1,0 +1,181 @@
+5) Realice un programa en el que cuatro robots realizan las siguientes actividades:
+	- El robot 1 debe limpiar de flores las primeras 15 esquinas de las calles 75 y 80. Al finalizar
+	cada calle, debe depositar todas las flores en la última esquina.
+	- El robot 2 debe limpiar de papeles las últimas 20 esquinas de las avenidas 75 y 80. Al
+	finalizar cada avenida debe depositar todos los papeles en la primera esquina.
+	- El robot 3 debe limpiar de flores las últimas 30 esquinas de las calles 10 y 15. Al finalizar
+	cada calle, debe depositar todas las flores en la última esquina.
+	- El robot 4 debe limpiar de papeles las primeras 10 esquinas de las avenidas 10 y 15. Al
+	finalizar cada avenida debe depositar todos los papeles en la primera esquina.
+	
+programa P1Ej5
+
+procesos
+
+	proceso juntarFlores(ES flores: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			flores:= flores + 1
+	fin
+	
+	proceso depositarFlores(ES flores: numero)
+	comenzar
+		mientras HayFlorEnLaBolsa
+			depositarFlor
+	fin
+	
+	proceso juntarPapeles(ES papeles: numero)
+	comenzar
+		mientras HayPapelEnLaEsquina
+			tomarPapel
+			papeles:= papeles + 1
+	fin
+	
+	proceso depositarPapeles(ES papeles: numero)
+	comenzar
+		mientras HayPapelEnLaBolsa
+			depositarPapel
+	fin
+	
+areas
+	areaP1R1: AreaP(1, 80, 15, 80)
+	areaP2R1: AreaP(1, 75, 15, 75)
+	
+	areaP1R2: AreaP(75, 80, 75, 100)
+	areaP2R2: AreaP(80, 80, 80, 100)
+	
+	areaP1R3: AreaP(70, 15, 100, 15)
+	areaP2R3: AreaP(70, 10, 100, 10)
+	
+	areaP1R4: AreaP(10, 1, 10, 10)
+	areaP2R4: AreaP(15, 1, 15, 10)
+	
+	
+robots
+	robot t1
+	variables
+		flores: numero	
+		avenidaInicial, calleInicial: numero
+		
+	comenzar
+		avenidaInicial:= PosAv
+		calleInicial:= PosCa
+		
+		repetir 1
+			derecha
+			repetir 14
+				juntarFlores(flores)
+				mover
+			juntarFlores(flores)
+			Pos(avenidaInicial, (calleInicial - 5))
+			
+		repetir 14
+			juntarFlores(flores)
+			mover
+		juntarFlores(flores)
+		
+		Informar('Cantidad_de_flores', flores)
+		depositarFlores(flores)
+			
+	fin
+	
+	
+	robot t2
+	variables
+		papeles: numero	
+		avenidaInicial, calleInicial: numero
+		
+	comenzar
+		avenidaInicial:= PosAv
+		calleInicial:= PosCa
+		
+		repetir 1
+			repetir 20
+				juntarPapeles(papeles)
+				mover
+			Pos((avenidaInicial + 5), calleInicial)
+			
+		repetir 20
+			juntarPapeles(papeles)
+			mover
+		juntarPapeles(papeles)
+		
+		Pos(avenidaInicial, calleInicial)
+		Informar('Cantidad_de_papeles', papeles)
+		depositarPapeles(papeles)
+	fin
+	
+	robot t3
+	variables
+		flores: numero	
+		avenidaInicial, calleInicial: numero
+		
+	comenzar
+		avenidaInicial:= PosAv
+		calleInicial:= PosCa
+		
+		repetir 1
+			derecha
+			repetir 30
+				juntarFlores(flores)
+				mover
+			Pos(avenidaInicial, (calleInicial - 5))
+			
+		repetir 30
+			juntarFlores(flores)
+			mover
+			
+			
+		juntarFlores(flores)
+		Informar('Cantidad_de_flores', flores)
+		depositarFlores(flores)
+	fin
+	
+	robot t4
+	variables
+		papeles: numero	
+		avenidaInicial, calleInicial: numero
+		
+	comenzar
+		avenidaInicial:= PosAv
+		calleInicial:= PosCa
+		
+		repetir 1
+			repetir 9
+				juntarPapeles(papeles)
+				mover
+			Pos((avenidaInicial + 5), calleInicial)
+			
+		repetir 9
+			juntarPapeles(papeles)
+			mover
+		juntarPapeles(papeles)
+		
+		Informar('Cantidad_de_papeles', papeles)
+		Pos(avenidaInicial, calleInicial)
+		depositarPapeles(papeles)
+	fin	
+
+
+variables
+	r1: t1
+	r2: t2
+	r3: t3
+	r4: t4
+
+comenzar
+	AsignarArea(r1, areaP1R1)
+	AsignarArea(r1, areaP2R1)
+	AsignarArea(r2, areaP1R2)
+	AsignarArea(r2, areaP2R2)
+	AsignarArea(r3, areaP1R3)
+	AsignarArea(r3, areaP2R3)
+	AsignarArea(r4, areaP1R4)
+	AsignarArea(r4, areaP2R4)
+	Iniciar(r1, 1, 80)
+	Iniciar(r2, 75, 80)
+	Iniciar(r3, 70, 15)
+	Iniciar(r4, 10, 1)
+
+fin
