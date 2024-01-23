@@ -1,0 +1,106 @@
+2. Realice un programa en el que 3 robots realizan una escalera de 4 escalones cada uno.
+	Todos los escalones tienen un ancho fijo de 1, y un alto aleatorio entre 1 y 5. Al finalizar
+	el recorrido, cada robot deberá enviar al robot jefe la cantidad de escalones que tenían
+	más flores que papeles. Una vez que los tres robots finalizaron, el robot jefe deberá
+	informar la suma de las cantidades enviadas por los 3 robots.
+	- El robot jefe inicia en la esquina (1,1)
+	- El robot 1 inicia en la esquina (2,1)
+	- El robot 2 inicia en la esquina (7,1)
+	- El robot 3 inicia en la esquina (12,1)
+	
+
+programa P2Ej2
+procesos
+
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso juntarPapeles(ES p: numero)
+	comenzar
+		mientras HayPapelEnLaEsquina
+			tomarPapel
+			p:= p + 1
+	fin
+	
+	proceso HacerEscalon(ES flores: numero; ES papeles: numero)
+	variables
+		alto, ancho: numero
+	comenzar
+	
+		Random(alto, 1, 5)
+		repetir alto
+			juntarFlores(flores)
+			juntarPapeles(papeles)
+			mover
+		
+		derecha
+		
+		ancho:= 1
+		repetir ancho
+			juntarFlores(flores)
+			juntarPapeles(papeles)
+			mover
+		
+	fin
+	
+	proceso Arriba()
+	comenzar
+		repetir 3
+			derecha
+	fin
+
+areas
+	areaP1: AreaP(2, 1, 6, 21)
+	areaP2: AreaP(7, 1, 11, 21)
+	areaP3: AreaP(12, 1, 16, 21)
+	areaFisco: AreaP(1, 1, 1, 1)
+
+robots
+	robot rob
+	variables
+		flores, papeles: numero
+		cant: numero
+	comenzar
+		cant:= 0
+		
+		repetir 4
+			HacerEscalon(flores, papeles)
+			si (flores > papeles)
+				cant:= cant + 1
+			Arriba
+		
+		EnviarMensaje(cant, rFisco)
+	fin
+	
+	
+	robot fisco
+	variables
+		n, cant: numero
+	comenzar
+		
+		repetir 2
+			RecibirMensaje(n, *)
+			cant:= cant + n
+		
+		Informar(cant)
+	fin
+
+variables
+	r1: rob
+	r2: rob
+	r3: rob
+	rFisco: fisco
+comenzar
+	AsignarArea(r1, areaP1)
+	AsignarArea(r2, areaP2)
+	AsignarArea(r3, areaP3)
+	AsignarArea(rFisco, areaFisco)
+	Iniciar(r1, 2, 1)
+	Iniciar(r2, 7, 1)
+	Iniciar(r3, 12, 1)
+	Iniciar(rFisco, 1, 1)
+fin

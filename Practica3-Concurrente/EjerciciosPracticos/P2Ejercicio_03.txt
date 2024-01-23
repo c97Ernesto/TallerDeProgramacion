@@ -1,0 +1,279 @@
+3. Realice un programa con 2 equipos:
+	- El equipo A, compuesto por los robots A1 y A2, debe juntar papeles de las
+	primeras 20 esquinas de la calle 1
+	- El equipo B, compuesto por los robots B1 y B2, debe juntar flores de las primeras
+	20 esquinas de la calle 5
+	Los robots A1 y B1 deberán realizar las 10 primeras esquinas de su recorrido, y al
+	finalizar avisarán a los robots A2 y B2 respectivamente para que continúen con las
+	siguientes 10 esquinas. El segundo robot de cada equipo debe informar la cantidad
+	de elementos recogidos en las 20 esquinas.
+	Inicialice los 4 robots en las esquinas que considere más apropiadas según el
+	trayecto que le corresponde realizar a cada uno.
+
+programa P2Ej3
+
+procesos
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras (HayFlorEnLaEsquina)
+			tomarFlor
+			f:= f + 1
+		
+	fin
+	proceso RecorrerAvenidaFlores(ES flores: numero)
+	comenzar
+		repetir 9
+			juntarFlores(flores)
+			mover
+		juntarFlores(flores)
+	fin
+	
+	proceso juntarPapeles(ES p: numero)
+	comenzar
+		mientras (HayPapelEnLaEsquina)
+			tomarPapel
+			p:= p + 1
+		
+	fin
+	
+	proceso RecorrerAvenidaPapeles(ES papeles: numero)
+	comenzar
+		repetir 9
+			juntarPapeles(papeles)
+			mover
+		juntarPapeles(papeles)
+	fin
+
+areas
+	areaA1: AreaP(1, 1, 1, 10)
+	areaA2: AreaP(1, 11, 1, 20)
+	areaB1: AreaP(5, 1, 5, 10)
+	areaB2: AreaP(5, 11, 5, 20)
+	
+
+robots
+	robot A1
+	variables
+		flores: numero
+	comenzar
+		flores:= 0
+		RecorrerAvenidaFlores(flores)
+		EnviarMensaje(flores, robotA2)
+	fin
+	
+	
+	robot A2
+	variables
+		flores, total: numero
+	comenzar
+		total:= 0
+		RecibirMensaje(flores, robotA1)
+		RecorrerAvenidaFlores(total)
+		total:= total + flores
+		Informar('El_total_de_flores_de_A1_y_A2', total)
+	
+	fin
+	
+	
+	robot B1
+	variables
+		papeles: numero
+	comenzar
+		papeles:= 0
+		RecorrerAvenidaPapeles(papeles)
+		EnviarMensaje(papeles, robotB2)
+	fin
+	
+	
+	robot B2
+	variables
+		papeles, total: numero
+	comenzar
+		total:= 0
+		RecibirMensaje(papeles, robotB1)
+		total:= total + papeles
+		RecorrerAvenidaPapeles(papeles)
+		total:= total + papeles
+		
+		Informar('El_total_de_papeles_de_B1_y_B2', total)
+	fin
+
+variables
+	robotA1: A1
+	robotA2: A2
+	robotB1: B1
+	robotB2: B2
+	
+comenzar
+	AsignarArea(robotA1, areaA1)
+	AsignarArea(robotA2, areaA2)
+	AsignarArea(robotB1, areaB1)
+	AsignarArea(robotB2, areaB2)
+	Iniciar(robotA1, 1, 1)
+	Iniciar(robotA2, 1, 11)
+	Iniciar(robotB1, 5, 1)
+	Iniciar(robotB2, 5, 11)
+fin
+
+
+b. Modifique el programa anterior para que cada equipo repita el recorrido con las
+siguientes 20 esquinas de sus correspondientes calles.
+
+programa P2Ej3_b
+
+procesos
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras (HayFlorEnLaEsquina)
+			tomarFlor
+			f:= f + 1
+		
+	fin
+	proceso RecorrerAvenidaFlores(ES flores: numero)
+	comenzar
+		repetir 9
+			juntarFlores(flores)
+			mover
+		juntarFlores(flores)
+	fin
+	
+	proceso juntarPapeles(ES p: numero)
+	comenzar
+		mientras (HayPapelEnLaEsquina)
+			tomarPapel
+			p:= p + 1
+		
+	fin
+	
+	proceso RecorrerAvenidaPapeles(ES papeles: numero)
+	comenzar
+		repetir 9
+			juntarPapeles(papeles)
+			mover
+		juntarPapeles(papeles)
+	fin
+
+areas
+	areaA1_1: AreaP(1, 1, 1, 10)
+	areaA2_1: AreaP(1, 11, 1, 20)
+	areaA1_2: AreaP(1, 21, 1, 30)
+	areaA2_2: AreaP(1, 31, 1, 40)
+	areaB1_1: AreaP(5, 1, 5, 10)
+	areaB2_1: AreaP(5, 11, 5, 20)
+	areaB1_2: AreaP(5, 21, 5, 30)
+	areaB2_2: AreaP(5, 31, 5, 40)
+	
+
+robots
+	robot A1
+	variables
+		flores, total: numero
+		avenidaInicial, calleInicial: numero
+	comenzar
+		total:= 0
+		avenidaInicial:= PosAv
+		calleInicial:= PosCa
+		
+		repetir 1
+			flores:= 0
+			RecorrerAvenidaFlores(flores)
+			EnviarMensaje(flores, robotA2)
+			RecibirMensaje(total, robotA2)
+			total:= total + flores
+			Pos(avenidaInicial, (calleInicial + 20))
+		
+		RecorrerAvenidaFlores(flores)
+		EnviarMensaje(flores, robotA2)
+
+	fin
+	
+	
+	robot A2
+	variables
+		flores, total: numero
+		avenidaInicial, calleInicial: numero
+		
+	comenzar
+		total:= 0
+		avenidaInicial:= PosAv
+		calleInicial:= PosCa
+		repetir 1
+			RecibirMensaje(flores, robotA1)
+			RecorrerAvenidaFlores(total)
+			total:= total + flores
+			EnviarMensaje(total, robotA1)
+			Pos(avenidaInicial, (calleInicial + 20))
+			
+		RecibirMensaje(flores, robotA1)
+		RecorrerAvenidaFlores(total)
+		total:= total + flores
+		Informar('El_total_de_flores_de_A1_y_A2', total)
+	
+	fin
+	
+	
+	robot B1
+	variables
+		papeles, total: numero
+		avenidaInicial, calleInicial: numero
+	comenzar
+		total:= 0
+		avenidaInicial:= PosAv
+		calleInicial:= PosCa
+		
+		repetir 1
+			papeles:= 0
+			RecorrerAvenidaPapeles(papeles)
+			EnviarMensaje(papeles, robotB2)
+			RecibirMensaje(total, robotB2)
+			total:= total + papeles
+			Pos(avenidaInicial, (calleInicial + 20))
+			
+		RecorrerAvenidaPapeles(papeles)
+		EnviarMensaje(papeles, robotB2)
+	fin
+	
+	
+	robot B2
+	variables
+		papeles, total: numero
+		avenidaInicial, calleInicial: numero
+	comenzar
+		total:= 0
+		avenidaInicial:= PosAv
+		calleInicial:= PosCa
+		
+		repetir 1
+			RecibirMensaje(papeles, robotB1)
+			RecorrerAvenidaPapeles(total)
+			total:= total + papeles
+			EnviarMensaje(total, robotB1)
+			Pos(avenidaInicial, (calleInicial + 20))
+		
+		RecibirMensaje(papeles, robotB1)
+		RecorrerAvenidaPapeles(total)
+		total:= total + papeles
+		
+		Informar('El_total_de_papeles_de_B1_y_B2', total)
+	fin
+
+variables
+	robotA1: A1
+	robotA2: A2
+	robotB1: B1
+	robotB2: B2
+	
+comenzar
+	AsignarArea(robotA1, areaA1_1)
+	AsignarArea(robotA2, areaA2_1)
+	AsignarArea(robotA1, areaA1_2)
+	AsignarArea(robotA2, areaA2_2)
+	AsignarArea(robotB1, areaB1_1)
+	AsignarArea(robotB2, areaB2_1)
+	AsignarArea(robotB1, areaB1_2)
+	AsignarArea(robotB2, areaB2_2)
+	Iniciar(robotA1, 1, 1)
+	Iniciar(robotA2, 1, 11)
+	Iniciar(robotB1, 5, 1)
+	Iniciar(robotB2, 5, 11)
+fin
