@@ -1,3 +1,9 @@
+3) Realice un programa en el que 3 robots realicen escaleras de 4 escalones. El tamaño de cada
+	escalón se incrementa en un 1 respecto al escalón anterior. El primer escalón será de 1x1, el
+	segundo de 2x2, y así sucesivamente.
+	Al finalizar el recorrido, cada robot debe informar la cantidad de escalones en los que la
+	cantidad de papeles superó en 1 a la cantidad de flores. Las esquinas deben quedar sin
+	modificar.
 
 programa P1Ej3
 

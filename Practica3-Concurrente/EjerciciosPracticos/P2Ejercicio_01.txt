@@ -352,8 +352,8 @@ robots
 
 variables
 	robot1: limpiador
-	robot2: limpiador
 	robot3: limpiador
+	robot2: limpiador
 	robot4: limpiador
 	robot5: limpiador
 	robot6: limpiador

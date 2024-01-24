@@ -1,5 +1,5 @@
 2) Realice un programa en el que 4 robots limpien de papeles el perímetro de un cuadrado de lado
-20 en sentido horario, como se muestra en la figura:
+	20 en sentido horario, como se muestra en la figura:
 	El vértice inferior izquierdo del cuadrado se ubica en la esquina (10,10).
 	Al finalizar, cada robot debe informar la cantidad de papeles juntados en su lado.
 	Al realizar este programa, analizar:

@@ -1,0 +1,64 @@
+EjercicioTeoria_4
+Realice un programa para que dos robots junten todas las flores de los 
+perímetros (15, 15)-(30, 35) y (40, 40)-(55, 60) respectivamente. Luego
+deben posicionarse en la esquina (10,10), depositar todas las flores 
+juntadas de a una.
+Los robots se encuentras posicionados originalmente en la esquina (15, 15)
+y (40, 40)
+
+
+programa EjercicioTeoria_3
+procesos
+	
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso rectangulo(E alto: numero; E ancho: numero; ES flores: numero)
+	comenzar
+		repetir 2
+			repetir alto
+				juntarFlores(flores)
+				mover
+			derecha
+			repetir ancho
+				juntarFlores(flores)
+				mover
+			derecha
+	fin
+	
+areas
+	area1: AreaPC(1, 1, 100, 100)
+	
+robots
+	robot recorredor1
+	variables
+		flores: numero
+		avIni, caIni: numero
+	comenzar
+		flores:= 0
+		avIni:= PosAv
+		caIni:= PosCa
+		
+		rectangulo(15, 20, flores)
+		repetir flores
+			BloquearEsquina(10, 10)
+			Pos(10,10)
+			depositarFlor
+			Pos(avIni, caIni)
+			LiberarEsquina(10, 10)
+	fin
+	
+variables
+	robot1: recorredor1
+	robot2: recorredor1
+	
+comenzar
+	AsignarArea(robot1, area1)
+	AsignarArea(robot2, area1)
+	Iniciar(robot1, 15, 15)
+	Iniciar(robot2, 40, 40)
+fin

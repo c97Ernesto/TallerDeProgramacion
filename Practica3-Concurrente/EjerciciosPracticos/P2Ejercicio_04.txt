@@ -1,0 +1,187 @@
+programa P2Ej4
+
+procesos
+
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso juntarPapeles(ES p: numero)
+	comenzar
+		mientras HayPapelEnLaEsquina
+			tomarPapel
+			p:= p + 1
+	fin
+	
+	proceso LimpiarEsquina(ES flores: numero; ES papeles: numero)
+	comenzar
+		juntarFlores(flores)
+		juntarPapeles(papeles)
+	fin
+	
+	proceso PosicionarseEnEsquina
+	variables
+		x, y: numero
+	comenzar
+		Random(x, 25, 75)
+		Random(y, 25, 75)
+		Pos(x, y)
+	fin
+	
+	proceso EnviarId
+	comenzar
+		EnviarMensaje(1, robot1)
+		EnviarMensaje(2, robot2)
+		EnviarMensaje(3, robot3)
+		EnviarMensaje(4, robot4)
+	fin
+	
+	proceso ElegirRobot
+	variables
+		n: numero
+	comenzar
+		Random(n, 1, 4)
+		si (n = 1)
+			EnviarMensaje(V, robot1)
+		sino
+			si (n = 2)
+				EnviarMensaje(V, robot2)
+			sino
+				si (n = 3)
+					EnviarMensaje(V, robot3)
+				sino
+					si (n = 4)
+						EnviarMensaje(V, robot4)
+	fin
+		
+	proceso CalcularMaximio(E id: numero; ES idMax: numero; E cant: numero; ES cantMax: numero)
+	comenzar
+		
+		si (cant > cantMax)
+			cantMax:= cant
+			idMax:= id
+		
+	fin
+	
+	proceso FinalizarRobots
+	variables
+		f: numero
+	comenzar
+		EnviarMensaje(F, robot1)
+		EnviarMensaje(F, robot2)
+		EnviarMensaje(F, robot3)
+		EnviarMensaje(F, robot4)
+	fin
+	
+	proceso Ganador(E id: numero)
+	comenzar
+		EnviarMensaje(id, robot1)
+		EnviarMensaje(id, robot2)
+		EnviarMensaje(id, robot3)
+		EnviarMensaje(id, robot4)
+	fin
+	
+	
+areas
+	areaPC: AreaPC(25, 25, 75, 75)
+	areaP1: AreaP(25, 1, 25, 1)
+	areaP2: AreaP(30, 1, 30, 1)
+	areaP3: AreaP(35, 1, 35, 1)
+	areaP4: AreaP(40, 1, 40, 1)
+	areaFisco: AreaP(1, 1, 1, 1)
+
+robots
+	robot recolector
+	variables
+		flores, papeles: numero
+		id, x: numero
+		avIni, caIni: numero
+		noSeTermino: boolean
+		
+	comenzar
+		avIni:= PosAv
+		caIni:= PosCa
+		flores:= 0
+		papeles:= 0
+		
+		RecibirMensaje(id, robotFisco)
+		RecibirMensaje(noSeTermino, robotFisco)
+		mientras noSeTermino
+			PosicionarseEnEsquina
+			LimpiarEsquina(flores, papeles)
+			Pos(avIni, caIni)
+			EnviarMensaje(id, robotFisco)
+			EnviarMensaje((flores + papeles), robotFisco)
+			RecibirMensaje(noSeTermino, robotFisco)
+			
+		RecibirMensaje(x, robotFisco)
+		si (x = id)
+			Pos(50, 50)
+	fin
+	
+	
+	robot fiscalizador
+	variables
+		idMax, id, cantMax, cant: numero
+		n: numero
+		
+	comenzar
+		n:= 0
+		idMax:= 0
+		cantMax:= 0
+		
+		EnviarId
+	
+		repetir 10
+			n:= n + 1
+			ElegirRobot
+			
+			RecibirMensaje(id, *)
+			si (id = 1)
+				RecibirMensaje(cant, robot1)
+			sino
+				si (id = 2)
+					RecibirMensaje(cant, robot2)
+				sino
+					si (id = 3)
+						RecibirMensaje(cant, robot3)
+					sino
+						si (id = 4)
+							RecibirMensaje(cant, robot4)
+			
+			CalcularMaximio(id, idMax, cant, cantMax)
+			
+		FinalizarRobots
+		
+		Informar('Robot_Ganador', idMax)
+			
+		Ganador(idMax)
+	fin
+	
+
+variables
+	robot1: recolector
+	robot2: recolector
+	robot3: recolector
+	robot4: recolector
+	robotFisco: fiscalizador
+
+comenzar
+	AsignarArea(robot1, areaP1)
+	AsignarArea(robot1, areaPC)
+	AsignarArea(robot2, areaP2)
+	AsignarArea(robot2, areaPC)
+	AsignarArea(robot3, areaP3)
+	AsignarArea(robot3, areaPC)
+	AsignarArea(robot4, areaP4)
+	AsignarArea(robot4, areaPC)
+	AsignarArea(robotFisco, areaFisco)
+	Iniciar(robot1, 25, 1)
+	Iniciar(robot2, 30, 1)
+	Iniciar(robot3, 35, 1)
+	Iniciar(robot4, 40, 1)
+	Iniciar(robotFisco, 1, 1)
+fin
