@@ -1,0 +1,132 @@
+programa P3Ej1
+
+procesos
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso juntarPapeles(ES p: numero)
+	comenzar
+		mientras HayPapelEnLaEsquina
+			tomarPapel
+			p:= p + 1
+	fin
+	
+	proceso CalcularEsquinaFlorero(ES x: numero; ES y: numero)
+	variables
+		x, y: numero
+	comenzar
+		Random(x, 1, 5)
+		Random(y, 1, 10)
+	fin
+	
+	proceso CalcularEsquinaPapelero(ES x: numero; ES y: numero)
+	variables
+		x, y: numero
+	comenzar
+		Random(x, 6, 10)
+		Random(y, 1, 9)
+	fin
+	
+
+areas
+	areaP_Florero1: AreaP(6, 10, 6, 10)
+	areaP_Florero2: AreaP(7, 10, 7, 10)
+	areaPC_Floreros: AreaPC(1, 1, 5, 10)
+	
+	areaP_Papelero1: AreaP(8, 10, 8, 10)
+	areaP_Papelero2: AreaP(9, 10, 9, 10)
+	areaPC_Papeleros: AreaPC(6, 1, 10, 9)
+	
+	areaC: AreaC(10, 10, 10, 10)
+
+robots
+	robot florero
+	variables
+		flores: numero
+		avIni, caIni: numero
+		av, ca: numero
+	comenzar
+		flores:= 0
+		avIni:= PosAv
+		caIni:= PosCa
+		
+		repetir 5
+			CalcularEsquinaFlorero(av, ca)
+			BloquearEsquina(av, ca)
+			Pos(av, ca)
+			juntarFlores(flores)
+			Pos(avIni, caIni)
+			LiberarEsquina(av, ca)
+			
+		repetir flores
+			BloquearEsquina(10, 10)
+			Pos(10, 10)
+			depositarFlor
+			Pos(avIni, caIni)
+			LiberarEsquina(10, 10)
+			
+			
+	fin
+	
+	robot papelero
+	variables
+		papeles: numero
+		ca, av: numero
+		avIni, caIni: numero
+	comenzar
+		papeles:= 0
+		avIni:= PosAv
+		caIni:= PosCa
+		
+		repetir 3
+			CalcularEsquinaPapelero(av, ca)
+			BloquearEsquina(av, ca)
+			Pos(av, ca)
+			juntarPapeles(papeles)
+			Pos(avIni, caIni)
+			LiberarEsquina(av, ca)
+		
+		repetir papeles
+			BloquearEsquina(10, 10)
+			Pos(10, 10)
+			depositarPapel
+			Pos(avIni, caIni)
+			LiberarEsquina(10, 10)
+			
+	fin
+
+
+variables
+	robotFlorero1: florero
+	robotFlorero2: florero
+	robotPapelero1: papelero
+	robotPapelero2: papelero
+
+comenzar
+	AsignarArea(robotFlorero1, areaP_Florero1)
+	AsignarArea(robotFlorero1, areaPC_Floreros)
+	AsignarArea(robotFlorero1, areaC)
+	AsignarArea(robotFlorero2, areaP_Florero2)
+	AsignarArea(robotFlorero2, areaPC_Floreros)
+	AsignarArea(robotFlorero2, areaC)
+	
+	
+	AsignarArea(robotPapelero1, areaP_Papelero1)
+	AsignarArea(robotPapelero2, areaP_Papelero2)
+	
+	AsignarArea(robotPapelero1, areaPC_Papeleros)
+	AsignarArea(robotPapelero2, areaPC_Papeleros)
+	
+	AsignarArea(robotPapelero1, areaC)
+	AsignarArea(robotPapelero2, areaC)
+	
+	
+	Iniciar(robotFlorero1, 6, 10)
+	Iniciar(robotFlorero2, 7, 10)
+	Iniciar(robotPapelero1, 8, 10)
+	Iniciar(robotPapelero2, 9, 10)
+fin
