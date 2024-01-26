@@ -1,3 +1,10 @@
+4. Realice un programa en el que un robot fiscalizador controla el acceso de 4 robots
+	recolectores al cuadrante encerrado entre las esquinas (25,25) y (75,75) . Para ello, el
+	robot fiscalizador avisa a un robot recolector aleatorio que puede ingresar al área. El
+	robot que recibe la autorización de acceso calcula una esquina aleatoria dentro del
+	área, limpia dicha esquina de flores y papeles, regresa a su esquina y avisa al robot
+	fiscalizador que ya finalizó.
+
 programa P2Ej4
 
 procesos
