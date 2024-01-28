@@ -1,0 +1,143 @@
+programa P3Ej6
+
+procesos
+
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso BloquearArriba(ES flores: numero; E cuadrante: numero)
+	comenzar
+		repetir (cuadrante)
+			juntarFlores(flores)
+			LiberarEsquina(PosAv, (PosCa - 1))
+			BloquearEsquina(PosAv, (PosCa + 1))
+			mover
+			
+	fin
+	
+	proceso BloquearDerecha(ES flores: numero; E cuadrante: numero)
+	comenzar
+		repetir cuadrante
+			juntarFlores(flores)
+			LiberarEsquina((PosAv + 1), PosCa)
+			BloquearEsquina((PosAv - 1), PosAv)
+			mover
+	fin
+	
+	proceso BloquearAbajo(ES flores: numero; E cuadrante: numero)
+	comenzar
+		repetir cuadrante
+			juntarFlores(flores)
+			LiberarEsquina(PosAv, (PosCa + 1))
+			BloquearEsquina(PosAv, (PosCa - 1))
+			mover
+	fin
+	
+	proceso BloquearIzquierda(ES flores: numero; E cuadrante: numero)
+	comenzar
+		repetir cuadrante
+			juntarFlores(flores)
+			LiberarEsquina((PosAv + 1), PosCa)
+			BloquearEsquina((PosAv - 1), PosCa)
+			mover
+	fin
+	
+areas
+
+	areaC: AreaC(2, 2, 16, 16)
+	
+	areaFiscal: AreaP(100, 100, 100, 100)
+
+robots
+	robot florero
+	variables
+		flores: numero
+		cuadrante: numero
+	comenzar
+		flores:= 0
+		
+		cuadrante:= 6
+		
+		juntarFlores(flores)
+		BloquearEsquina(PosAv, (PosCa + 1))
+		mover
+		
+		BloquearArriba(flores, (cuadrante - 1))
+		derecha
+		BloquearDerecha(flores, cuadrante)
+		derecha
+		BloquearAbajo(flores, cuadrante)
+		derecha
+		BloquearIzquierda(flores, cuadrante)
+		juntarFlores(flores)
+	fin
+	
+	
+	robot floreroYpapelero
+	variables
+		flores, papeles: numero
+		cuadrante: numero
+	comenzar
+		flores:= 0
+		papeles:= 0
+		cuadrante:= 10
+		
+		juntarFlores(flores)
+		BloquearEsquina(PosAv, (PosCa + 1))
+		mover
+		
+		BloquearArriba(flores, (cuadrante - 1))
+		derecha
+		BloquearDerecha(flores, cuadrante)
+		derecha
+		BloquearAbajo(flores, cuadrante)
+		derecha
+		BloquearIzquierda(flores, cuadrante)
+		juntarFlores(flores)
+	fin
+	
+	
+	robot papelero
+	variables
+		papeles: numero
+		cuadrante: numero
+	comenzar
+		papeles:= 0
+		
+		cuadrante:= 7
+		
+		juntarFlores(papeles)
+		BloquearEsquina(PosAv, (PosCa + 1))
+		mover
+		
+		BloquearArriba(papeles, (cuadrante - 1))
+		derecha
+		BloquearDerecha(papeles, cuadrante)
+		derecha
+		BloquearAbajo(papeles, cuadrante)
+		derecha
+		BloquearIzquierda(papeles, cuadrante)
+		juntarFlores(papeles)
+	fin
+
+variables
+	robot1: florero
+	robot2: floreroYpapelero
+	robot3: papelero
+	
+
+comenzar
+	AsignarArea(robot1, areaC)
+	AsignarArea(robot2, areaC)
+	AsignarArea(robot3, areaC)
+	
+	
+	Iniciar(robot1, 2, 2)
+	Iniciar(robot2, 5, 5)
+	Iniciar(robot3, 9, 9)
+
+fin

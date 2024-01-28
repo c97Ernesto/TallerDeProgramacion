@@ -1,0 +1,152 @@
+5- Realice un programa en el que 4 robots juegan una carrera por avenidas diferentes: 4, 6,
+	8 y 10 respectivamente. Todos los robots inician en la calle 1.
+	Para poder avanzar, cada robot debe juntar un papel de una fuente de papeles localizada
+	en la esquina (11,11), colocarlo en la esquina actual de su avenida y avanzar un paso.
+	Cuando la esquina fuente ya no tiene más papeles, o cuando se haya completado la
+	avenida, deberán avisar al robot coordinador y este determinará el robot que llegó más
+	lejos.
+
+programa P3-Ej5
+
+procesos
+	
+	proceso juntarPapel(ES p: numero; ES hay: boolean)
+	comenzar
+		si (HayPapelEnLaEsquina)
+			tomarPapel
+			p:= p + 1
+		sino
+			hay:= F
+	fin
+	
+	proceso IrAFuente(ES papeles: numero; ES hayPapel: boolean; E avAct: numero; E caAct: numero)
+	comenzar
+		BloquearEsquina(11, 11)
+		Pos(11, 11)
+		juntarPapel(papeles, hayPapel)
+		Pos(avAct, caAct)
+		LiberarEsquina(11, 11)
+	fin
+	
+	proceso IniciarRobots
+	comenzar
+		EnviarMensaje(1, robot1)
+		EnviarMensaje(2, robot2)
+		EnviarMensaje(3, robot3)
+		EnviarMensaje(4, robot4)
+	fin
+	
+	proceso Maximo(E cantCalles: numero; ES cantCallesMax: numero; E nroRobot: numero; ES nroRobotMax: numero)
+	comenzar
+		si (cantCalles > cantCallesMax)
+			cantCallesMax:= cantCalles
+			nroRobotMax:= nroRobot
+	fin
+
+
+areas
+	areaAvenida4: AreaP(4, 1, 4, 100)
+	areaAvenida6: AreaP(6, 1, 6, 100)
+	areaAvenida8: AreaP(8, 1, 8, 100)
+	areaAvenida10: AreaP(10, 1, 10, 100)
+	
+	areaCoordinador: AreaP(13, 13, 13, 13)
+	
+	areaFuente: AreaPC(11, 11, 11, 11)
+	
+
+robots
+	robot maratonista
+	variables
+		id, papeles: numero
+		avAct, caAct: numero
+		hayPapel: boolean
+		calles: numero
+	comenzar
+		papeles:= 0
+		calles:= 1
+		hayPapel:= V
+		
+		RecibirMensaje(id, robotCoordinador)
+		
+		mientras (hayPapel & (calles <= 99))
+			avAct:= PosAv
+			caAct:= PosCa
+		
+			IrAFuente(papeles, hayPapel, avAct, caAct)
+			si hayPapel
+				depositarPapel
+			
+			mover
+			calles:= calles + 1
+			
+		si ~(hayPapel)
+			EnviarMensaje(id, robotCoordinador)
+			EnviarMensaje(calles, robotCoordinador)
+		sino
+			avAct:= PosAv
+			caAct:= Posca
+			
+			IrAFuente(papeles, hayPapel, avAct, caAct)
+			si hayPapel
+				depositarPapel
+				
+			EnviarMensaje(id, robotCoordinador)
+			EnviarMensaje(calles, robotCoordinador)
+				
+		Informar('Calles_recorridas', calles)
+	fin
+	
+	robot coordinador
+	variables
+		cantCalles, cantCallesMax: numero
+		nroRobot, nroRobotMax: numero
+	comenzar
+		IniciarRobots
+		
+		repetir 4
+			RecibirMensaje(nroRobot, *)
+			si (nroRobot = 1)
+				RecibirMensaje(cantCalles, robot1)
+			sino
+				si (nroRobot = 2)
+					RecibirMensaje(cantCalles, robot2)
+				sino
+					si (nroRobot = 3)
+						RecibirMensaje(cantCalles, robot3)
+					sino
+						si (nroRobot = 4)
+							RecibirMensaje(cantCalles, robot4)
+							
+			Maximo(cantCalles, cantCallesMax, nroRobot, nroRobotMax)
+		Informar('El_robot_con_mas_calles_fue', nroRobotMax)
+	fin
+
+variables
+	robot1: maratonista
+	robot2: maratonista
+	robot3: maratonista
+	robot4: maratonista
+	robotCoordinador: coordinador
+
+comenzar
+	AsignarArea(robot1, areaAvenida4)
+	AsignarArea(robot1, areaFuente)
+	
+	AsignarArea(robot2, areaAvenida6)
+	AsignarArea(robot2, areaFuente)
+	
+	AsignarArea(robot3, areaAvenida8)
+	AsignarArea(robot3, areaFuente)
+	
+	AsignarArea(robot4, areaAvenida10)
+	AsignarArea(robot4, areaFuente)
+
+	AsignarArea(robotCoordinador, areaCoordinador)
+	
+	Iniciar(robot1, 4, 1)
+	Iniciar(robot2, 6, 1)
+	Iniciar(robot3, 8, 1)
+	Iniciar(robot4, 10, 1)
+	Iniciar(robotCoordinador, 13, 13)
+fin
