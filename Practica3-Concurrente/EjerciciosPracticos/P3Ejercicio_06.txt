@@ -1,3 +1,13 @@
+6.a- Tres robots deben recorrer el perímetro de su cuadrante, como se indica a
+	continuación:
+		- El robot 1 comienza la esquina (2,2) y debe realizar un cuadrante de 6x6 juntando
+		todas las flores que encuentre
+		- El robot 2 comienza en la esquina (5,5) y debe realizar un cuadrante de 10x10
+		juntando todas las flores y los papeles que encuentre
+		- El robot 3 comienza en la esquina (9,9) y debe realizar un cuadrante de 7x7 juntando
+		todos los papeles que encuentre
+
+
 programa P3Ej6
 
 procesos
@@ -9,41 +19,68 @@ procesos
 			f:= f + 1
 	fin
 	
-	proceso BloquearArriba(ES flores: numero; E cuadrante: numero)
+	proceso juntarPapeles(ES p: numero)
+	comenzar
+		mientras HayPapelEnLaEsquina
+			tomarPapel
+			p:= p + 1
+	fin
+	
+	proceso juntarX(ES x: numero; ES nroRobot: numero)
+	comenzar
+		si (nroRobot = 1)
+			juntarFlores(x)
+		sino
+			si (nroRobot = 2)
+				juntarFlores(x)
+				juntarPapeles(x)
+			sino
+				si (nroRobot = 3)
+					juntarPapeles(x)
+	fin
+	
+	proceso BloquearArriba(ES x: numero; E cuadrante: numero; E nroRobot: numero)
 	comenzar
 		repetir (cuadrante)
-			juntarFlores(flores)
+			juntarX(x, nroRobot)
 			LiberarEsquina(PosAv, (PosCa - 1))
 			BloquearEsquina(PosAv, (PosCa + 1))
 			mover
 			
 	fin
 	
-	proceso BloquearDerecha(ES flores: numero; E cuadrante: numero)
+	proceso BloquearDerecha(ES x: numero; E cuadrante: numero; E nroRobot: numero)
 	comenzar
 		repetir cuadrante
-			juntarFlores(flores)
+			juntarX(x, nroRobot)
 			LiberarEsquina((PosAv + 1), PosCa)
 			BloquearEsquina((PosAv - 1), PosAv)
 			mover
 	fin
 	
-	proceso BloquearAbajo(ES flores: numero; E cuadrante: numero)
+	proceso BloquearAbajo(ES x: numero; E cuadrante: numero; E nroRobot: numero)
 	comenzar
 		repetir cuadrante
-			juntarFlores(flores)
+			juntarX(x, nroRobot)
 			LiberarEsquina(PosAv, (PosCa + 1))
 			BloquearEsquina(PosAv, (PosCa - 1))
 			mover
 	fin
 	
-	proceso BloquearIzquierda(ES flores: numero; E cuadrante: numero)
+	proceso BloquearIzquierda(ES x: numero; E cuadrante: numero; E nroRobot: numero)
 	comenzar
 		repetir cuadrante
-			juntarFlores(flores)
+			juntarX(x, nroRobot)
 			LiberarEsquina((PosAv + 1), PosCa)
 			BloquearEsquina((PosAv - 1), PosCa)
 			mover
+	fin
+	
+	proceso IniciarRobots
+	comenzar
+		EnviarMensaje(1, robot1)
+		EnviarMensaje(2, robot2)
+		EnviarMensaje(3, robot3)
 	fin
 	
 areas
@@ -57,47 +94,51 @@ robots
 	variables
 		flores: numero
 		cuadrante: numero
+		id: numero
 	comenzar
 		flores:= 0
-		
 		cuadrante:= 6
 		
-		juntarFlores(flores)
+		RecibirMensaje(id, robotFiscal)
+		
+		juntarX(flores, id)
 		BloquearEsquina(PosAv, (PosCa + 1))
 		mover
 		
-		BloquearArriba(flores, (cuadrante - 1))
+		BloquearArriba(flores, (cuadrante - 1), id)
 		derecha
-		BloquearDerecha(flores, cuadrante)
+		BloquearDerecha(flores, cuadrante, id)
 		derecha
-		BloquearAbajo(flores, cuadrante)
+		BloquearAbajo(flores, cuadrante, id)
 		derecha
-		BloquearIzquierda(flores, cuadrante)
-		juntarFlores(flores)
+		BloquearIzquierda(flores, cuadrante, id)
+		juntarX(flores, id)
 	fin
 	
 	
 	robot floreroYpapelero
 	variables
-		flores, papeles: numero
+		fYP
 		cuadrante: numero
+		id: numero
 	comenzar
-		flores:= 0
-		papeles:= 0
+		fYP:= 0
 		cuadrante:= 10
 		
-		juntarFlores(flores)
+		RecibirMensaje(id, robotFiscal)
+		
+		juntarX(fYP, id)
 		BloquearEsquina(PosAv, (PosCa + 1))
 		mover
 		
-		BloquearArriba(flores, (cuadrante - 1))
+		BloquearArriba(fYP, (cuadrante - 1), id)
 		derecha
-		BloquearDerecha(flores, cuadrante)
+		BloquearDerecha(fYP, cuadrante, id)
 		derecha
-		BloquearAbajo(flores, cuadrante)
+		BloquearAbajo(fYP, cuadrante, id)
 		derecha
-		BloquearIzquierda(flores, cuadrante)
-		juntarFlores(flores)
+		BloquearIzquierda(fYP, cuadrante, id)
+		juntarX(fYP, id)
 	fin
 	
 	
@@ -105,39 +146,51 @@ robots
 	variables
 		papeles: numero
 		cuadrante: numero
+		id: numero
 	comenzar
 		papeles:= 0
-		
 		cuadrante:= 7
 		
-		juntarFlores(papeles)
+		RecibirMensaje(id, robotFiscal)
+		
+		juntarX(papeles, id)
 		BloquearEsquina(PosAv, (PosCa + 1))
 		mover
 		
-		BloquearArriba(papeles, (cuadrante - 1))
+		BloquearArriba(papeles, (cuadrante - 1), id)
 		derecha
-		BloquearDerecha(papeles, cuadrante)
+		BloquearDerecha(papeles, cuadrante, id)
 		derecha
-		BloquearAbajo(papeles, cuadrante)
+		BloquearAbajo(papeles, cuadrante, id)
 		derecha
-		BloquearIzquierda(papeles, cuadrante)
-		juntarFlores(papeles)
+		BloquearIzquierda(papeles, cuadrante, id)
+		juntarX(papeles, id)
+	fin
+	
+	robot fiscal
+	variables
+		id: numero
+	comenzar
+		IniciarRobots
 	fin
 
 variables
 	robot1: florero
 	robot2: floreroYpapelero
 	robot3: papelero
+	robotFiscal: fiscal
 	
 
 comenzar
 	AsignarArea(robot1, areaC)
 	AsignarArea(robot2, areaC)
 	AsignarArea(robot3, areaC)
+	AsignarArea(robotFiscal, areaFiscal)
 	
 	
 	Iniciar(robot1, 2, 2)
 	Iniciar(robot2, 5, 5)
 	Iniciar(robot3, 9, 9)
+	Iniciar(robotFiscal, 100, 100)
 
 fin

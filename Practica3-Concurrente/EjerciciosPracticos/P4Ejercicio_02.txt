@@ -1,0 +1,128 @@
+programa PRepasoEj2
+
+procesos
+	
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso dejarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaBolsa
+			depositarFlor
+			f:= f - 1
+	fin
+	
+	proceso moverX10(ES flores: numero)
+	comenzar
+		repetir 10
+			juntarFlores(flores)
+			mover
+	fin
+	
+	proceso moverX9(ES flores: numero)
+	comenzar
+		repetir 9
+			juntarFlores(flores)
+			mover
+		juntarFlores(flores)
+	fin
+	
+	proceso IrACompartida(ES flores: numero)
+	variables
+		avAct, caAct: numero
+	comenzar
+		avAct:= PosAv
+		caAct:= PosCa
+		BloquearEsquina(50, 50)
+		Pos(50, 50)
+		dejarFlores(flores)
+		Pos(avAct, caAct)
+		LiberarEsquina(50, 50)
+	fin
+	
+	proceso IniciarRobots
+	comenzar
+		EnviarMensaje(1, robot1)
+		EnviarMensaje(2, robot2)
+		EnviarMensaje(3, robot3)
+	fin
+
+areas
+	areaP1: AreaP(1, 1, 100, 1)
+	areaP2: AreaP(1, 2, 100, 2)
+	areaP3: AreaP(1, 3, 100, 3)
+	areaFisco: AreaP(1, 4, 1, 4)
+	
+	areaC: AreaC(50, 50, 50, 50)
+
+robots
+	robot recolector
+	variables
+		flores: numero
+		nro: numero
+	comenzar
+		flores:= 0
+		
+		derecha
+			
+		repetir 9
+			RecibirMensaje(nro, robotFisco)
+			moverX10(flores)
+			IrACompartida(flores)
+			EnviarMensaje(nro, robotFisco)
+		
+		
+		RecibirMensaje(nro, robotFisco)
+		moverX9(flores)
+		IrACompartida(flores)
+		EnviarMensaje(nro, robotFisco)
+	fin
+	
+	
+	robot fiscalizador
+	variables
+		id: numero
+		cant: numero
+	comenzar
+		cant:= 0
+		
+		repetir 10
+			IniciarRobots
+			repetir 3
+				RecibirMensaje(id, *)
+				
+		Pos(50, 50)
+		juntarFlores(cant)
+		Informar('Flores', cant)
+		
+	fin
+
+
+variables
+	robot1: recolector
+	robot2: recolector
+	robot3: recolector
+	robotFisco: fiscalizador
+	
+
+comenzar
+	AsignarArea(robot1, areaP1)
+	AsignarArea(robot2, areaP2)
+	AsignarArea(robot3, areaP3)
+	AsignarArea(robotFisco, areaFisco)
+	
+	AsignarArea(robot1, areaC)
+	AsignarArea(robot2, areaC)
+	AsignarArea(robot3, areaC)
+	AsignarArea(robotFisco, areaC)
+	
+	Iniciar(robot1, 1, 1)
+	Iniciar(robot2, 1, 2)
+	Iniciar(robot3, 1, 3)
+	Iniciar(robotFisco, 1, 4)
+
+fin

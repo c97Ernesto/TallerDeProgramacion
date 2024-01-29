@@ -1,0 +1,130 @@
+programa PRepasoEj3
+
+procesos
+
+	proceso juntarFlor(ES f: numero)
+	comenzar
+		si HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso juntarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			f:= f + 1
+	fin
+	
+	proceso dejarFlores(ES f: numero)
+	comenzar
+		mientras HayFlorEnLaBolsa
+			depositarFlor
+			f:= f - 1
+	fin
+	
+	proceso IrAEsquinaDejar(E flores: numero; E avAct: numero; E caAct: numero)
+	comenzar
+		BloquearEsquina(10, 10)
+		Pos(10, 10)
+		dejarFlores(flores)
+		Pos(avAct, caAct)
+		LiberarEsquina(10, 10)
+	fin
+	
+	proceso IrAEsquinaTomar(ES flores: numero; E avIni: numero; E caIni: numero)
+	comenzar
+		BloquearEsquina(10, 10)
+		Pos(10, 10)
+		juntarFlores(flores)
+		Pos(avIni, caIni)
+		LiberarEsquina(10, 10)
+	fin
+
+
+areas
+	areaP1: AreaP(1, 3, 100, 3)
+	areaP2: AreaP(1, 4, 100, 4)
+	areaCocechador: AreaP(1, 5, 1, 5)
+	areaC: AreaC(10, 10, 10, 10)
+	
+
+robots
+	robot recolector
+	variables
+		flores, totalFlores: numero
+		avAct, caAct: numero
+		esquinas: numero
+	comenzar
+		flores:= 0
+		totalFlores:= 0
+		esquinas:= 0
+		
+		derecha
+		repetir 99
+			
+			avAct:= PosAv
+			caAct:= PosCa
+			
+			si ((esquinas < 4) | (flores <= 10))
+				juntarFlor(flores)
+				esquinas:= esquinas + 1
+				totalFlores:= totalFlores + flores
+			sino
+				esquinas:= 0
+				IrAEsquinaDejar(flores, avAct, caAct)
+				EnviarMensaje(V, cocechador)
+			mover
+		
+		avAct:= PosAv
+		caAct:= PosCa
+		juntarFlor(flores)
+		totalFlores:= totalFlores + flores
+		IrAEsquinaDejar(flores, avAct, caAct)
+		EnviarMensaje(F, cocechador)
+		Informar('Total_Flores', totalFlores)
+		
+	fin
+	
+	robot cocechador
+	variables
+		flores: numero
+		verdadero: boolean
+		avIni, caIni: numero
+	comenzar
+		flores:= 0
+		verdadero:= V
+		avIni:= PosAv
+		caIni:= PosCa		
+		
+		repetir 2
+			mientras verdadero
+				RecibirMensaje(verdadero, *)
+				IrAEsquinaTomar(flores, avIni, caIni)
+			
+		Informar('Flores', flores)
+	fin
+	
+
+
+variables
+	recolector1: recolector
+	recolector2: recolector
+	cocechador: cocechador
+	
+comenzar
+	
+	AsignarArea(recolector1, areaP1)
+	AsignarArea(recolector1, areaC)
+	
+	AsignarArea(recolector2, areaP2)
+	AsignarArea(recolector2, areaC)
+	
+	AsignarArea(cocechador, areaCocechador)
+	AsignarArea(cocechador, areaC)
+	
+	Iniciar(recolector1, 1, 3)
+	Iniciar(recolector2, 1, 4)
+	Iniciar(cocechador, 1, 5)
+
+fin
