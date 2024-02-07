@@ -1,4 +1,4 @@
-## Arreglos: Métodos de ordenación.
+## Arreglos:
 ### [Selección](#1-selección)
 ### [Ordenación](#2-inserción)
 ### [Generar Vector de Listas.](#generar-vector-de-listas-1)
@@ -154,6 +154,16 @@ End;
 ```
 
 ## Árboles Binarios de Búsqueda:
+
+Es una estructura de datos jerárquica, formada por nodos, donde cada nodo tiene a los sumo dos hijos. El nodo principal se denomina raíz y los nodos que no tienen hijos se denominan hojas del árbol.
+- Todo Árbol es una estructura de datos jerárquica.
+- Todo Árbol es una estructura de datos dinámica.
+- Todo Árbol es una estructura homogénea.
+- Para crear un Árbol siempre se empiza por la ráiz.
+- Un Árbol vacío se representa por le valro "nil".
+- Un nuevo dato siempre se inserta como una hoja.
+- Los nodos del Árbol respetan todos el mismo criterio (los hijos ubicados a la izquierda son menores al nodo padre o al revés.)
+
 ### 1. Creación:
 ```Pascal
 Procedure Crear(var a: Arbol; num: dato);
@@ -185,7 +195,7 @@ end;
 ```
 
 ```Pascal
-Procedure preOrden (a: Arbol);
+Procedure preOrden(a: Arbol);
 begin
     if ( a <> nil ) then begin
         write (a^.dato); //o cualquier otra acción
@@ -209,7 +219,7 @@ end;
 ### 3. Búsqueda: Elemento mínimo y máximo.
 
 ```Pascal
-Procedure minimo(a: Arbol): integer
+Function minimo(a: Arbol): integer
 begin
     if ( a^.HI = nil ) then
         minimo:= a^.dato
@@ -219,7 +229,7 @@ end;
 ```
 
 ```Pascal
-Procedure maximo(a: Arbol): integer
+Function maximo(a: Arbol): integer
 begin
     if ( a^.HD = nil ) then
         minimo:= a^.dato;
@@ -230,7 +240,7 @@ end;
 
 ### 4. Búsqueda: Nodo mínimo y máximo.
 ```Pascal
-Procedure minimoNodo(a: Arbol): Arbol;
+Function minimoNodo(a: Arbol): Arbol;
 begin
     if (a = nil) then
         minimoNodo:= nil
@@ -243,7 +253,7 @@ end;
 ```
 
 ```Pascal
-Procedure maximoNodo(a: Arbol): Arbol;
+Function maximoNodo(a: Arbol): Arbol;
 begin
     if (a = nil) then
         minimoNodo:= nil
@@ -258,7 +268,7 @@ end;
 ### 5. Busqueda: Devolver si se encuentra el elemento en la estructura.
 
 ```Pascal
-Procedure buscarElemento(a: Arbol; x: interger): boolean;
+Function buscarElemento(a: Arbol; x: interger): boolean;
 begin
     if (a = nil) then
         buscarElemento:= false;
@@ -275,7 +285,7 @@ end;
 
 ### 6. Busqueda: Devolver el nodo donde se encuentra el elemento.
 ```Pascal
-Procedure buscarNodo(a: Arbol; x: interger): Arbol;
+Function buscarNodo(a: Arbol; x: interger): Arbol;
 begin
     if (a = nil) then
         buscarNodo:= nil
