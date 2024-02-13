@@ -124,21 +124,37 @@ Procedure RetornarMenores(arbol: Arbol; codigo: integer);
 Begin
 	
 	if (arbol <> nil) then begin
-		if (arbol^.datos.codigoProducto > codigo) then
+		if (arbol^.datos.codigoProducto >= codigo) then
 			RetornarMenores(arbol^.hi, codigo)
 		else begin
 			RetornarMenores(arbol^.hi, codigo);
 			MostrarDatos(arbol^.datos);
+			RetornarMenores(arbol^.hd, codigo);
 		end;
 	end;
 End;
 
 {________________________________e.________________________________}
+Procedure RetornarEntre(a: Arbol; c1, c2: integer);
+Begin
+	if (a <> nil) then
+		if (a^.datos.codigoProducto > c2) then
+			RetornarEntre(a^.hi, c1, c2)
+		else
+			if (a^.datos.codigoProducto < c1) then
+				RetornarEntre(a^.hd, c1, c2)
+			else begin
+				RetornarEntre(a^.hi, c1, c2);
+				MostrarDatos(a^.datos);
+				RetornarEntre(a^.hd, c1, c2)
+			end;
+End;
+
 
 {________________________________P.P________________________________}
 VAR
 	ventas: Arbol;
-	maxCodigoProducto, maxUnidadesVendidas: integer;
+	minCodigoProducto, maxCodigoProducto, maxUnidadesVendidas: integer;
 BEGIN
 	{a.}
 	GenerarArbol(ventas);
@@ -152,4 +168,19 @@ BEGIN
 	RetornarMaxCodigoProducto(ventas, maxCodigoProducto, maxUnidadesVendidas);
 	writeln('El codigo de producto con más unidades vendidas fue: ', maxCodigoProducto);
 	writeln('');
+	
+	{d.}
+	write('Ingresar codigo producto: ');
+	readln(maxCodigoProducto);
+	RetornarMenores(ventas, maxCodigoProducto);
+	writeln('');
+	
+	{e.}
+	write('Ingresar valor maximo del rango: ');
+	readln(maxCodigoProducto);
+	write('Ingresar valor minimo del rango: ');
+	readln(minCodigoProducto);
+	RetornarEntre(ventas, minCodigoProducto, maxCodigoProducto);
+	writeln('')
+	
 END.
