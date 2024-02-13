@@ -8,14 +8,19 @@
 		i. En una estructura cada préstamo debe estar en un nodo.
 		ii. En otra estructura, cada nodo debe contener todos los préstamos realizados al ISBN.
 			(prestar atención sobre los datos que se almacenan).
+			
 	b. Un módulo recursivo que reciba la estructura generada en i. y retorne el ISBN más
 		grande.
+		
 	c. Un módulo recursivo que reciba la estructura generada en ii. y retorne el ISBN más
 		pequeño.
+		
 	d. Un módulo recursivo que reciba la estructura generada en i. y un número de socio. El
 		módulo debe retornar la cantidad de préstamos realizados a dicho socio.
+		
 	e. Un módulo recursivo que reciba la estructura generada en ii. y un número de socio. El
 		módulo debe retornar la cantidad de préstamos realizados a dicho socio.
+		
 	f. Un módulo que reciba la estructura generada en i. y retorne una nueva estructura
 		ordenada ISBN, donde cada ISBN aparezca una vez junto a la cantidad total de veces
 		que se prestó.
