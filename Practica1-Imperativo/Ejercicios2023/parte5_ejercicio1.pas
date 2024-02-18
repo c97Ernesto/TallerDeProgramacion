@@ -143,6 +143,28 @@ Begin
 	writeln('');
 End;
 
+{________________________________d.RetornarExpenas________________________________}
+Procedure RetornarTotalExpensas(oficinas: vector_oficinas; dL: indice_oficinas);
+	
+	function retornarSuma(v: vector_oficinas; i: indice_oficinas; dL: indice_oficinas): integer;
+	begin
+		if (i < dL) then begin
+			i:= i + 1;
+			retornarSuma:= v[i].valorExpensa + retornarSuma(v, i, dL);
+		end
+		else
+			retornarSuma:= 0;
+	end;
+	
+Var
+	i: indice_oficinas;
+Begin
+	
+	i:= 0;
+	Writeln('El total de las expensas es de: ', retornarSuma(oficinas, i, dL));
+	
+End;
+
 {________________________________P.P________________________________}
 VAR
 	oficinas: vector_oficinas;
@@ -164,4 +186,9 @@ BEGIN
 	{c.}
 	writeln('BUSCAR CODIGO');
 	RealizarBusquedaDicotomica(oficinas, dimensionLogica);
+	writeln('');
+	
+	{b.}
+	RetornarTotalExpensas(oficinas, dimensionLogica);
+	
 END.
