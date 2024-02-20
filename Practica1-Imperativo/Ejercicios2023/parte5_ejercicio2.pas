@@ -39,9 +39,20 @@ TYPE
 		datos: registro_marca;
 	end;
 	
+	registro_anios = record
+	    anioFabricacion: rango_anios;
+	    autos: lista_autos;
+	end;
+	
+	arbol_anios = ^nodo_arbolAnios;
+	nodo_arbolAnios = record
+	    hi: arbol_anios;
+	    hd: arbol_anios;
+	    datos: registro_anios;
+	end;
 	
 {________________________________a.GenerarArboles________________________________}
-Procedure GenerarArboles(var abbPatente: arbol_patentes; var abbMarca: arbol_marcas);
+Procedure GenerarArboles(var abbPatentes: arbol_patentes; var abbMarcas: arbol_marcas);
 	
 	procedure leerAuto(var auto: registro_auto);
 	begin
@@ -108,12 +119,12 @@ Var
 	auto: registro_auto;
 	
 Begin
-	abbPatente:= nil;
-	abbMarca:= nil;
+	abbPatentes:= nil;
+	abbMarcas:= nil;
 	leerAuto(auto);
 	while (auto.patente <> FIN) do begin
-		porPatente(abbPatente, auto);
-		porMarca(abbMarca, auto);
+		porPatente(abbPatentes, auto);
+		porMarca(abbMarcas, auto);
 		leerAuto(auto);
 	end;
 End;
@@ -198,34 +209,106 @@ Begin
 	end;
 End;
 
-{________________________________P.P________________________________}
+{________________________________d.________________________________}
+Procedure RecorrerArbolPatentes(abbPatentes: arbol_patentes; var abbAnios: arbol_anios);
 
-{________________________________P.P________________________________}
+    procedure generarArbolAnios(var a: arbol_anios; auto: registro_auto);
+        
+        procedure insertarAdelante(l: lista_autos; auto: registro_auto);
+        var
+            nodo: lista_autos;
+        begin
+            new(nodo);
+            nodo^.datos:= auto;
+            nodo^.sig:= l;
+            l:= nodo;
+        end;
+        
+    begin
+        if (a <> nil) then
+            if (a^.datos.anioFabricacion = auto.anioFabricacion) then
+                insertarAdelante(a^.datos.autos, auto)
+            else
+                if (a^.datos.anioFabricacion < auto.anioFabricacion) then
+                    generarArbolAnios(a^.hi, auto)
+                else
+                    generarArbolAnios(a^.hd, auto)
+        else begin
+            new(a);
+            a^.hi:= nil;
+            a^.hd:= nil;
+            a^.datos.anioFabricacion:= auto.anioFabricacion;
+            a^.datos.autos:= nil;
+            insertarAdelante(a^.datos.autos, auto);
+        end;
+    end;
+    
+Begin
+    if (abbPatentes <> nil) then Begin
+        RecorrerArbolPatentes(abbPatentes^.hi, abbAnios);
+        generarArbolAnios(abbAnios, abbPatentes^.datos);
+        RecorrerArbolPatentes(abbPatentes^.hd, abbAnios);
+    end;
+End;
+
+{________________________________e.________________________________}
+Procedure RetornarModelo(abbPatentes: arbol_patentes);
+
+    function recorrerArbol(a: arbol_patentes; patente: str30): str30;
+    begin
+    
+        if (a <> nil) then
+            if (a^.datos.patente = patente) then
+                recorrerArbol:= a^.datos.modelo
+            else
+                if (a^.datos.patente < patente) then
+                    recorrerArbol:= recorrerArbol(a^.hi, patente)
+                else
+                    recorrerArbol:= recorrerArbol(a^.hd, patente)
+        else
+            recorrerArbol:= 'fin';
+    end;
+
+Var
+    patente, modelo: str30;
+Begin
+
+    write('Ingresar Patente: ');
+    readln(patente);
+    modelo:= recorrerArbol(abbPatentes, patente);
+    if (modelo <> FIN) then
+        writeln('El modelo que contiene la patente ingresada es: ', modelo)
+    else
+        writeln('No hay modelo para esa patente.');
+    writeln('');
+
+End;
 
 {________________________________P.P________________________________}
 	
 VAR
-	arbolPorMarca: arbol_marcas;
-	arbolPorPatente: arbol_patentes;
+	arbolMarcas: arbol_marcas;
+	arbolPatentes: arbol_patentes;
+	arbolPorAnios: arbol_anios;
 	marca: str30;
 	cantidad: integer;
 
 BEGIN
 	{a.}
-	GenerarArboles(arbolPorPatente, arbolPorMarca);
+	GenerarArboles(arbolPatentes, arbolMarcas);
 	writeln('');	
 	writeln('');
-	ImprimirArbolPatentes(arbolPorPatente);
+	ImprimirArbolPatentes(arbolPatentes);
 	writeln('');
 	writeln('');
-	ImprimirArbolMarcas(arbolPorMarca);
+	ImprimirArbolMarcas(arbolMarcas);
 	writeln('');
 	writeln('');
 	
 	{b.}
 	write('Ingresar Marca: ');
 	readln(marca);
-	writeln('La cantidad de autos con esa marca es: ', RetornarCantAutosPorPatente_1(arbolPorPatente, marca));
+	writeln('La cantidad de autos con esa marca es: ', RetornarCantAutosPorPatente_1(arbolPatentes, marca));
 	writeln('');
 	writeln('');
 	
@@ -233,10 +316,18 @@ BEGIN
 	write('Ingresar Marca: ');
 	readln(marca);
 	cantidad:= 0;
-	RetornarCantAutosPorMarca(arbolPorMarca, marca, cantidad);
+	RetornarCantAutosPorMarca(arbolMarcas, marca, cantidad);
 	writeln('La cantidad de autos con esa marca es: ', cantidad);
 	writeln('');
 	writeln('');
+	
+	{d.}
+	arbolPorAnios:= nil;
+	RecorrerArbolPatentes(arbolPatentes, arbolPorAnios);
+	
+	{e.}
+	RetornarModeloArbolPatentes(arbolPatentes);
+	RetornarModeloArbolMarcas(arbolMarcas);
     
 END.
 
