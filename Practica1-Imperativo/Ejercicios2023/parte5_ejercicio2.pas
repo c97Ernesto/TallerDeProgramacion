@@ -179,10 +179,23 @@ Begin
 End;
 
 {________________________________c.________________________________}
-Procedure RetornarCantAutosPorMarca(a: arbol_marcas; marca: str30):
+Procedure RetornarCantAutosPorMarca(a: arbol_marcas; marca: str30; var total: integer);
+    
+    procedure recorrerListaAutos(l: lista_autos; var cantidad: integer);
+    begin
+        while (l <> nil) do begin
+            cantidad:= cantidad + 1;
+            l:= l^.sig;
+        end;
+    end;
+    
 Begin
-	if (a <> nil) then
+	if (a <> nil) then begin
+		RetornarCantAutosPorMarca(a^.hi, marca, total);
 		if (a^.datos.marca = marca) then
+			recorrerListaAutos(a^.datos.autos, total);
+		RetornarCantAutosPorMarca(a^.hi, marca, total);
+	end;
 End;
 
 {________________________________P.P________________________________}
@@ -195,6 +208,7 @@ VAR
 	arbolPorMarca: arbol_marcas;
 	arbolPorPatente: arbol_patentes;
 	marca: str30;
+	cantidad: integer;
 
 BEGIN
 	{a.}
@@ -211,7 +225,16 @@ BEGIN
 	{b.}
 	write('Ingresar Marca: ');
 	readln(marca);
-	writeln('La cantidad de autos con esa marca es: ', RetornarCantAutosPorPatente(arbolPorPatente, marca));
+	writeln('La cantidad de autos con esa marca es: ', RetornarCantAutosPorPatente_1(arbolPorPatente, marca));
+	writeln('');
+	writeln('');
+	
+	{c.}
+	write('Ingresar Marca: ');
+	readln(marca);
+	cantidad:= 0;
+	RetornarCantAutosPorMarca(arbolPorMarca, marca, cantidad);
+	writeln('La cantidad de autos con esa marca es: ', cantidad);
 	writeln('');
 	writeln('');
     
