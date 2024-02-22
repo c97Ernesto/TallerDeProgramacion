@@ -1,3 +1,28 @@
+{
+2. Una agencia dedicada a la venta de autos ha organizado su stock y, dispone en papel de la
+información de los autos en venta. Implementar un programa que:
+
+	a) Lea la información de los autos (patente, año de fabricación (2010..2018), marca y
+	modelo) y los almacene en dos estructuras de datos:
+		i. Una estructura eficiente para la búsqueda por patente.
+		ii. Una estructura eficiente para la búsqueda por marca. Para cada marca se deben
+			almacenar todos juntos los autos pertenecientes a ella.
+			
+	b) Invoque a un módulo que reciba la estructura generado en a) i y una marca y retorne la
+	cantidad de autos de dicha marca que posee la agencia.
+	
+	c) Invoque a un módulo que reciba la estructura generado en a) ii y una marca y retorne
+	la cantidad de autos de dicha marca que posee la agencia.
+	
+	d) Invoque a un módulo que reciba el árbol generado en a) i y retorne una estructura con
+	la información de los autos agrupados por año de fabricación.
+	
+	e) Invoque a un módulo que reciba el árbol generado en a) i y una patente y devuelva el
+	modelo del auto con dicha patente.
+	
+	f) Invoque a un módulo que reciba el árbol generado en a) ii y una patente y devuelva el
+	modelo del auto con dicha patente.
+}
 PROGRAM P5Ej2;
 CONST
 	FIN = 'fin';
@@ -252,7 +277,7 @@ Begin
 End;
 
 {________________________________e.________________________________}
-Procedure RetornarModelo(abbPatentes: arbol_patentes);
+Procedure RetornarModeloArbolPatentes(abbPatentes: arbol_patentes);
 
     function recorrerArbol(a: arbol_patentes; patente: str30): str30;
     begin
@@ -282,6 +307,48 @@ Begin
         writeln('No hay modelo para esa patente.');
     writeln('');
 
+End;
+
+{________________________________f.________________________________}
+Procedure RetornarModeloArbolMarcas(abbMarcas: arbol_marcas);
+
+    procedure recorrerLista(l: lista_autos; patente: str30; var modelo: str30; var encontrado: boolean);
+    begin
+        while (l <> nil) and (not encontrado) do begin
+            if (l^.datos.patente = patente) then begin
+                modelo:= l^.datos.modelo;
+                encontrado:= true;
+            end
+            else
+                l:= l^.sig;
+        end;
+    end;
+    
+    procedure recorrerArbolEnPreOrden(a: arbol_marcas; patente: str30; var modelo: str30; var encontrado: boolean);
+    begin
+        if (a <> nil) then begin
+            recorrerLista(a^.datos.autos, patente, modelo, encontrado);
+            if (not encontrado) then begin
+                recorrerArbolEnPreOrden(a^.hi, patente, modelo, encontrado);
+                recorrerArbolEnPreOrden(a^.hd, patente, modelo, encontrado);
+            end;
+        end;
+    end;
+    
+Var
+    patente, modelo: str30;
+    encontrado: boolean;
+Begin
+    encontrado:= false;
+    write('Ingresar patente: ');
+    readln(patente);
+    modelo:= 'fin';
+    recorrerArbolEnPreOrden(abbMarcas, patente, modelo, encontrado);
+    if (modelo <> FIN) then
+        writeln('El modelo que contiene la patente ingresada es: ', modelo)
+    else
+        writeln('No hay modelo para esa patente.');
+    writeln('');
 End;
 
 {________________________________P.P________________________________}
@@ -327,7 +394,13 @@ BEGIN
 	
 	{e.}
 	RetornarModeloArbolPatentes(arbolPatentes);
+	writeln('');
+	writeln('');
+	
+	{f.}
 	RetornarModeloArbolMarcas(arbolMarcas);
+	writeln('');
+	writeln('');
     
 END.
 
