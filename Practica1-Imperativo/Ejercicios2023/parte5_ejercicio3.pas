@@ -140,11 +140,6 @@ Begin
         writeln('No existe codigo de producto para el rubro ingresado');
 End;
 
-
-
-{________________________________P.P________________________________}
-
-
 {________________________________P.P________________________________}
 
 Procedure EjercicioC(v: vector_rubros);
@@ -162,14 +157,50 @@ Var
     nodoMax: arbol_codigoProducto;
 Begin    
     for i:= 1 to MAX_rubros do Begin
-        if (v[i] <> nil) then
+        if (v[i] <> nil) then begin
             nodoMax:= codigoMayor(v[i]);
-            writeln('El mayor codigoProducto para el rubro ', i, ' es: ',nodoMax.datosProductos.codigoProducto);
-            writeln('La cantidad de stock para el mayor codigoProducto es: ', nodoMax.datosProductos.stock);
+            writeln('El mayor codigoProducto para el rubro ', i, ' es: ',nodoMax^.datosProductos.codigoProducto);
+            writeln('La cantidad de stock para el mayor codigoProducto es: ', nodoMax^.datosProductos.stock);
+        end
         else
             writeln('No hay datos en el rubro ', i);
     end;
 End;
+
+{________________________________d.________________________________}
+Procedure EjercicioD(v: vector_rubros);
+
+    procedure recorrerArbol(a: arbol_codigoProducto; c1, c2: integer; var cant: integer);
+    begin
+        if (a <> nil) then
+            if (a^.datosProductos.codigoProducto < c1) then
+                recorrerArbol(a^.hd, c1, c2, cant)
+            else
+                if (a^.datosProductos.codigoProducto > c2) then
+                    recorrerArbol(a^.hi, c1, c2, cant)
+                else begin
+                    cant:= cant + 1;
+                    recorrerArbol(a^.hi, c1, c2, cant);
+                    recorrerArbol(a^.hd, c1, c2, cant);
+                end;
+    end;
+
+Var
+    codigoRubro: rango_rubros;
+    cant, codProd1, codProd2: integer;
+    
+Begin
+    
+    write('Ingresar codigo de producto 1: ');
+    readln(codProd1);
+    write('Ingresar codigo de producto 2: ');
+    readln(codProd2);
+    cant:= 0;
+    for codigoRubro:= 1 to MAX_rubros do
+        recorrerArbol(v[codigoRubro], codProd1, codProd2, cant);
+    writeln('La cantidad de productos entre codigo1 y codigo2 es: ', cant);
+End;
+
 
 {________________________________P.P________________________________}
 VAR
@@ -191,6 +222,12 @@ BEGIN
     writeln('');
     
     EjercicioC(rubros);
+    writeln('');
+    writeln('');
+    
+    EjercicioD(rubros);
+    writeln('');
+    writeln('');
 END.
 
 

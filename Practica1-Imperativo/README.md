@@ -277,9 +277,9 @@ begin
             buscarElemento:= true;
         else
             if (a^.dato > x) then
-                buscarElemento:= buscar(a^.HD, x);
+                buscarElemento:= buscar(a^.HI, x);
             else
-                buscarElemento:= buscarElemento(a^.HI)
+                buscarElemento:= buscarElemento(a^.HD)
 end;
 ```
 
@@ -291,9 +291,9 @@ begin
         buscarNodo:= nil
     else
         if (a^.dato > x) then
-            buscarNodo:= bucar(a^.HD, x);
+            buscarNodo:= bucar(a^.HI, x);
         else
-            buscarNodo:= buscarNodo(a^.HI, x);         
+            buscarNodo:= buscarNodo(a^.HD, x);         
 
 end;
 ```
