@@ -189,7 +189,17 @@ Begin
 	end;
 End;
 
-{________________________________viii.RetornarSociosEntre________________________________}
+{________________________________viii.RetornarSumaEdades________________________________}
+Procedure RetornarSumaEdades(abb: arbol; var suma: integer);
+Begin
+	if (abb <> nil) then begin
+		RetornarCantSocios(abb^.hi, suma);
+		suma:= suma + abb^.dato.edad;
+		RetornarCantSocios(abb^.hd, suma);
+	end;
+End;
+
+{________________________________ix.RetornarSociosEntre________________________________}
 Procedure RetornarSociosEntre(abb: arbol; n1, n2: integer; var cant: integer);
 Begin
 	if (abb <> nil) then begin
@@ -201,13 +211,13 @@ Begin
 End;
 
 
-{________________________________viii.RetornarSumaEdades________________________________}
-Procedure RetornarSumaEdades(abb: arbol; var suma: integer);
+{________________________________x.InformarDecreciente________________________________}
+Procedure InformarEnOrdenDecreciente(a: arbol);
 Begin
-	if (abb <> nil) then begin
-		RetornarCantSocios(abb^.hi, suma);
-		suma:= suma + abb^.dato.edad;
-		RetornarCantSocios(abb^.hd, suma);
+	if (a <> nil) then begin
+		InformarEnOrdenDecreciente(a^.hd);
+		MostrarDatos(a^.dato);
+		InformarEnOrdenDecreciente(a^.hi);
 	end;
 End;
 
@@ -282,5 +292,9 @@ BEGIN
 		readln(m);
 		RetornarSociosEntre(abb, n, m, total);
 		Writeln('La cantidad de socios entre ', n, ' y ', m, ' es de: ', total);
+		Writeln('');
+		Writeln('');
+		
+		InformarEnOrdenDecreciente(abb);
 	end;
 END.

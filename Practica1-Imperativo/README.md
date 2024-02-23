@@ -1,9 +1,11 @@
-## Arreglos:
+<h2 align="center">Arreglos</h2>
+
 ### [Selección](#1-selección)
 ### [Ordenación](#2-inserción)
 ### [Generar Vector de Listas.](#generar-vector-de-listas-1)
 
-## Árboles Binarios de Búsqueda:
+<h2 align="center">Árboles Binarios de Búsqueda</h2>
+
 ### [Creación.](#1-creación)
 ### [Recorridos: inOrden, preOrden y postOrden.](#2-recorridos-enorden-preorden-y-postorden)
 ### [Búsqueda: Elemento mínimo y máximo.](#3-búsqueda-elemento-mínimo-y-máximo)
@@ -11,7 +13,8 @@
 ### [Búsqueda: Devolver si se encuentra el nodo en la estructura.](#5-busqueda-devolver-si-se-encuentra-el-elemento-en-la-estructura)
 ### [Búsqueda: Devolver el nodo donde se encuentra el elemento.](#6-busqueda-devolver-el-nodo-donde-se-encuentra-el-elemento)
 
-## Listas:
+<h2 align="center">Listas</h2>
+
 ### [Crear Lista: Merge.](#crear-lista-merge-1)
 ### [Crear Lista: Merge Acumulador.](#crear-lista-merge-acumulador-1)
 
