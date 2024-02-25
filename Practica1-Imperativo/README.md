@@ -1,3 +1,5 @@
+<h1 align="center">Modulos</h1>
+
 <h2 align="center">Arreglos</h2>
 
 ### [Selección](#1-selección)

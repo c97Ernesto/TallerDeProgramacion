@@ -1,8 +1,8 @@
 <h1 align='center'>Taller de Programación</h1>
 
 ## [Práctica 1: Módulo Imperativo.](./Practica1-Imperativo) 
-- [Módulos para la resolución de ejercicios.](./Practica1-Imperativo/Modulos.md)
-- [Ejercicios resultos.](./Practica1-Imperativo/Practicas2023)
+- [Módulos para la resolución de ejercicios.](./Practica1-Imperativo#readme)
+- [Ejercicios resultos.](./Practica1-Imperativo/Ejercicios2023)
 
 ## [Práctica 2: Módulo con Objetos.](./Practica2-Objetos/TP2021_ProyectoAlumnos)
 - [Manejo de datos simples.](./Practica2-Objetos/TP2021_ProyectoAlumnos/src/tema1_ManejoDeDatosSimples)
