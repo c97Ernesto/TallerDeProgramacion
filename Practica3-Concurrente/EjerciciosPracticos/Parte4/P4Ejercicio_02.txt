@@ -1,0 +1,23 @@
+programa p4Ej2
+
+procesos
+	
+	
+areas
+	areaProductor1: AreaP(5, 1, 5, 100)
+	areaProductor2: AreaP(10, 1, 10, 100)
+	
+	areaConsumidor1: AreaP(11, 1, 11, 11)
+	areaConsumidor2: AreaP(12, 1, 12, 11)
+	
+	areaCompartida: AreaC(50, 50, 50, 50)
+	
+
+robots
+
+
+variables
+
+comenzar
+
+fin
