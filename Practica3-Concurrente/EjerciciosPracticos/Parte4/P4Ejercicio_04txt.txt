@@ -1,0 +1,166 @@
+programa p4Ej4
+
+procesos
+	proceso juntarFlores(ES flores: numero; E av: numero; E ca: numero)
+	variables
+		avIni, caIni: numero
+	comenzar
+		avIni:= PosAv
+		caIni:= PosCa
+		
+		BloquearEsquina(av, ca)
+		Pos(av, ca)
+		mientras HayFlorEnLaEsquina
+			tomarFlor
+			flores:= flores  + 1
+			
+		Pos(avIni, caIni)
+		LiberarEsquina(av, ca)
+	fin
+	
+	proceso juntarPapeles(ES papeles: numero; E av: numero; E ca: numero)
+	variables
+		avIni, caIni: numero
+	comenzar
+		avIni:= PosAv
+		caIni:= PosCa
+		
+		BloquearEsquina(av, ca)
+		Pos(av, ca)
+		
+		mientras HayPapelEnLaEsquina
+			tomarPapel
+			papeles:= papeles + 1
+			
+		Pos(avIni, caIni)
+		LiberarEsquina(av, ca)
+	fin
+	
+	proceso vaciarBolsa(ES flores: numero; ES papeles: numero; E av: numero; E ca: numero)
+	variables
+		avIni, caIni: numero
+	comenzar
+		avIni:= PosAv
+		caIni:= PosCa
+		
+		BloquearEsquina(av, ca)
+		Pos(av, ca)
+		
+		si HayFlorEnLaBolsa
+			mientras HayFlorEnLaBolsa
+				depositarFlor
+				flores:= flores - 1
+		si HayPapelEnLaBolsa
+			mientras HayPapelEnLaBolsa
+				depositarPapel
+				papeles:= papeles - 1
+				
+		Pos(avIni, caIni)
+		LiberarEsquina(av, ca)
+	fin
+	
+	
+areas
+	areaRobot1: AreaP(2, 1, 2, 1)
+	areaRobot2: AreaP(3, 1, 3, 1)
+	areaTrabajadores: AreaPC(2, 2, 100, 100)
+	areaJefe: AreaP(1, 1, 1, 1)
+
+
+robots
+	robot trabajador
+	variables
+		id, flores, papeles: numero
+		tarea, av, ca: numero
+		end: boolean
+	comenzar
+		
+		RecibirMensaje(id, robotJefe)
+		
+		end:= F
+		mientras ~end
+			RecibirMensaje(tarea, robotJefe)
+			
+			si (tarea < 4)
+				RecibirMensaje(av, robotJefe)
+				RecibirMensaje(ca, robotJefe)
+				
+				si (tarea = 1)
+					juntarFlores(flores, av, ca)
+				sino
+					si (tarea = 2)
+						juntarPapeles(papeles, av, ca)
+					sino
+						vaciarBolsa(papeles, flores, ca, av)
+			sino
+				RecibirMensaje(end, robotJefe)
+			
+	fin
+	
+	
+	robot jefe
+	variables
+		finR1, finR2: boolean
+		cant, tarea, id: numero
+		ca, av: numero
+	comenzar
+		finR1:= F
+		finR2:= F
+		
+		EnviarMensaje(1, robot1)
+		EnviarMensaje(2, robot2)
+		
+		mientras (((~finR1) | (~finR2)) & (cant < 10))
+			Random(tarea, 1, 4)
+			Random(id, 1, 2)
+			
+			si tarea = 4			
+				si ((id = 1) & (~finR1))
+					finR1:= V
+					EnviarMensaje(finR1, robot1)
+				sino
+					si ((id = 2) & (~finR2))
+						finR2:= V
+						EnviarMensaje(finR2, robot2)		
+			sino
+				Random(av, 2, 100)
+				Random(ca, 2, 100)
+				si ((id = 1) & (~finR1))
+					EnviarMensaje(tarea, robot1)
+					EnviarMensaje(av, robot1)
+					EnviarMensaje(ca, robot1)
+				sino
+					si ((id = 2) & (~finR2))
+						EnviarMensaje(tarea, robot2)
+						EnviarMensaje(av, robot2)
+						EnviarMensaje(ca, robot2)
+						
+			cant:= cant + 1
+			
+		si (cant = 10)
+			si (~finR1)
+				EnviarMensaje(4, robot1)
+				EnviarMensaje(V, robot1)
+			si (~finR2)
+				EnviarMensaje(4, robot2)
+				EnviarMensaje(V, robot2)
+	fin
+
+variables
+	robot1: trabajador
+	robot2: trabajador
+	robotJefe: jefe
+
+comenzar
+	AsignarArea(robot1, areaTrabajadores)
+	AsignarArea(robot1, areaRobot1)
+	
+	AsignarArea(robot2, areaTrabajadores)
+	AsignarArea(robot2, areaRobot2)
+	
+	AsignarArea(robotJefe, areaJefe)
+	
+	Iniciar(robot1, 2, 1)
+	Iniciar(robot2, 3, 1)
+	Iniciar(robotJefe, 1, 1)
+fin
