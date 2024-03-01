@@ -3,8 +3,10 @@
 
 <h2 align='start'>Imperativo</h2>
 
-1. **La municipalidad de la ciudad de La Plata necesita un sistema que le permita recolectar las denuncias realizadas por los ciudadanos. La denuncia la hace cualquier ciudadano y al hacerlo debe proporcionar la categoría de denuncia (1: corte de luz en la vía pública; 2: auto mal estacionado; 3: recolección de residuos; 4: ruidos molestos; 5: semáforo en malfuncionamiento; 6: bache en la calle), su DNI, la dirección (número de calle y número de altura) y el mes, día y hora. </br>
-Implemente en pascal:**
+1. **La municipalidad de la ciudad de La Plata necesita un sistema que le permita recolectar las denuncias realizadas por los ciudadanos.**
+
+    La denuncia la hace cualquier ciudadano y al hacerlo debe proporcionar la categoría de denuncia (1: corte de luz en la vía pública; 2: auto mal estacionado; 3: recolección de residuos; 4: ruidos molestos; 5: semáforo en malfuncionamiento; 6: bache en la calle), su DNI, la dirección (número de calle y número de altura) y el mes, día y hora. </br>
+    Implemente en pascal:
 
     a. Un módulo que genere el alta de todas las denuncias almacenando toda la información en una estructura agrupada por categoría y ordenada por número de calle. La carga finaliza hasta leer el DNI igual a cero. 
     
