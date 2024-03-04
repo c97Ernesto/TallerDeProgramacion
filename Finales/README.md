@@ -73,7 +73,9 @@
 
     -  agregar un bien a un subsidio de bienes.
 
-    - devolver el monto total del subsidio, teniendo en cuenta las fórmulas: Monto_total_subsidio_estadia = costo_pasajes + cantidad_dias_estadiamonto_hotel_por_dia Monto_total_subsidio_bienes = ∑ costo_final_bien_i donde costo_final_bien_i = cantidad_bien_i* costo_por_unidad_bien_i
+    - devolver el monto total del subsidio, teniendo en cuenta las fórmulas: 
+        - Monto_total_subsidio_estadia = costo_pasajes + cantidad_dias_estadia * monto_hotel_por_dia 
+        - Monto_total_subsidio_bienes = ∑ costo_final_bien_i donde costo_final_bien_i = cantidad_bien_i * costo_por_unidad_bien_i
 
     - devolver un String que represente el subsidio, siguiendo los ejemplos:
         - Subsidio estadia: "Nombre del investigador.... Plan de trabajo:... Fecha de solicitud:
@@ -82,6 +84,16 @@
         - Descripción de los bienes solicitados: descripción bien 1, descripción bien 2...."
 
     c. Escriba un programa que instancie un subsidio de estadía y un subsidio de bienes, establezca todos los datos necesarios para cada uno de ellos y muestre por consola la representación String de cada uno.
+
+    [Instanciacion de Objetos](Finales/javas/2023-2-ProgPrincipal.java)
+
+    [Subsidio](Finales/javas/2023-2-Subsidio.java)
+
+    [Subsidio de Estadia](Finales/javas/2023-2-SubsidioDeEstadia.java)
+
+    [Subsidio de Bien](Finales/javas/2023-2-SubsidioDeBien.java)
+
+    [Bien](Finales/javas/2023-2-Bien.java)
 
 
 3. **Una agencia de apuestas de partidos de fútbol desea un sistema para manejar las apuestas que realizan sus clientes, los partidos que usa para las apuestas y todo lo necesario para pagar a los clientes ganadores.**
