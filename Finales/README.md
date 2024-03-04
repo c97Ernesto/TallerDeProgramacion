@@ -85,15 +85,15 @@
 
     c. Escriba un programa que instancie un subsidio de estadía y un subsidio de bienes, establezca todos los datos necesarios para cada uno de ellos y muestre por consola la representación String de cada uno.
 
-    [Instanciacion de Objetos](Finales/javas/2023-2-ProgPrincipal.java)
+    [Instanciacion de Objetos](/Finales/javas/2023-2-ProgPrincipal.java)
 
-    [Subsidio](Finales/javas/2023-2-Subsidio.java)
+    [Subsidio](/Finales/javas/2023-2-Subsidio.java)
 
-    [Subsidio de Estadia](Finales/javas/2023-2-SubsidioDeEstadia.java)
+    [Subsidio de Estadia](/Finales/javas/2023-2-SubsidioDeEstadia.java)
 
-    [Subsidio de Bien](Finales/javas/2023-2-SubsidioDeBien.java)
+    [Subsidio de Bien](/Finales/javas/2023-2-SubsidioDeBien.java)
 
-    [Bien](Finales/javas/2023-2-Bien.java)
+    [Bien](/Finales/javas/2023-2-Bien.java)
 
 
 3. **Una agencia de apuestas de partidos de fútbol desea un sistema para manejar las apuestas que realizan sus clientes, los partidos que usa para las apuestas y todo lo necesario para pagar a los clientes ganadores.**
