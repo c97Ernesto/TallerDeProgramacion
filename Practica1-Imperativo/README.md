@@ -294,12 +294,14 @@ Function buscarNodo(a: Arbol; x: interger): Arbol;
 begin
     if (a = nil) then
         buscarNodo:= nil
-    else
-        if (a^.dato > x) then
-            buscarNodo:= bucar(a^.HI, x);
-        else
-            buscarNodo:= buscarNodo(a^.HD, x);         
-
+		else
+				if (a^.dato = x) then
+						buscarNodo:= a
+    		else
+      			if (a^.dato > x) then
+          		  buscarNodo:= bucar(a^.HI, x);
+        		else
+          	  	buscarNodo:= buscarNodo(a^.HD, x);         
 end;
 ```
 
