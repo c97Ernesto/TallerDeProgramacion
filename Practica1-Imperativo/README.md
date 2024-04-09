@@ -50,8 +50,7 @@ var
 	i, j, p: indice;
 	item: tipoElem;
 	
-begin
-	{busca el min y guarda en p la pos}
+begins
 	for i:= 1 to dimL-1 do begin 
 		p:= i;	//almaceno en p la pos actual del arreglo
 		
@@ -161,11 +160,9 @@ End;
 ## Árboles Binarios de Búsqueda:
 
 Es una estructura de datos jerárquica, formada por nodos, donde cada nodo tiene a los sumo dos hijos. El nodo principal se denomina raíz y los nodos que no tienen hijos se denominan hojas del árbol.
-- Todo Árbol es una estructura de datos jerárquica.
-- Todo Árbol es una estructura de datos dinámica.
-- Todo Árbol es una estructura homogénea.
+- Todo Árbol es una estructura de datos jerárquica, dinámica y  homogénea.
 - Para crear un Árbol siempre se empiza por la ráiz.
-- Un Árbol vacío se representa por le valro "nil".
+- Un Árbol vacío se representa por le valor "nil".
 - Un nuevo dato siempre se inserta como una hoja.
 - Los nodos del Árbol respetan todos el mismo criterio (los hijos ubicados a la izquierda son menores al nodo padre o al revés.)
 

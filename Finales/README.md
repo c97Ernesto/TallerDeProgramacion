@@ -1,13 +1,13 @@
-<h1 align='center'>Finales 2023</h1>
+<h1 align='center'>Finales</h1>
 
 
-<h2 align='start'>Imperativo</h2>
+## Imperativo
 
 1. **La municipalidad de la ciudad de La Plata necesita un sistema que le permita recolectar las denuncias realizadas por los ciudadanos.**
 
-    La denuncia la hace cualquier ciudadano y al hacerlo debe proporcionar la categoría de denuncia (1: corte de luz en la vía pública; 2: auto mal estacionado; 3: recolección de residuos; 4: ruidos molestos; 5: semáforo en malfuncionamiento; 6: bache en la calle), su DNI, la dirección (número de calle y número de altura) y el mes, día y hora. </br>
-    Implemente en pascal:
-
+    La denuncia la hace cualquier ciudadano y al hacerlo debe proporcionar la categoría de denuncia (1: corte de luz en la vía pública; 2: auto mal estacionado; 3: recolección de residuos; 4: ruidos molestos; 5: semáforo en malfuncionamiento; 6: bache en la calle), su DNI, la dirección (número de calle y número de altura) y el mes, día y hora. 
+    
+    Implemente en pascal:</br>
     a. Un módulo que genere el alta de todas las denuncias almacenando toda la información en una estructura agrupada por categoría y ordenada por número de calle. La carga finaliza hasta leer el DNI igual a cero. 
     
     b. Un módulo que reciba la estructura generada en a) y devuelva una lista de denuncias donde para cada número de calle se contabilice cantidad de denuncias totales y cantidad de denuncias realizadas en el mes de julio. 
@@ -16,7 +16,7 @@
 
 2. **La oficina de presupuesto nacional está analizando las partidas de dinero enviadas a las 24 provincias en los últimos años.**
 
-    a. Realice un módulo que lea la información de las partidas de dinero y las almacene en una estructura de datos eficiente para la búsqueda por año. De cada partida se lee el mes y año, código de provincia (entre 1 y 24) y monto enviado a dicha provincia en ese mes y año. La información, para cada año, debe quedar almacenada de manera ordenada ascendentemente por mes. La información se ingresa sin ningún orden. La lectura finaliza cuando se lee la partida enviada a la provincia 24 en el mes 12 y año 2022. Se sugiere utilizar el módulo leerAtencion ().
+    a. Realice un módulo que lea la información de las partidas de dinero y las almacene en una estructura de datos eficiente para la búsqueda por año. De cada partida se lee el mes y año, código de provincia (entre 1 y 24) y monto enviado a dicha provincia en ese mes y año. La información, para cada año, debe quedar almacenada de manera ordenada ascendentemente por mes. La información se ingresa sin ningún orden. La lectura finaliza cuando se lee la partida enviada a la provincia 24 en el mes 12 y año 2022. Se sugiere utilizar el módulo leerAtencion().
 
     b. Realice un módulo que reciba la estructura de datos generada en el inciso 1 y retorne una nueva estructura de datos que contenga, para cada provincia, la cantidad total de partidas recibidas y el monto total.
 
@@ -32,7 +32,7 @@
 
     c. Implemente un módulo recursivo que reciba la lista creada en b) y devuelva la cantidad de recitales que tocaron más de 12 canciones.
 
-<h2 align='start'>Objetos</h2>
+## Objetos
 
 1. **El servicio meteorológico nacional necesita un sistema para sus estaciones que permita registrar la temperatura promedio mensual durante los últimos N años.**
 
@@ -119,13 +119,9 @@
 
     Realice un programa para probar el correcto funcionamiento del sistema.
 
-<h2 align='start'>Concurrente</h2>
+## Concurrente
 
-1. Implemente el siguiente juego: Existe un área compartida delimitada por las esquinas (1,1) (20,20), dos robots jugadores y un robot fiscalizador.
-
-    Ambos robots jugadores juegan simultáneamente y durante el juego tiene cinco intentos para posicionarse en una esquina del área compartida determinada al azar (elegida por el robot fiscalizador), junta todas las flores de
-
-    esa esquina y vuelve a su esquina original informando al fiscalizador cuántas flores juntó en dicha esquina. Cuando los dos robots jugadores finalizan sus cinco intentos, el robot fiscalizador determinará e informará quien es el robot ganador (el que más flores juntó en total).
-
-    El robot perdedor se debe posicionar en la esquina (25,25) y depositar todas las flores juntadas por él. Notas: Los robots jugadores se posicionan inicialmente en (21,21), (22,22) y el robot fiscalizador en la esquina (23,23).
+1. Implemente el siguiente juego: Existe un área compartida delimitada por las esquinas (1,1) (20,20), dos robots jugadores y un robot fiscalizador.</br>
+Ambos robots jugadores juegan simultáneamente y durante el juego tiene cinco intentos para posicionarse en una esquina del área compartida determinada al azar (elegida por el robot fiscalizador), junta todas las flores de esa esquina y vuelve a su esquina original informando al fiscalizador cuántas flores juntó en dicha esquina. Cuando los dos robots jugadores finalizan sus cinco intentos, el robot fiscalizador determinará e informará quien es el robot ganador (el que más flores juntó en total).</br>
+El robot perdedor se debe posicionar en la esquina (25,25) y depositar todas las flores juntadas por él. Notas: Los robots jugadores se posicionan inicialmente en (21,21), (22,22) y el robot fiscalizador en la esquina (23,23).
 

@@ -22,3 +22,5 @@
 - [**Parte 4:** Distinguir modelos de algoritmos a desarrollar de acuerdo al problema planteado.](/Practica3-Concurrente/EjerciciosPracticos#concurrente-parte-4)
 - [**Parte 5**: Repaso.](/Practica3-Concurrente/EjerciciosPracticos#concurrente-parte-5)
 - [Ejercicios Teóricos.](/Practica3-Concurrente/EjerciciosTeoricos)
+
+## [Finales](Finales#imperativo)
