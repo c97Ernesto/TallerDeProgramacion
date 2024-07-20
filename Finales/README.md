@@ -24,13 +24,12 @@
 
     d. Realice un módulo que reciba la estructura de datos generada en 1, dos años y un mes, y retorne la cantidad total de partidas enviadas a las distintas provincias en el mes entre dichos años.
 
-3. **El teatro Musicalisimo ofrece sus instalaciones para que bandas de música puedan dar sus recitales. De cada recital se conoce: el nombre de la banda, la fecha del recital, la cantidad de canciones tocadas y el monto recaudado por la venta de entradas.**
+### Final Taller de programación - Programación Imperativa - 12/10/2023 
 
-    a. Implemente un módulo que lea registros de recitales de manera sucesiva hasta que se ingrese "ZZZ" como nombre de banda. Los recitales se pueden leer en cualquier orden. Todos los recitales leídos deben almacenarse en una estructura que permita el recorrido óptimo por monto recaudado.
-
-    b. Implemente un módulo que reciba la estructura cargada y dos valores (ej: 200 y 500) y devuelva una lista con todos los recitales cuyo monto recaudado se encuentra entre esos dos valores leídos (ambos inclusive). La lista resultante debe estar ordenada por monto de mayor a menor,
-
-    c. Implemente un módulo recursivo que reciba la lista creada en b) y devuelva la cantidad de recitales que tocaron más de 12 canciones.
+El teatro Musicalisimo ofrece sus instalaciones para que bandas de música puedan dar sus recitales. De cada recital se conoce: el nombre de la banda, la fecha del recital, la cantidad de canciones tocadas y el monto recaudado por la venta de entradas.**
+1. Implemente un módulo que lea registros de recitales de manera sucesiva hasta que se ingrese "ZZZ" como nombre de banda. Los recitales se pueden leer en cualquier orden. Todos los recitales leídos deben almacenarse en una estructura que permita el recorrido óptimo por monto recaudado.
+2. Implemente un módulo que reciba la estructura cargada y dos valores (ej: 200 y 500) y devuelva una lista con todos los recitales cuyo monto recaudado se encuentra entre esos dos valores leídos (ambos inclusive). La lista resultante debe estar ordenada por monto de mayor a menor,
+3. Implemente un módulo recursivo que reciba la lista creada en b) y devuelva la cantidad de recitales que tocaron más de 12 canciones.
 
 ## Objetos
 
@@ -119,9 +118,422 @@
 
     Realice un programa para probar el correcto funcionamiento del sistema.
 
+### Final Taller de programación - Módulo POO 09/04/2024
+Una compañía de seguros necesita un sistema para manejar las pólizas de sus clientes. La compañía maneja 10 seguros de rubros diferentes (0: de auto, 1: de motos, 2: de casas, 3: de vida, ... , etc.) y en cada uno de ellos puede proveer hasta 200 pólizas. De cada póliza se conoce el monto asegurado, el valor de la cuota mensual y la fecha de comienzo y fin de la cobertura. Además una póliza corresponde a un cliente de quien se conoce DNI, nombre y apellido. Un mismo cliente puede tener más de una póliza, incluso en el mismo rubro.
+
+1) Modele el problema generando las clases que considere necesarias, cada una con los constructores, estado, getters y setter que considere necesarios.
+2) Implemente en las clases realizadas los métodos necesarios para incorporar la siguiente funcionalidad:
+    - `void agregarPoliza(Poliza unaPoliza, int unRubro)`: Ingresa una nueva póliza en el rubro recibido.
+    - `String infoCliente(int unDNI)`: Devuelve un string con toda la información de todas las pólizas del cliente cuyo DNI se recibe.
+    - `void aumentarCuotas(double unPorcentaje, int unRubro)`: Aumenta el valor de las cuotas de todas las pólizas vigentes de un rubro. El nuevo valor de la cuota se calcula como valorActual * unPorcentaje.
+    - `Int cantidadAVencer(int mes, int año)`: Devuelve la cantidad de pólizas cuya fecha de finalización coincide con el mes y año recibido.
+3) Implemente una función main que simule el ingreso de cinco pólizas, imprima la información de un cliente cuyo DNI se lee por teclado, aumente el valor de las cuotas un 1.11 en el rubro seguro de vida (código 3) e imprima la cantidad de pólizas que se vencen en abril de 2024.
+
+    ```java
+    package companiaDeSeguros;
+
+    public class CompaniaDeSeguros {
+
+        public static void main(String[] args) {
+            Cliente c0 = new Cliente("Cliente1", "ApellidoCliente1", 0);
+            Cliente c1 = new Cliente("Cliente1", "ApellidoCliente1", 1);
+            Cliente c2 = new Cliente("Cliente1", "ApellidoCliente1", 2);
+        
+            Poliza p1 = new Poliza(1, 1, "Agosto 1991", "Agosto 1993", c0);
+            Poliza p2 = new Poliza(2, 2, "Septiembre 1991", "Septiembre 1993", c2);
+            Poliza p3 = new Poliza(3, 3, "Junio 1991", "Julio 1993", c1);
+            Poliza p4 = new Poliza(4, 4, "Noviembre 1991", "Diciembre 1993", c2);
+            Poliza p5 = new Poliza(1, 1, "Febrero 1991", "Julio 1993", c1);
+        
+            Compania compania = new Compania();
+            compania.agregarPoliza(p1, 0);
+            compania.agregarPoliza(p2, 1);
+            compania.agregarPoliza(p3, 2);
+            compania.agregarPoliza(p4, 1);
+            compania.agregarPoliza(p5, 0);
+            
+            System.out.println(compania.infoCliente(2));
+            
+            compania.aumentarCuotas(7, 1);
+            
+            System.out.println(compania.infoCliente(2));
+            
+            System.out.println("Cantidadades a vencer: " + compania.cantidadAVencer("Julio 1993"));
+        }    
+    }
+    ```
+
+    ```java
+    package companiaDeSeguros;
+
+    public class Compania {
+        
+        private Poliza[][] polizas;
+        private final int maxRubros;
+        private final int maxPolizas;
+
+        public Compania() {
+            this.maxRubros = 3;
+            this.maxPolizas = 4;
+            this.polizas = new Poliza[this.maxRubros][this.maxPolizas];
+        }
+        
+        public void agregarPoliza(Poliza unaPoliza, int unRubro) {
+            int posPoliza = 0;
+            while (posPoliza < getMaxPolizas() && getPolizas()[unRubro][posPoliza] != null) {
+                posPoliza++;
+            }
+            if (posPoliza < getMaxPolizas()) {
+                getPolizas()[unRubro][posPoliza] = unaPoliza;
+            }
+        }
+        
+        public String infoCliente(int unDni){
+            String infoCliente = "Información de las Pólizas del Cliente con Dni: " + unDni + " \n";
+            
+            for (int i = 0; i < getMaxRubros(); i++){
+                for (int j = 0; j < getMaxPolizas(); j++){
+                    if (getPolizas()[i][j] != null){
+                        if (getPolizas()[i][j].getCliente().getDni() == unDni){
+                            infoCliente+= getPolizas()[i][j].infoPoliza() + "\n";
+                        }                    
+                    }
+                }
+            }
+            return infoCliente;   
+        }
+        
+        public void aumentarCuotas(double unPorcentaje, int unRubro){
+            int i = 0;
+            while (i < getMaxPolizas() && (getPolizas()[unRubro][i] != null)){
+                Poliza p = getPolizas()[unRubro][i];
+                p.actualizarCuota(unPorcentaje);
+                i++;
+            }
+        }
+        
+        public int cantidadAVencer(String fecha){
+            
+            int total = 0;
+            int posRubro = 0;
+            while (posRubro < getMaxRubros()){
+                int posPoliza = 0;
+                while (posPoliza < getMaxPolizas() && getPolizas()[posRubro][posPoliza] != null){
+                    if (fecha.equals(getPolizas()[posRubro][posPoliza].getFechaFinCobertura()))
+                        total+= 1;
+                    posPoliza++;
+                }
+                posRubro++;
+            }
+            return total;
+        }
+
+        private int getMaxRubros() {
+            return this.maxRubros;
+        }
+
+        private int getMaxPolizas() {
+            return this.maxPolizas;
+        }
+
+        private Poliza[][] getPolizas() {
+            return this.polizas;
+        }        
+    }
+    ```
+
+    ```java
+    package companiaDeSeguros;
+
+    public class Poliza {
+        
+        private double montoAsegurado;
+        private double valorCuotaMensual;
+        private String fechaInicioCobertura;
+        private String fechaFinCobertura;
+        private Cliente cliente;
+
+        public Poliza(double montoAsegurado, double valorCuotaMensual, String fechaInicioCobertura, String fechaFinCobertura, Cliente cliente) {
+            this.montoAsegurado = montoAsegurado;
+            this.valorCuotaMensual = valorCuotaMensual;
+            this.fechaInicioCobertura = fechaInicioCobertura;
+            this.fechaFinCobertura = fechaFinCobertura;
+            this.cliente = cliente;
+        }
+        
+        public String infoPoliza(){
+            String datos = "Información de la Póliza: \n";
+            datos += "Monto asegurado: " + getMontoAsegurado() + ". "
+                    + "Valor cuota mensual:  " + getValorCuotaMensual() + ". "
+                    + "Fecha inicio cobertura: " + getFechaInicioCobertura() + ". "
+                    + "Fecha fin cobertura: " + getFechaFinCobertura();
+            
+            return datos;
+        }
+        
+        public void actualizarCuota(double unProcentaje){
+            setValorCuotaMensual(getValorCuotaMensual()*unProcentaje);
+        }
+        
+        // SETTERS AND GETTERS   
+    }
+    ```
+
+    ```java
+    package companiaDeSeguros;
+
+    public class Cliente {
+        private String nombre;
+        private String apellido;
+        private int dni;
+        
+        private int maxRubros;
+        private int maxPolizas;
+        private Poliza[][] polizas;
+
+        public Cliente(String nombre, String apellido, int dni) {
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.dni = dni;
+            this.maxRubros = 10;
+            this.maxPolizas = 200;
+            this.polizas = new Poliza[10][200];
+        }
+
+        // GETTERS AND SETTERS       
+    }
+    ```
+
+### Taller de programación - Programación orientada a objetos - 12/03/2024
+
+Queremos representar sectores de una **fábrica automotriz**, sus empleados y productos. Un sector posee un nombre, un empleado jefe y los empleados que trabajan en el sector (hasta 50 como máximo). Cualquier sector puede estar trabajando hasta en un máximo de N productos al mismo tiempo.
+
+De cada empleado (incluyendo los jefes de sectores) se desea saber su nombre, apellido y antigüedad.
+
+De cada producto se desea saber su código, el costo total y la etapa en la cual se encuentra (un número de 1 a 5).
+
+1) Implemente el modelo de clases teniendo en cuenta:
+    - Un sector solo debería poder construirse con el nombre y la cantidad máxima N de productos en los que puede trabajar.
+    - Un trabajador solo debería poder construirse con su nombre, apellido y antigüedad.
+    - Todo producto debe ser creado a partir de un código, costo igual a cero y etapa igual a uno.
+2) Implemente los siguientes métodos (en las clases donde corresponda) que permitan realizar la tarea indicada:
+    - `void agregarEmpleado(unEmpleado, esJefe)`: agrega un empleado a un sector. Si `esJefe` es verdadero entonces el empleado se agrega como jefe del sector, en caso contrario se agrega como empleado ordinario.
+        > NOTA: asuma que hay lugar disponible.
+
+    - `void agregarProducto(unProducto)`: agrega un producto a un sector.
+        > NOTA: asuma que hay lugar disponible.
+
+    - `double costoTotal(unaEtapa)`:  devuelve el costo total de los productos que están en el número de etapa pasado como parámetro
+
+    - `void cambiarEtapa(unCodProducto, unCosto)`: aumenta en una unidad la etapa del producto con el código pasado por parámetro. Además, a ese producto también le suma el costo pasado por parámetro.
+
+    - `String toString()`: devuelve un String que tiene el nombre del sector, todos los datos del jefe, la cantidad total de productos en los que está trabajando, el costo total de todos los productos finalizados (los que están en etapa 5) y todos los datos de los trabajadores cuya antigüedad sea mayor a 10.
+
+> NOTA: puede crear todos los métodos auxiliares que considere necesario.
+3) Escriba un programa principal que cree un sector, agréguele un jefe y dos trabajadores. Agregue dos productos y haga avanzar hasta la última etapa a uno de ellos. Luego imprima por consola la representación del sector.
+
+    ```java
+    package fabricaAutomotriz;
+
+    public class Sector {
+        private String nombre;
+        
+        private Empleado jefe;
+        
+        private int maxEmpleados;
+        private int dimLEmpleados;
+        private Empleado[] empleados;
+        
+        private int maxProductos;
+        private int dimLProductos;
+        private Producto[] productos;
+
+        public Sector(String nombre, int maxProductos) {
+            this.nombre = nombre;
+            
+            this.maxEmpleados = 50;
+            this.dimLEmpleados = 0;
+            this.empleados = new Empleado[maxEmpleados];
+            
+            this.maxProductos = maxProductos;
+            this.dimLProductos = 0;
+            this.productos = new Producto[maxProductos];
+        }
+        
+        public void agregarEmpleado(Empleado unEmpleado, boolean esJefe){
+            if (esJefe){
+                this.setJefe(unEmpleado);
+            }
+            else {
+                if (this.getDimLEmpleados() < this.getMaxEmpleados()){
+                    this.getEmpleados()[this.getDimLEmpleados()] = unEmpleado;
+                    this.setDimLEmpleados(this.getDimLEmpleados() + 1);    
+                }        
+            }
+        }
+        
+        public void agregarProducto(Producto unProducto){
+            if (getDimLProductos() < getMaxProductos()){
+                getProductos()[getDimLProductos()] = unProducto;
+                setDimLProductos(getDimLProductos() + 1);
+            }
+        }
+
+        public double costoTotal(int unaEtapa){
+            double costoTotal = 0;
+            for(int i = 0; i < getDimLProductos(); i++){    
+                if (getProductos()[i].getEtapa() == unaEtapa){
+                    costoTotal+= getProductos()[i].getCosto();
+                }
+            }
+            return costoTotal;
+        }
+        
+        public void cambiarEtapa(int unCodProducto, double unCosto){
+            int posicion = 0;
+            while (posicion < getDimLProductos() && (getProductos()[posicion].getCodigo() != unCodProducto)){
+                posicion++;
+            }
+            if (getProductos()[posicion].getCodigo() == unCodProducto){
+                getProductos()[posicion].actualizarProducto(unCosto);
+            }
+            else {
+                System.out.println("No hay producto con el código ingresado.");
+            }
+        }
+        
+        @Override
+        public String toString (){
+            String datos = "Nombre del Sector: " + getNombre() + " \n";
+            datos+= "Datos del Jefe: " + getJefe().toString()+ " \n";
+            datos+= "Costo total de productos finalizados: " + costoTotalProductosFinalizados()+ " \n";
+            
+            datos+= "Empleados con antiguedad mayor a 10 años:  \n";
+            for(int posEmpleado = 0; posEmpleado < getDimLEmpleados(); posEmpleado++){
+                if (getEmpleados()[posEmpleado].getAntiguedad() > 10){
+                    datos+= getEmpleados()[posEmpleado].toString() + " \n";
+                }
+            }
+            return datos;
+        }
+        
+        private double costoTotalProductosFinalizados() {
+            int costoTotalProductosFinalizados = 0;
+            for (int i = 0; i < getDimLProductos(); i++){
+                if (getProductos()[i].estadoFinalizado()){
+                    costoTotalProductosFinalizados+= getProductos()[i].getCosto();
+                }
+            }
+            return costoTotalProductosFinalizados;
+        }
+        
+        // GETTERS AND SETTERS
+    }
+    ```
+
+    ```java
+    package fabricaAutomotriz;
+
+    public class Empleado {
+
+        private String nombre;
+        private String apellido;
+        private int antiguedad;
+
+        public Empleado(String nombre, String apellido, int antiguedad ) {
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.antiguedad = antiguedad;
+        }
+
+        public Empleado() {
+
+        }
+        
+        @Override
+        public String toString(){
+            String datos = ("Nombre: " + getNombre() +" | Apellido: "+ getApellido());
+            return datos;
+        }
+
+        // GETTERS AND SETTERS
+    }
+    ```
+
+    ```java
+    package fabricaAutomotriz;
+
+    public class Producto {
+
+        private int codigo;
+        private double costo;
+        private int etapa;
+
+        public Producto(int codigo) {
+            this.codigo = codigo;
+            this.costo = 0;
+            this.etapa = 1;
+        }
+        
+        boolean estadoFinalizado() {
+            return etapa == 5;
+        }
+        
+        void actualizarProducto(double unCosto) {
+            this.setCosto(getCosto() + unCosto);
+            this.setEtapa(getEtapa() + 1);
+        }
+        
+        // GETTERS AND SETTERS
+    ```
+
+    ```java
+    package fabricaAutomotriz;
+
+    public class FabricaAutomotriz { 
+        public static void main(String[] args) {
+            
+            Sector sector = new Sector("Sector 1", 5);
+            
+            Empleado jefe = new Empleado("Jefe", "ApellidoDelJefe", 20);
+            sector.agregarEmpleado(jefe, true);
+            
+            Empleado e1 = new Empleado("Empleado1", "ApellidoDelEmpleado1", 1);
+            sector.agregarEmpleado(e1, false);
+            
+            Empleado e2 = new Empleado("Empleado2", "ApellidoDelEmpleado2", 2);
+            sector.agregarEmpleado(e2, false);
+            
+            Empleado e3 = new Empleado("Empleado3", "ApellidoDelEmpleado3", 13);
+            sector.agregarEmpleado(e3, false);
+            
+            Producto p1 = new Producto(1); Producto p2 = new Producto(2);
+            Producto p3 = new Producto(3); Producto p4 = new Producto(4);
+            Producto p5 = new Producto(5);
+
+            sector.agregarProducto(p1); sector.agregarProducto(p2);
+            sector.agregarProducto(p3); sector.agregarProducto(p4);
+            sector.agregarProducto(p5); 
+            
+            sector.cambiarEtapa(4, 4); sector.cambiarEtapa(4, 4);
+            sector.cambiarEtapa(4, 4); sector.cambiarEtapa(4, 4);
+            sector.cambiarEtapa(2, 2); sector.cambiarEtapa(2, 2);
+            sector.cambiarEtapa(2, 2); sector.cambiarEtapa(2, 2);
+            
+            for (int i = 0; i < sector.getDimLEmpleados(); i++) {
+                System.out.println("Empleado número "+ i + ": "+ sector.getEmpleados()[i].getNombre());
+            }
+            
+            System.out.println(sector.toString());
+        }
+    }
+    ```
+
 ## Concurrente
 
-1. Implemente el siguiente juego: Existe un área compartida delimitada por las esquinas (1,1) (20,20), dos robots jugadores y un robot fiscalizador.</br>
+### Final Taller de programación - Módulo Concurrente - 30/11/2023
+Implemente el siguiente juego: Existe un área compartida delimitada por las esquinas (1,1) (20,20), dos robots jugadores y un robot fiscalizador.</br>
 Ambos robots jugadores juegan simultáneamente y durante el juego tiene cinco intentos para posicionarse en una esquina del área compartida determinada al azar (elegida por el robot fiscalizador), junta todas las flores de esa esquina y vuelve a su esquina original informando al fiscalizador cuántas flores juntó en dicha esquina. Cuando los dos robots jugadores finalizan sus cinco intentos, el robot fiscalizador determinará e informará quien es el robot ganador (el que más flores juntó en total).</br>
-El robot perdedor se debe posicionar en la esquina (25,25) y depositar todas las flores juntadas por él. Notas: Los robots jugadores se posicionan inicialmente en (21,21), (22,22) y el robot fiscalizador en la esquina (23,23).
+El robot perdedor se debe posicionar en la esquina (25,25) y depositar todas las flores juntadas por él. 
+> Notas: Los robots jugadores se posicionan inicialmente en (21,21), (22,22) y el robot fiscalizador en la esquina (23,23).
 

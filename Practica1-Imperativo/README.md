@@ -1,34 +1,33 @@
-<h1 align="center">Modulos</h1>
+# Módulos
 
-<h2 align="center">Arreglos</h2>
+## Arreglos
+- ### Métodos de Ordenación: 
+	- **[Selección](#selección)**
+	- **[Inserción](#inserción)**
+- ### [Generar Vector de Listas.](#generar-vector-de-listas-1)
 
-### [Selección](#1-selección)
-### [Ordenación](#2-inserción)
-### [Generar Vector de Listas.](#generar-vector-de-listas-1)
+## Árboles Binarios de Búsqueda
 
-<h2 align="center">Árboles Binarios de Búsqueda</h2>
+- ### [Creación.](#1-creación)
+- ### [Recorridos: inOrden, preOrden y postOrden.](#2-recorridos-enorden-preorden-y-postorden)
+- ### [Búsqueda: Elemento mínimo y máximo.](#3-búsqueda-elemento-mínimo-y-máximo)
+- ### [Búsqueda: Nodo mínimo y máximo.](#4-búsqueda-nodo-mínimo-y-máximo)
+- ### [Búsqueda: Devolver si se encuentra el nodo en la estructura.](#5-busqueda-devolver-si-se-encuentra-el-elemento-en-la-estructura)
+- ### [Búsqueda: Devolver el nodo donde se encuentra el elemento.](#6-busqueda-devolver-el-nodo-donde-se-encuentra-el-elemento)
 
-### [Creación.](#1-creación)
-### [Recorridos: inOrden, preOrden y postOrden.](#2-recorridos-enorden-preorden-y-postorden)
-### [Búsqueda: Elemento mínimo y máximo.](#3-búsqueda-elemento-mínimo-y-máximo)
-### [Búsqueda: Nodo mínimo y máximo.](#4-búsqueda-nodo-mínimo-y-máximo)
-### [Búsqueda: Devolver si se encuentra el nodo en la estructura.](#5-busqueda-devolver-si-se-encuentra-el-elemento-en-la-estructura)
-### [Búsqueda: Devolver el nodo donde se encuentra el elemento.](#6-busqueda-devolver-el-nodo-donde-se-encuentra-el-elemento)
-
-<h2 align="center">Listas</h2>
-
-### [Crear Lista: Merge.](#crear-lista-merge-1)
-### [Crear Lista: Merge Acumulador.](#crear-lista-merge-acumulador-1)
+## Listas
+- ### [Crear Lista: Merge.](#crear-lista-merge-1)
+- ### [Crear Lista: Merge Acumulador.](#crear-lista-merge-acumulador-1)
 
 
 ## Arreglos: Métodos de ordenación.
 
-### 1. Selección
+### Selección
 Dado un arreglo A y una dimensión lógica (dimL), el algoritmo consiste en buscar (hasta finalizar) en cada vuelta en que posición está ubicado el elemento mínimo, y al finalizar la vuelta intercambiar el elemento mínimo con el primero que no ha sido ordenado.
 
 Es decir, en la **primera vuelta** se busca en que posición está ubicado el mínimo (realizando la búsqueda desde la 1ra posición hasta la última, siendo esta, dimL) y se intercambia el elemento de la primera posición con el elemento ubicado en la posición en la que se encontró el mínimo.
 
-En la **seunda vuelta** se busca en que posición está ubicado el mínimo comenzado desde la 2da posición hasta el final del arreglo (dimL), luego se intercambia el elemento de la segunda posición con el elemento ubicado en la posición donde se encontró el segundo mínimo
+En la **segunda vuelta** se busca en que posición está ubicado el mínimo comenzado desde la 2da posición hasta el final del arreglo (dimL), luego se intercambia el elemento de la segunda posición con el elemento ubicado en la posición donde se encontró el segundo mínimo
 
 El algoritmo se repite (dimensión lógica - 1) veces.
 
@@ -48,9 +47,9 @@ El algoritmo se repite (dimensión lógica - 1) veces.
 Procedure OrdenarPorSeleccion(var v: vector; dimL: indice);
 var
 	i, j, p: indice;
-	item: tipoElem;
+	item: tipoElem; 	// tipo de elemento del arreglo
 	
-begins
+begin
 	for i:= 1 to dimL-1 do begin 
 		p:= i;	//almaceno en p la pos actual del arreglo
 		
@@ -66,7 +65,7 @@ begins
 end;
 ```
 
-### 2. Inserción
+### Inserción
 Dado un arreglo A y una dimensión lógica (dimL), el algoritmo consiste en ordenar en cada vuelta un elemetno de un subconjunto de elementos ya ordenados.
 
 Es decir, en la **primera vuelta** se toma todo el subconjunto que contiene _solo el primer elemento_ del arreglo y ovbiamente se considera ordenado.
@@ -160,14 +159,25 @@ End;
 ## Árboles Binarios de Búsqueda:
 
 Es una estructura de datos jerárquica, formada por nodos, donde cada nodo tiene a los sumo dos hijos. El nodo principal se denomina raíz y los nodos que no tienen hijos se denominan hojas del árbol.
+
+#### Características:
 - Todo Árbol es una estructura de datos jerárquica, dinámica y  homogénea.
 - Para crear un Árbol siempre se empiza por la ráiz.
 - Un Árbol vacío se representa por le valor "nil".
 - Un nuevo dato siempre se inserta como una hoja.
-- Los nodos del Árbol respetan todos el mismo criterio (los hijos ubicados a la izquierda son menores al nodo padre o al revés.)
+- Los nodos del Árbol respetan todos el mismo criterio (los hijos ubicados a la izquierda son menores al nodo padre y los ubicados a la derecha son mayores al nodo padre.)
+```pascal
+Type
+	Arbol = ^nodo;
+	nodo = record
+		dato: dato;
+		HI: Arbol;
+		HD: Arbol;
+	end;
+```
 
 ### 1. Creación:
-```Pascal
+```pascal
 Procedure Crear(var a: Arbol; num: dato);
 begin
 	if (a = nil) then begin
@@ -185,38 +195,41 @@ end;
 ```
 
 ### 2. Recorridos: EnOrden, PreOrden y PostOrden.
-```Pascal
-Procedure enOrden (a: Arbol);
-begin
-    if ( a <> nil ) then begin
-        enOrden (a^.HI);
-        write (a^.dato); //o cualquier otra acción
-        enOrden (a^.HD);
-    end;
-end;
-```
 
-```Pascal
-Procedure preOrden(a: Arbol);
-begin
-    if ( a <> nil ) then begin
-        write (a^.dato); //o cualquier otra acción
-        enOrden (a^.HI);
-        enOrden (a^.HD);
-    end;
-end;
-```
+- Recorrido **enOrden**: hijoIzq - raíz - hijoDer
+	```Pascal
+	Procedure enOrden (a: Arbol);
+	begin
+		if ( a <> nil ) then begin
+			enOrden (a^.HI);
+			write (a^.dato); //o cualquier otra acción
+			enOrden (a^.HD);
+		end;
+	end;
+	```
 
-```Pascal
-Procedure postOrden (a: Arbol);
-begin
-    if ( a <> nil ) then begin
-        enOrden (a^.HI);
-        enOrden (a^.HD);
-        write (a^.dato); //o cualquier otra acción
-    end;
-end;
-```
+- Recorrido **preOrden**: raíz - hijoIzq - hijoDer
+	```Pascal
+	Procedure preOrden(a: Arbol);
+	begin
+		if ( a <> nil ) then begin
+			write (a^.dato); //o cualquier otra acción
+			enOrden (a^.HI);
+			enOrden (a^.HD);
+		end;
+	end;
+	```
+- Recorrido **postOrden**: hijoIzq - hijoDer - raíz
+	```Pascal
+	Procedure postOrden (a: Arbol);
+	begin
+		if ( a <> nil ) then begin
+			enOrden (a^.HI);
+			enOrden (a^.HD);
+			write (a^.dato); //o cualquier otra acción
+		end;
+	end;
+	```
 
 ### 3. Búsqueda: Elemento mínimo y máximo.
 
@@ -281,7 +294,7 @@ begin
             if (a^.dato > x) then
                 buscarElemento:= buscar(a^.HI, x);
             else
-                buscarElemento:= buscarElemento(a^.HD)
+                buscarElemento:= buscarElemento(a^.HD, x)
 end;
 ```
 
@@ -292,13 +305,13 @@ begin
     if (a = nil) then
         buscarNodo:= nil
 		else
-				if (a^.dato = x) then
-						buscarNodo:= a
+			if (a^.dato = x) then
+				buscarNodo:= a
     		else
       			if (a^.dato > x) then
-          		  buscarNodo:= bucar(a^.HI, x);
+          			buscarNodo:= bucar(a^.HI, x);
         		else
-          	  	buscarNodo:= buscarNodo(a^.HD, x);         
+          	  		buscarNodo:= buscarNodo(a^.HD, x);         
 end;
 ```
 
@@ -328,6 +341,17 @@ End
 ```
 
 ## Listas
+
+- Una **lista** es una estructura de datos lineal compuesta por nodos. 
+
+- Cada nodo de la lista posee el dato que almacena la lista y la dirección del siguiente nodo. Toda lista puede recorrerse a partir de su primer elemento.
+
+- Los elementos no necesariamente está en posiciones contiguas de memoria.
+
+- Para generar nuevos elementos en la lista, o eliminar alguno se deben utilizar las operaciones de `new` y `dispose` respectivamente.
+
+- Características: homogénea, dinámica, de acceso secuencial, y lineal (le sigue y antecede un único elemento).
+
 ### Crear Lista: Merge.
 
 ```pascal
