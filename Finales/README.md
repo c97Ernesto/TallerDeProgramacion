@@ -24,6 +24,156 @@
 
     d. Realice un módulo que reciba la estructura de datos generada en 1, dos años y un mes, y retorne la cantidad total de partidas enviadas a las distintas provincias en el mes entre dichos años.
 
+### Final Taller de programación - Módulo imperativo 02/07/2024
+
+La oficina de mantenimiento de una empresa recibe llamadas telefónicas con problemas reportados por distintos empleados de la empresa. En cada llamada recibe: nivel de la importancia del problema (un número entre 1 .. 5), sector de la empresa donde se detectó el problema (un número entre 1 .. 50), número de empleados afectados por el problema.
+
+Implemente en Pascal un programa que invoque a:
+
+1.   Un módulo que simule la recepción de 100 llamadas en total con problemas reportados (puede generar números random) y almacene toda la información generada en una estructura agrupada por nivel de importancia y ordenada por sector de la empresa donde se detectó el problema.
+
+2. Un módulo que reciba la estructura generada en 1) y un nivel de importancia N y devuelva una estructura eficiente para la búsqueda, ordenada por número de empleados afectados, con todos los problemas del
+nivel N.
+
+3. Un módulo que reciba la estructura generada en 2) y devuelva el número de sector del problema con mayor cantidad de empleados afectados.
+
+    ```pascal
+    PROGRAM finaleImperativo_07_24;
+    CONST
+        MAX_llamadas = 8;
+        MAX_importancias = 5;
+    TYPE
+        rng_importancias = 1..5;
+        rng_sectores = 1..50;
+        
+        reg_llamada = record
+            nivelImportancia: rng_importancias;
+            sectorProblema: rng_sectores;
+            empleadosAfectados: integer;
+        end;
+        
+        lista_llamadas = ^nodo_lista;
+        nodo_lista = record
+            sig: lista_llamadas;
+            datos: reg_llamada;
+        end;
+        
+        arbol_llamadas = ^nodo;
+        nodo = record
+            hi: arbol_llamadas;
+            hd: arbol_llamadas;
+            datos: reg_llamada;
+        end;
+        
+        vector_importancias = array [rng_importancias] of lista_llamadas;
+        
+    {________________________InicializarVectorListas.________________________}
+    Procedure iniciarlizarVector(var vec: vector_importancias);
+    Var
+        i: integer;
+    Begin
+        for i:= 1 to MAX_importancias do begin
+            vec[i]:= nil;
+        end;
+    End;
+    {________________________Punto 1.________________________}
+    Procedure GenerarVectorDeListas(var vec: vector_importancias);
+
+        procedure leerLlamada(var llamada: reg_llamada);
+        begin
+            write('Ingresar nivel de importancia del problema: ');
+            readln(llamada.nivelImportancia);
+            write('Ingresar sector donde se detectó el problema: ');
+            readln(llamada.sectorProblema);
+            write('Números de empleados afectados: ');
+            readln(llamada.empleadosAfectados);
+        end;
+        
+        procedure cargarListaOrdenada(var l: lista_llamadas; llamada: reg_llamada);
+        var
+            ant, act, nodo: lista_llamadas;
+        begin
+            new(nodo);
+            nodo^.datos:= llamada;
+            act:= l;
+            while ((act <> nil) and (llamada.sectorProblema < act^.datos.sectorProblema)) do begin
+                ant:= act;
+                act:= act^.sig;
+            end;
+            if (act = l) then
+                l:= nodo
+            else
+                ant^.sig:= nodo;
+            nodo^.sig:= act;
+        end;
+
+    Var
+        i: integer;
+        llamada: reg_llamada;
+    Begin
+        for i:= 1 to MAX_llamadas do begin
+            leerLlamada(llamada);
+            cargarListaOrdenada(vec[llamada.nivelImportancia], llamada);
+        end;
+    End;
+    {________________________Punto 2.________________________}
+    Procedure GenerarArbol(var arbol: arbol_llamadas; l: lista_llamadas);
+
+        procedure insertarEnArbol(var nodo: arbol_llamadas; llamada: reg_llamada);
+        begin
+            if (nodo <> nil) then
+                if (llamada.empleadosAfectados < nodo^.datos.empleadosAfectados) then
+                    insertarEnArbol(nodo^.hi, llamada)
+                else
+                    insertarEnArbol(nodo^.hd, llamada)
+            else begin
+                new(nodo);
+                nodo^.datos:= llamada;
+                nodo^.hi:= nil;
+                nodo^.hd:= nil;
+            end;
+        end;
+
+    Begin
+        arbol:= nil;
+        while (l <> nil) do begin
+            insertarEnArbol(arbol, l^.datos);
+            l:= l^.sig;
+        end;
+    End;
+    {________________________Punto 3.________________________}
+    Function devolverMayorCantDeEmpleados(a: arbol_llamadas): integer;
+    Begin
+        if (a^.hd = nil) then
+            devolverMayorCantDeEmpleados:= a^.datos.sectorProblema
+        else
+            devolverMayorCantDeEmpleados:= devolverMayorCantDeEmpleados(a^.hd);
+    End;
+    {________________________P.P.________________________}
+    VAR
+        vector: vector_importancias;
+        arbol: arbol_llamadas;
+        nivel: integer;
+    BEGIN
+        iniciarlizarVector(vector);
+        writeln('');
+        
+        GenerarVectorDeListas(vector);
+        writeln('');
+        
+        ImprimirVector(vector);
+        writeln('');
+        
+        write('Ingresar Nivel de Importancia: '); readln(nivel);
+        if ((nivel <= MAX_importancias) and (vector[nivel] <> nil)) then begin
+            GenerarArbol(arbol, vector[nivel]);
+            ImprimirArbol(arbol);
+            writeln('El número de sector con mayor cantidad de empleados afectados es: ', devolverMayorCantDeEmpleados(arbol));
+        end;
+    END.
+    ```
+
+
 ### Final Taller de programación - Programación Imperativa - 12/10/2023 
 
 El teatro Musicalisimo ofrece sus instalaciones para que bandas de música puedan dar sus recitales. De cada recital se conoce: el nombre de la banda, la fecha del recital, la cantidad de canciones tocadas y el monto recaudado por la venta de entradas.**
