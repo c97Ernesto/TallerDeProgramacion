@@ -176,10 +176,192 @@ nivel N.
 
 ### Final Taller de programación - Programación Imperativa - 12/10/2023 
 
-El teatro Musicalisimo ofrece sus instalaciones para que bandas de música puedan dar sus recitales. De cada recital se conoce: el nombre de la banda, la fecha del recital, la cantidad de canciones tocadas y el monto recaudado por la venta de entradas.**
+El teatro Musicalisimo ofrece sus instalaciones para que bandas de música puedan dar sus recitales. De cada recital se conoce: el nombre de la banda, la fecha del recital, la cantidad de canciones tocadas y el monto recaudado por la venta de entradas.
 1. Implemente un módulo que lea registros de recitales de manera sucesiva hasta que se ingrese "ZZZ" como nombre de banda. Los recitales se pueden leer en cualquier orden. Todos los recitales leídos deben almacenarse en una estructura que permita el recorrido óptimo por monto recaudado.
 2. Implemente un módulo que reciba la estructura cargada y dos valores (ej: 200 y 500) y devuelva una lista con todos los recitales cuyo monto recaudado se encuentra entre esos dos valores leídos (ambos inclusive). La lista resultante debe estar ordenada por monto de mayor a menor,
 3. Implemente un módulo recursivo que reciba la lista creada en b) y devuelva la cantidad de recitales que tocaron más de 12 canciones.
+
+```pascal
+PROGRAM finalImperativo_10_23;
+CONST
+	FIN = 'ZZZ';
+
+TYPE
+	reg_recital = record
+		nombreBanda: string;
+		fecha: string;
+		cancionesTocadas: integer;
+		montoRecaudado:real;
+	end;
+	
+	arbol = ^nodo_arbol;
+	nodo_arbol = record
+		datos: reg_recital;
+		hi: arbol;
+		hd: arbol;
+	end;
+	
+	lista_recitales = ^nodo_lista;
+	nodo_lista = record
+		datos: reg_recital;
+		sig: lista_recitales
+	end;
+	
+
+{______________________________Punto 1______________________________}
+Procedure GenerarArbol(var a: arbol);
+	procedure leerRecital(var r: reg_recital; nombre: string);
+	begin
+		r.nombreBanda:= nombre;
+		write('Ingresar fecha del recital: ');
+		readln(r.fecha);
+		write('Ingresar canciones tocadas: ');
+		readln(r.cancionesTocadas);
+		write('Ingresar monto recaudado: ');
+		readln(r.montoRecaudado);
+	end;
+
+	procedure insertarNodo(var a: arbol; registro: reg_recital);
+	begin
+		if (a <> nil) then
+			if (a^.datos.montoRecaudado > registro.montoRecaudado) then
+				insertarNodo(a^.hi, registro)
+			else
+				insertarNodo(a^.hd, registro)
+		else begin
+			new(a);
+			a^.datos:= registro;
+			a^.hi:= nil;
+			a^.hd:= nil;
+		end;
+	end;
+
+Var
+	recital: reg_recital;
+	nombreBanda: string;
+	
+Begin
+	a:= nil;
+	
+	write('Ingresar nombre de la Banda: ');
+	readln(nombreBanda);
+	
+	while (nombreBanda <> FIN) do begin
+		leerRecital(recital, nombreBanda);
+		insertarNodo(a, recital);
+		
+		write('Ingresar nombre de la Banda <> ZZZ: ');
+		readln(nombreBanda);
+	end;
+End;
+{______________________________MostrarRecital______________________________}
+Procedure MostrarRecital(recital: reg_recital);
+Begin
+	writeln('Nombre de Banda: ', recital.nombreBanda);
+	writeln('Fecha: ', recital.fecha);
+	writeln('Canciones tocadas: ', recital.cancionesTocadas);
+	writeln('Monto recaudado: ', recital.montoRecaudado);
+	writeln('');
+End;
+{______________________________ImprimirAbb______________________________}
+Procedure ImprimirArbol(a: arbol);
+Begin
+	if (a <> nil) then begin
+		ImprimirArbol(a^.hi);
+		MostrarRecital(a^.datos);
+		ImprimirArbol(a^.hd);
+	end;
+End;	
+{______________________________Punto 2______________________________}
+Procedure GenerarLista(a: arbol; var l: lista_recitales);
+	procedure insertarNodo(var l: lista_recitales; recital: reg_recital);
+	var
+		nodo: lista_recitales;
+	begin
+		new(nodo);
+		nodo^.datos:= recital;
+		nodo^.sig:= l;
+		l:= nodo;
+	end;
+	
+	procedure recorrerAbb(a: arbol; n1, n2: integer; var l: lista_recitales);
+	begin
+		if (a <> nil) then
+			if (a^.datos.montoRecaudado < n2) then
+				if (a^.datos.montoRecaudado > n1) then begin
+					recorrerAbb(a^.hi, n1, n2, l);
+					insertarNodo(l, a^.datos);
+					recorrerAbb(a^.hd, n1, n2, l);
+				end
+				else
+					recorrerAbb(a^.hd, n1, n2, l)
+			else
+				recorrerAbb(a^.hi, n1, n2, l);
+	end;
+
+var
+	monto1, monto2: integer;
+	
+Begin
+	l:= nil;
+	
+	write('Ingresar monto 1: ');
+	readln(monto1);
+	write('Ingresar monto 2: ');
+	readln(monto2);
+	
+	recorrerAbb(a, monto1, monto2, l);
+
+End;
+
+
+{______________________________ImprimirLista______________________________}
+Procedure ImprimirLista(l: lista_recitales);
+Begin
+	if (l <> nil) then begin
+		MostrarRecital(l^.datos);
+		ImprimirLista(l^.sig);
+	end;
+End;
+
+{______________________________Punto 3______________________________}
+Procedure TotalRecitales(l: lista_recitales; var total: integer);
+Begin
+	while (l <> nil) do begin
+		if (l^.datos.cancionesTocadas > 12) then
+			total:= total + 1;
+		l:= l^.sig;
+	end;
+End;
+
+{______________________________P.P______________________________}
+VAR
+	abb: arbol;
+	lista: lista_recitales;
+	total: integer;
+BEGIN
+	
+	GenerarArbol(abb);
+	
+	writeln('ARBOL');
+	ImprimirArbol(abb);
+	writeln('');
+	
+	GenerarLista(abb, lista);
+	
+	writeln('LISTA');
+	ImprimirLista(lista);
+	writeln('');
+	
+	writeln('TOTAL RECITALES');
+	total:= 0;
+	TotalRecitales(lista, total);
+	writeln('La cantidad de recitales con más de 12 canciones tocadas fueron: ', total);
+	
+END.
+
+
+```
 
 ## Objetos
 

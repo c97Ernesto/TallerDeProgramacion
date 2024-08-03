@@ -16,6 +16,7 @@
 - ### [Búsqueda: Devolver el nodo donde se encuentra el elemento.](#6-busqueda-devolver-el-nodo-donde-se-encuentra-el-elemento)
 
 ## Listas
+- ### [Insertar nodo.](#insertar-nodo)
 - ### [Crear Lista: Merge.](#crear-lista-merge-1)
 - ### [Crear Lista: Merge Acumulador.](#crear-lista-merge-acumulador-1)
 
@@ -351,6 +352,63 @@ End
 - Para generar nuevos elementos en la lista, o eliminar alguno se deben utilizar las operaciones de `new` y `dispose` respectivamente.
 
 - Características: homogénea, dinámica, de acceso secuencial, y lineal (le sigue y antecede un único elemento).
+
+### Insertar Nodo
+
+- **Insertar al comienzo**
+	```pascal
+	procedure cargarLista (var l: lista; dato: datos);
+	var
+		aux: lista;
+	begin
+		new(aux);
+		aux^.datos:= dato;
+		aux^.sig:= l;
+		l:= aux;
+	end;
+	```
+
+- **Insertar atrás**
+	```pascal
+	procedure agregarAtras(var l: lista; dato: datos); 
+	var  
+		act, nodo : lista;
+	begin 
+		new (nodo);
+		nodo^.datos:= dato;
+		nodo^.sig := nil;
+		if l <> nil then begin
+			act := l ;
+			while  (act^.sig <> nil) do 
+				act := act^.sig ;
+			act^.sig := nodo ;
+		end
+		else
+			l:= nodo;
+	end;
+	```
+
+- **Insertar ordenado**
+	```pascal
+	procedure insertarOrdenado(var l: lista_recitales; recital: reg_recital);
+	var
+		nodo, ant, act: lista_recitales;
+	begin
+		new(nodo);
+		nodo^.datos:= recital;
+		act:= l;
+		while ((act <> nil) and (recital.montoRecaudado < l^.datos.montoRecaudado)) do begin
+			ant:= act;
+			act:= act^.sig;
+		end;
+		if (act = l) then	//en caso de que la lista se encuentre vacía
+			l:= nodo
+		else					//en caso de que el elemento se posicione en el medio o al final
+			ant^.sig:= nodo;
+				
+		nodo^.sig:= act;		// en el primer caso sig contendrà nil, sino el que le seguía al anterior
+	end;
+	```
 
 ### Crear Lista: Merge.
 
