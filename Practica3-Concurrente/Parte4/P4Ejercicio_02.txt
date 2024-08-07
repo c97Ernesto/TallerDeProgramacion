@@ -1,0 +1,112 @@
+programa P4Ejercicio_02
+
+
+procesos
+
+  proceso depositarPapelesEnCincuenta(ES papeles: numero)
+  variables
+    avAct, caAct: numero
+  comenzar
+    avAct:= PosAv
+    caAct:= PosCa
+
+    BloquearEsquina(50, 50)
+    Pos(50, 50)
+
+    repetir 5
+      depositarPapel
+      papeles:= papeles - 1
+
+    Pos(avAct, caAct)
+    LiberarEsquina(50, 50)
+  fin
+
+  proceso juntarYdepositarPapeles(ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:= papeles + 1
+      si (papeles > 4)
+        depositarPapelesEnCincuenta(papeles)
+  fin
+
+  proceso juntarPapelesEnCincuenta(ES intentos: numero)
+  variables
+    avIni, caIni: numero
+    totalPapeles: numero
+    papeles: numero
+  comenzar
+    totalPapeles:= 0
+    avIni:= PosAv
+    caIni:= PosCa
+
+    BloquearEsquina(50, 50)
+    Pos(50, 50)
+
+    si HayPapelEnLaEsquina
+      intentos:= 0
+      Random(papeles, 2, 5)
+
+      mientras (HayPapelEnLaEsquina & (totalPapeles < papeles))
+        tomarPapel
+        totalPapeles:= totalPapeles + 1
+
+      Pos(avIni, caIni)
+      LiberarEsquina(50, 50)
+
+    sino
+      intentos:= intentos + 1
+      Pos(avIni, caIni)
+      LiberarEsquina(50, 50)
+  fin
+
+
+areas
+  areaProductor1: AreaP(5,1,5,100)
+  areaProductor2: AreaP(10,1,10,100)
+  areaPrivadaConsumidor1: AreaP(11,1,11,1)
+  areaPrivadaConsumidor2: AreaP(12,1,12,1)
+  areaCompartida: AreaC(50, 50, 50, 50)
+
+
+robots
+  robot productor
+  variables
+    papeles: numero
+  comenzar
+    papeles:= 0
+    repetir 99
+      juntarYdepositarPapeles(papeles)
+      mover
+  fin  
+
+  robot consumidor
+  variables
+    intentos: numero
+  comenzar
+    intentos:= 0
+    Informar('Consumidor', intentos)
+    mientras (intentos < 8)
+      juntarPapelesEnCincuenta(intentos)
+  fin
+
+variables
+  consumidor1: consumidor
+  consumidor2: consumidor
+  productor1: productor
+  productor2: productor
+
+comenzar
+  AsignarArea(productor1, areaProductor1)
+  AsignarArea(productor2, areaProductor2)
+  AsignarArea(productor1, areaCompartida)
+  AsignarArea(productor2, areaCompartida)
+  AsignarArea(consumidor1, areaPrivadaConsumidor1)
+  AsignarArea(consumidor2, areaPrivadaConsumidor2)
+  AsignarArea(consumidor1, areaCompartida)
+  AsignarArea(consumidor2, areaCompartida)
+  Iniciar(productor1, 5, 1)
+  Iniciar(productor2, 10, 1)
+  Iniciar(consumidor1, 11, 1)
+  Iniciar(consumidor2, 12, 1)
+fin
