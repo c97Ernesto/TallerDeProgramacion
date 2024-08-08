@@ -1,102 +1,92 @@
-programa p4Ej3
-
+programa P4Ejercicio_03
 procesos
-
-	proceso juntarPapeles(ES papelesJuntados: numero; ES papelesJuntar: numero)
-	comenzar
-		mientras (HayPapelEnLaEsquina & (papelesJuntados < papelesJuntar))
-			tomarPapel
-			papelesJuntados:= papelesJuntados + 1
-	fin
-
+  proceso juntarPapeles(ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:= papeles + 1
+  fin
+  proceso concluirEtapa(E miId: numero)
+  variables
+    unId, otroId: numero
+  comenzar
+    si (miId = 1)
+      EnviarMensaje(miId, r2)
+      EnviarMensaje(miId, r3)
+    sino
+      si (miId = 2)
+        EnviarMensaje(miId, r1)
+        EnviarMensaje(miId, r3)
+      sino
+        EnviarMensaje(miId, r1)
+        EnviarMensaje(miId, r2)
+    RecibirMensaje(unId, *)
+    RecibirMensaje(otroId, *)
+  fin
 areas
-	areaMaratonista1: AreaP(1, 1, 1, 100)
-	areaMaratonista2: AreaP(2, 1, 2, 100)
-	areaMaratonista3: AreaP(3, 1, 3, 100)
-	areaFiscalizador: AreaP(4, 50, 4, 50)
-
+  areaR1: AreaP(1, 1, 1, 100)
+  areaR2: AreaP(2, 1, 2, 100)
+  areaR3: AreaP(3, 1, 3, 100)
+  areaRx: AreaP(4,1,4,1)
 robots
-	robot maratonista
-	
-	variables
-		robotX, robotY: numero
-		calles, esquinas, id: numero 
-		papelesJuntados, papelesJuntar: numero
-		
-	comenzar
-		robotX:= -1
-		robotY:= -1
-		calles:= 1
-		esquinas:= 0
-		RecibirMensaje(id, robotFisco)
-		
-		
-		Random(papelesJuntar, 1, 5)
-		papelesJuntados:= 0
-		mientras (calles < 100)
-			
-			juntarPapeles(papelesJuntados, papelesJuntar)
-							
-			si (papelesJuntados = papelesJuntar)
-				
-				papelesJuntados:= 0
-				
-				si (id = 1)
-					EnviarMensaje(id, robot2)
-					EnviarMensaje(id, robot3)
-					RecibirMensaje(robotX, *)
-					RecibirMensaje(robotY, *)
-				sino 
-					si (id = 2)
-						EnviarMensaje(id, robot1)
-						EnviarMensaje(id, robot3)
-						RecibirMensaje(robotX, *)
-						RecibirMensaje(robotY, *)
-					sino
-						si (id = 3)
-							EnviarMensaje(id, robot1)
-							EnviarMensaje(id, robot2)
-							RecibirMensaje(robotX, *)
-							RecibirMensaje(robotY, *)
-							
-				Random(papelesJuntar, 1, 5)
-				
-			si ~(HayPapelEnLaEsquina)
-				mover
-				calles:= calles + 1
-							
-		juntarPapeles(papelesJuntados, papelesJuntar)
-		
-		// quedar en bucle recibiendo mensajes hasta que finalicen los demás
-		Informar(id)
-		
-	fin
-	
-	robot fiscalizador
-	comenzar
-		EnviarMensaje(1, robot1)
-		EnviarMensaje(2, robot2)
-		EnviarMensaje(3, robot3)
-	fin
+  robot r
+  variables
+    papeles: numero
+    id: numero
+    calle: numero
+    finalizoR1, finalizoR2: boolean
+  comenzar
+    finalizoR1:= F
+    finalizoR2:= F
+    RecibirMensaje(id, rX)
+    mientras (PosCa < 99) & (~finalizoR1 | ~finalizoR2)
+      Random(totalPapeles, 1, 5)
+      papeles:= 0
+      mientras (papeles < totalPapeles)
+        si (~finalizoR1 & ~finalizoR2)
+          RecibirMensaje(finalizoR1, r1)
+          RecibirMensaje(finalizoR2, r2)
+        sino
+          si (~finalizoR1)
+            RecibirMensaje(finalizoR1, r1)
+          sino
+            si (~finalizoR2)
+              RecibirMensaje(finalizoR2, r2)
+        
+        juntarPapeles(papeles)
+      si (~HayPapelEnLaEsquina)
+        mover
 
-
+    si (~finalizoR1 & ~finalizoR2)
+      EnviarMensaje(V, r1)  
+      EnviarMensaje(V, r2)
+    sino
+      si (~finalizoR1)
+        EnviarMensaje(V, r1)
+      sino
+        si (~finalizoR2)
+          EnviarMensaje(V, r2)
+          
+    
+  fin
+  robot x
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+  fin
 variables
-
-	robot1: maratonista
-	robot2: maratonista
-	robot3: maratonista
-	robotFisco: fiscalizador
-
+  r1: r
+  r2: r
+  r3: r
+  rX: x
 comenzar
-	AsignarArea(robot1, areaMaratonista1)
-	AsignarArea(robot2, areaMaratonista2)
-	AsignarArea(robot3, areaMaratonista3)
-	AsignarArea(robotFisco, areaFiscalizador)
-	
-	Iniciar(robot1, 1, 1)
-	Iniciar(robot2, 2, 1)
-	Iniciar(robot3, 3, 1)
-	Iniciar(robotFisco, 4, 50)
-
+  AsignarArea(r1, areaR1)
+  AsignarArea(r2, areaR2)
+  AsignarArea(r3, areaR3)
+  AsignarArea(rX, areaRx)
+  Iniciar(r1, 1, 1)
+  Iniciar(r2, 2, 1)
+  Iniciar(r3, 3, 1)
+  Iniciar(rX, 4, 1)
 fin
-

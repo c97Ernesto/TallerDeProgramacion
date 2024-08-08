@@ -1,0 +1,125 @@
+programa P5Ejercicio_05
+
+procesos
+  proceso EnviarIds
+  comenzar
+    EnviarMensaje(1, robot1)
+    EnviarMensaje(2, robot2)
+    EnviarMensaje(3, robot3)
+  fin
+
+  proceso juntarPapeles(ES papeles: numero)
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+      papeles:= papeles + 1
+  fin
+
+  proceso solicitarPapeles(E id: numero; ES papeles: numero)
+  variables
+    papeles: numero
+  comenzar
+    Random(papeles, 1, 5)
+    EnviarMensaje(id, robotServidor)
+    EnviarMensaje(papeles, robotServidor)
+  fin
+
+  proceso dejarPapeles(ES totalPapeles: numero; E papeles: numero)
+  variables
+    avIni, caIni: numero
+  comenzar
+    avIni:= PosAv
+    caIni:= PosCa
+    BloquearEsquina(100, 1)
+    Pos(100, 1)
+    repetir papeles
+      depositarPapel
+      totalPapeles:= totalPapeles - 1
+    Pos(avIni, caIni)
+    LiberarEsquina(100, 1)
+  fin
+
+  proceso tomarYdepositarPapeles(E papeles: numero)
+  variables
+    avIni, caIni: numero
+  comenzar
+    avIni:= PosAv
+    caIni:= PosCa
+    repetir papeles
+      BloquearEsquina(100, 1)
+      Pos(100, 1)
+      tomarPapel
+      Pos(avIni, caIni)
+      LiberarEsquina(100, 1) 
+      depositarPapel
+  fin
+
+areas
+  areaCompartida: AreaC(100, 1, 100, 1)
+  areaR1: AreaP(10, 1, 10, 1)
+  areaR2: AreaP(11, 1, 11, 1)
+  areaR3: AreaP(12, 1, 12, 1)
+  areaServidor: AreaP(13, 1, 13, 1)
+
+robots
+  robot servidor
+  variables
+    papeles, totalPapeles: numero
+    id: numero
+
+  comenzar
+    juntarPapeles(totalPapeles)
+    EnviarIds
+
+    repetir 12
+      RecibirMensaje(id, *)
+      si (id = 1)
+        RecibirMensaje(papeles, robot1)
+        dejarPapeles(totalPapeles, papeles)
+        EnviarMensaje(id, robot1)
+      sino
+        si (id = 2)
+          RecibirMensaje(papeles, robot2)
+          dejarPapeles(totalPapeles, papeles)
+          EnviarMensaje(id, robot2)
+        sino
+          RecibirMensaje(papeles, robot3)
+          dejarPapeles(totalPapeles, papeles)
+          EnviarMensaje(id, robot3)
+  fin
+
+
+  robot cliente
+  variables
+    papeles: numero
+    miId, n: numero
+
+  comenzar
+    RecibirMensaje(miId, robotServidor)
+
+    repetir 4
+      solicitarPapeles(miId, papeles)
+      RecibirMensaje(n, robotServidor)
+      tomarYdepositarPapeles(papeles)
+  fin
+
+variables
+  robotServidor: servidor
+  robot1: cliente
+  robot2: cliente
+  robot3: cliente
+  
+comenzar
+  AsignarArea(robot1, areaR1)
+  AsignarArea(robot1, areaCompartida)
+  AsignarArea(robot2, areaR2)
+  AsignarArea(robot2, areaCompartida)
+  AsignarArea(robot3, areaR3)
+  AsignarArea(robot3, areaCompartida)
+  AsignarArea(robotServidor, areaServidor)
+  AsignarArea(robotServidor, areaCompartida)
+  Iniciar(robot1, 10, 1)
+  Iniciar(robot2, 11, 1)
+  Iniciar(robot3, 12, 1)
+  Iniciar(robotServidor, 13, 1)
+fin

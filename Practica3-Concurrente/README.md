@@ -251,6 +251,24 @@ Los robots clientes inician en las esquinas (1,1) , (2,1) y (3,1) respectivament
 2. **Productores y Consumidores:** Existen dos robots productores que recorren las avenidas 5 y 10 respectivamente, juntando todos los papeles de su avenida. A lo largo del recorrido, cada vez que juntan 5 papeles, los depositan en la esquina (50, 50).</br>
 Además existen dos robots consumidores que intentan tomar una cantidad aleatoria de papeles (entre 2 y 5) de la esquina (50,50) para depositarla en su esquina de origen. Si la esquina (50,50) no posee la cantidad de papeles requerida, vuelven a su esquina de origen sin tomar ningún papel. Si luego de 8 intentos seguidos detectan que la esquina (50,50) no tiene papeles suficientes para juntar, entonces asumirán que los productores ya han completado su trabajo y por lo tanto terminarán su tarea también.</br>
 Los consumidores inician en las esquinas (11, 1) y (12, 1) respectivamente.
+   - [Resolución ejercicio 2](./Parte4/P4Ejercicio_02.txt)
+
+3. **Sincronización Barrera:** Tres robots deben vaciar de papeles su avenida, comenzando por la calle 1 y terminando en la calle 100. El trabajo lo deben realizar todos juntos y por etapas: los robots inician juntos y cuando todos completan una etapa del trabajo pueden avanzar a la siguiente, lo que significa que para poder pasar de etapa los robots deben esperar que todos hayan completado la etapa en curso. Se proponen dos posibles soluciones para este problema: etapas homogéneas o heterogéneas:
+   1. Implemente el programa considerando que cada robot completa completa una etapa cada 5 esquinas.
+      - [Resolución ejercicio 3a](./Parte4/P4Ejercicio_03a.txt)
+
+   2. Implemente el programa considerando que cada robot completa una etapa luego de juntar N papeles. El valor de N (entre 1 y 5) lo calcula cada robot antes de iniciar la etapa.
+      - [Resolución ejercicio 3b](./Parte4/P4Ejercicio_03b.txt)
+
+   Los robots inician en esquinas (1,1), (2,1) y (3,1) respectivamente. Existe un robot coordinador, cuya única tarea es asignar identificadores a cada robot.
+   En cada solución, analice como debería finalizar el programa.
+   
+4. **Jefe y trabajadores - Master/Slave:** Un robot jefe asigna tareas a los trabajadores. Las tareas consisten en 1. recoger flores, 2. recoger papeles, 3. vaciar bolsa, 4. finalizar.</br>
+Existen 2 robots trabajadores que reciben solicitudes de tareas del robot jefe. Para cada solicitud, reciben la tarea y la esquina donde deben realizarla (salvo cuando la tarea es 4 que no deben acceder a una esquina). Luego de recibir la tarea, los robots van a la esquina indicada, realizan la tarea, avisan al jefe que ya la completaron y quedan a la espera de una nueva tarea.
+
+   El robot jefe inicia en la esquina (1,1) y los robots trabajadores inician en las esquinas (2,1) y (3,1). Las tareas se asignan aleatoriamente a cualquier esquina dentro del cuadrante comprendido entre las esquinas (2,2) y (100,100). El robot jefe envía 10 tareas aleatorias a trabajadores aleatorios y termina.
+
+   Analice: existe el riesgo de que el programa quede bloqueado, y que ningún robot trabajador pueda realizar su tarea. ¿en qué caso puede suceder esto? ¿qué resulta necesario considerar para evitar esta situación?
 
 ## Concurrente Parte 5.
 ### Objetivo:
@@ -262,9 +280,11 @@ de dos robots, y debe realizar una tarea:
    - Los robots R1 y R2 del equipo rojo debe juntar todas las flores de las avenidas 2 y 3
 respectivamente.
    - Los robots A1 y A2 del equipo azul debe juntar todos los papeles de las calles 98 y
-99 respectivamente. </br>
-Al finalizar la competencia, un robot fiscalizador deberá informar el equipo que juntó más
+99 respectivamente.
+
+   Al finalizar la competencia, un robot fiscalizador deberá informar el equipo que juntó más
 objetos.
+
    - [Resolución ejercicio 1](./Parte5/P5Ejercicio_01.txt)
 
 2. Tres robots recolectores deben avanzar por su calle vaciando las esquinas. El avance
