@@ -1,4 +1,4 @@
-<h1 align='center'>Finales</h1>
+# Finales
 
 
 ## Imperativo
@@ -24,18 +24,17 @@
 
     d. Realice un módulo que reciba la estructura de datos generada en 1, dos años y un mes, y retorne la cantidad total de partidas enviadas a las distintas provincias en el mes entre dichos años.
 
-### Final Taller de programación - Módulo imperativo 02/07/2024
+4. ### Final Taller de programación - Módulo imperativo 02/07/2024
 
-La oficina de mantenimiento de una empresa recibe llamadas telefónicas con problemas reportados por distintos empleados de la empresa. En cada llamada recibe: nivel de la importancia del problema (un número entre 1 .. 5), sector de la empresa donde se detectó el problema (un número entre 1 .. 50), número de empleados afectados por el problema.
+    La oficina de mantenimiento de una empresa recibe llamadas telefónicas con problemas reportados por distintos empleados de la empresa. En cada llamada recibe: nivel de la importancia del problema (un número entre 1 .. 5), sector de la empresa donde se detectó el problema (un número entre 1 .. 50), número de empleados afectados por el problema.
 
-Implemente en Pascal un programa que invoque a:
+    Implemente en Pascal un programa que invoque a:
 
-1.   Un módulo que simule la recepción de 100 llamadas en total con problemas reportados (puede generar números random) y almacene toda la información generada en una estructura agrupada por nivel de importancia y ordenada por sector de la empresa donde se detectó el problema.
+    1. Un módulo que simule la recepción de 100 llamadas en total con problemas reportados (puede generar números random) y almacene toda la información generada en una estructura agrupada por nivel de importancia y ordenada por sector de la empresa donde se detectó el problema.
 
-2. Un módulo que reciba la estructura generada en 1) y un nivel de importancia N y devuelva una estructura eficiente para la búsqueda, ordenada por número de empleados afectados, con todos los problemas del
-nivel N.
+    2. Un módulo que reciba la estructura generada en 1) y un nivel de importancia N y devuelva una estructura eficiente para la búsqueda, ordenada por número de empleados afectados, con todos los problemas del nivel N.
 
-3. Un módulo que reciba la estructura generada en 2) y devuelva el número de sector del problema con mayor cantidad de empleados afectados.
+    3. Un módulo que reciba la estructura generada en 2) y devuelva el número de sector del problema con mayor cantidad de empleados afectados.
 
     ```pascal
     PROGRAM finaleImperativo_07_24;
@@ -174,220 +173,220 @@ nivel N.
     ```
 
 
-### Final Taller de programación - Programación Imperativa - 12/10/2023 
+4. ### Final Taller de programación - Programación Imperativa - 12/10/2023 
 
-El teatro Musicalisimo ofrece sus instalaciones para que bandas de música puedan dar sus recitales. De cada recital se conoce: el nombre de la banda, la fecha del recital, la cantidad de canciones tocadas y el monto recaudado por la venta de entradas.
-1. Implemente un módulo que lea registros de recitales de manera sucesiva hasta que se ingrese "ZZZ" como nombre de banda. Los recitales se pueden leer en cualquier orden. Todos los recitales leídos deben almacenarse en una estructura que permita el recorrido óptimo por monto recaudado.
-2. Implemente un módulo que reciba la estructura cargada y dos valores (ej: 200 y 500) y devuelva una lista con todos los recitales cuyo monto recaudado se encuentra entre esos dos valores leídos (ambos inclusive). La lista resultante debe estar ordenada por monto de mayor a menor,
-3. Implemente un módulo recursivo que reciba la lista creada en b) y devuelva la cantidad de recitales que tocaron más de 12 canciones.
+    El teatro Musicalisimo ofrece sus instalaciones para que bandas de música puedan dar sus recitales. De cada recital se conoce: el nombre de la banda, la fecha del recital, la cantidad de canciones tocadas y el monto recaudado por la venta de entradas.
+    1. Implemente un módulo que lea registros de recitales de manera sucesiva hasta que se ingrese "ZZZ" como nombre de banda. Los recitales se pueden leer en cualquier orden. Todos los recitales leídos deben almacenarse en una estructura que permita el recorrido óptimo por monto recaudado.
+    2. Implemente un módulo que reciba la estructura cargada y dos valores (ej: 200 y 500) y devuelva una lista con todos los recitales cuyo monto recaudado se encuentra entre esos dos valores leídos (ambos inclusive). La lista resultante debe estar ordenada por monto de mayor a menor,
+    3. Implemente un módulo recursivo que reciba la lista creada en b) y devuelva la cantidad de recitales que tocaron más de 12 canciones.
 
-```pascal
-PROGRAM finalImperativo_10_23;
-CONST
-	FIN = 'ZZZ';
+    ```pascal
+    PROGRAM finalImperativo_10_23;
+    CONST
+        FIN = 'ZZZ';
 
-TYPE
-	reg_recital = record
-		nombreBanda: string;
-		fecha: string;
-		cancionesTocadas: integer;
-		montoRecaudado:real;
-	end;
-	
-	arbol = ^nodo_arbol;
-	nodo_arbol = record
-		datos: reg_recital;
-		hi: arbol;
-		hd: arbol;
-	end;
-	
-	lista_recitales = ^nodo_lista;
-	nodo_lista = record
-		datos: reg_recital;
-		sig: lista_recitales
-	end;
-	
+    TYPE
+        reg_recital = record
+            nombreBanda: string;
+            fecha: string;
+            cancionesTocadas: integer;
+            montoRecaudado:real;
+        end;
+        
+        arbol = ^nodo_arbol;
+        nodo_arbol = record
+            datos: reg_recital;
+            hi: arbol;
+            hd: arbol;
+        end;
+        
+        lista_recitales = ^nodo_lista;
+        nodo_lista = record
+            datos: reg_recital;
+            sig: lista_recitales
+        end;
+        
 
-{______________________________Punto 1______________________________}
-Procedure GenerarArbol(var a: arbol);
-	procedure leerRecital(var r: reg_recital; nombre: string);
-	begin
-		r.nombreBanda:= nombre;
-		write('Ingresar fecha del recital: ');
-		readln(r.fecha);
-		write('Ingresar canciones tocadas: ');
-		readln(r.cancionesTocadas);
-		write('Ingresar monto recaudado: ');
-		readln(r.montoRecaudado);
-	end;
+    {______________________________Punto 1______________________________}
+    Procedure GenerarArbol(var a: arbol);
+        procedure leerRecital(var r: reg_recital; nombre: string);
+        begin
+            r.nombreBanda:= nombre;
+            write('Ingresar fecha del recital: ');
+            readln(r.fecha);
+            write('Ingresar canciones tocadas: ');
+            readln(r.cancionesTocadas);
+            write('Ingresar monto recaudado: ');
+            readln(r.montoRecaudado);
+        end;
 
-	procedure insertarNodo(var a: arbol; registro: reg_recital);
-	begin
-		if (a <> nil) then
-			if (a^.datos.montoRecaudado > registro.montoRecaudado) then
-				insertarNodo(a^.hi, registro)
-			else
-				insertarNodo(a^.hd, registro)
-		else begin
-			new(a);
-			a^.datos:= registro;
-			a^.hi:= nil;
-			a^.hd:= nil;
-		end;
-	end;
+        procedure insertarNodo(var a: arbol; registro: reg_recital);
+        begin
+            if (a <> nil) then
+                if (a^.datos.montoRecaudado > registro.montoRecaudado) then
+                    insertarNodo(a^.hi, registro)
+                else
+                    insertarNodo(a^.hd, registro)
+            else begin
+                new(a);
+                a^.datos:= registro;
+                a^.hi:= nil;
+                a^.hd:= nil;
+            end;
+        end;
 
-Var
-	recital: reg_recital;
-	nombreBanda: string;
-	
-Begin
-	a:= nil;
-	
-	write('Ingresar nombre de la Banda: ');
-	readln(nombreBanda);
-	
-	while (nombreBanda <> FIN) do begin
-		leerRecital(recital, nombreBanda);
-		insertarNodo(a, recital);
-		
-		write('Ingresar nombre de la Banda <> ZZZ: ');
-		readln(nombreBanda);
-	end;
-End;
-{______________________________MostrarRecital______________________________}
-Procedure MostrarRecital(recital: reg_recital);
-Begin
-	writeln('Nombre de Banda: ', recital.nombreBanda);
-	writeln('Fecha: ', recital.fecha);
-	writeln('Canciones tocadas: ', recital.cancionesTocadas);
-	writeln('Monto recaudado: ', recital.montoRecaudado);
-	writeln('');
-End;
-{______________________________ImprimirAbb______________________________}
-Procedure ImprimirArbol(a: arbol);
-Begin
-	if (a <> nil) then begin
-		ImprimirArbol(a^.hi);
-		MostrarRecital(a^.datos);
-		ImprimirArbol(a^.hd);
-	end;
-End;	
-{______________________________Punto 2______________________________}
-Procedure GenerarLista(a: arbol; var l: lista_recitales);
-	procedure insertarNodo(var l: lista_recitales; recital: reg_recital);
-	var
-		nodo: lista_recitales;
-	begin
-		new(nodo);
-		nodo^.datos:= recital;
-		nodo^.sig:= l;
-		l:= nodo;
-	end;
-	
-	procedure recorrerAbb(a: arbol; n1, n2: integer; var l: lista_recitales);
-	begin
-		if (a <> nil) then
-			if (a^.datos.montoRecaudado < n2) then
-				if (a^.datos.montoRecaudado > n1) then begin
-					recorrerAbb(a^.hi, n1, n2, l);
-					insertarNodo(l, a^.datos);
-					recorrerAbb(a^.hd, n1, n2, l);
-				end
-				else
-					recorrerAbb(a^.hd, n1, n2, l)
-			else
-				recorrerAbb(a^.hi, n1, n2, l);
-	end;
+    Var
+        recital: reg_recital;
+        nombreBanda: string;
+        
+    Begin
+        a:= nil;
+        
+        write('Ingresar nombre de la Banda: ');
+        readln(nombreBanda);
+        
+        while (nombreBanda <> FIN) do begin
+            leerRecital(recital, nombreBanda);
+            insertarNodo(a, recital);
+            
+            write('Ingresar nombre de la Banda <> ZZZ: ');
+            readln(nombreBanda);
+        end;
+    End;
+    {______________________________MostrarRecital______________________________}
+    Procedure MostrarRecital(recital: reg_recital);
+    Begin
+        writeln('Nombre de Banda: ', recital.nombreBanda);
+        writeln('Fecha: ', recital.fecha);
+        writeln('Canciones tocadas: ', recital.cancionesTocadas);
+        writeln('Monto recaudado: ', recital.montoRecaudado);
+        writeln('');
+    End;
+    {______________________________ImprimirAbb______________________________}
+    Procedure ImprimirArbol(a: arbol);
+    Begin
+        if (a <> nil) then begin
+            ImprimirArbol(a^.hi);
+            MostrarRecital(a^.datos);
+            ImprimirArbol(a^.hd);
+        end;
+    End;	
+    {______________________________Punto 2______________________________}
+    Procedure GenerarLista(a: arbol; var l: lista_recitales);
+        procedure insertarNodo(var l: lista_recitales; recital: reg_recital);
+        var
+            nodo: lista_recitales;
+        begin
+            new(nodo);
+            nodo^.datos:= recital;
+            nodo^.sig:= l;
+            l:= nodo;
+        end;
+        
+        procedure recorrerAbb(a: arbol; n1, n2: integer; var l: lista_recitales);
+        begin
+            if (a <> nil) then
+                if (a^.datos.montoRecaudado < n2) then
+                    if (a^.datos.montoRecaudado > n1) then begin
+                        recorrerAbb(a^.hi, n1, n2, l);
+                        insertarNodo(l, a^.datos);
+                        recorrerAbb(a^.hd, n1, n2, l);
+                    end
+                    else
+                        recorrerAbb(a^.hd, n1, n2, l)
+                else
+                    recorrerAbb(a^.hi, n1, n2, l);
+        end;
 
-var
-	monto1, monto2: integer;
-	
-Begin
-	l:= nil;
-	
-	write('Ingresar monto 1: ');
-	readln(monto1);
-	write('Ingresar monto 2: ');
-	readln(monto2);
-	
-	recorrerAbb(a, monto1, monto2, l);
+    var
+        monto1, monto2: integer;
+        
+    Begin
+        l:= nil;
+        
+        write('Ingresar monto 1: ');
+        readln(monto1);
+        write('Ingresar monto 2: ');
+        readln(monto2);
+        
+        recorrerAbb(a, monto1, monto2, l);
 
-End;
-
-
-{______________________________ImprimirLista______________________________}
-Procedure ImprimirLista(l: lista_recitales);
-Begin
-	if (l <> nil) then begin
-		MostrarRecital(l^.datos);
-		ImprimirLista(l^.sig);
-	end;
-End;
-
-{______________________________Punto 3______________________________}
-Procedure TotalRecitales(l: lista_recitales; var total: integer);
-Begin
-	while (l <> nil) do begin
-		if (l^.datos.cancionesTocadas > 12) then
-			total:= total + 1;
-		l:= l^.sig;
-	end;
-End;
-
-{______________________________P.P______________________________}
-VAR
-	abb: arbol;
-	lista: lista_recitales;
-	total: integer;
-BEGIN
-	
-	GenerarArbol(abb);
-	
-	writeln('ARBOL');
-	ImprimirArbol(abb);
-	writeln('');
-	
-	GenerarLista(abb, lista);
-	
-	writeln('LISTA');
-	ImprimirLista(lista);
-	writeln('');
-	
-	writeln('TOTAL RECITALES');
-	total:= 0;
-	TotalRecitales(lista, total);
-	writeln('La cantidad de recitales con más de 12 canciones tocadas fueron: ', total);
-	
-END.
+    End;
 
 
-```
+    {______________________________ImprimirLista______________________________}
+    Procedure ImprimirLista(l: lista_recitales);
+    Begin
+        if (l <> nil) then begin
+            MostrarRecital(l^.datos);
+            ImprimirLista(l^.sig);
+        end;
+    End;
+
+    {______________________________Punto 3______________________________}
+    Procedure TotalRecitales(l: lista_recitales; var total: integer);
+    Begin
+        while (l <> nil) do begin
+            if (l^.datos.cancionesTocadas > 12) then
+                total:= total + 1;
+            l:= l^.sig;
+        end;
+    End;
+
+    {______________________________P.P______________________________}
+    VAR
+        abb: arbol;
+        lista: lista_recitales;
+        total: integer;
+    BEGIN
+        
+        GenerarArbol(abb);
+        
+        writeln('ARBOL');
+        ImprimirArbol(abb);
+        writeln('');
+        
+        GenerarLista(abb, lista);
+        
+        writeln('LISTA');
+        ImprimirLista(lista);
+        writeln('');
+        
+        writeln('TOTAL RECITALES');
+        total:= 0;
+        TotalRecitales(lista, total);
+        writeln('La cantidad de recitales con más de 12 canciones tocadas fueron: ', total);
+        
+    END.
+    ```
 
 ## Objetos
 
 1. **El servicio meteorológico nacional necesita un sistema para sus estaciones que permita registrar la temperatura promedio mensual durante los últimos N años.**
 
-     Además, según la estación, necesita dos versiones del sistema que permita o bien reportar el promedio histórico por años, o bien reportar el promedio histórico por meses. Esto se detalla más adelante.
+    Además, según la estación, necesita dos versiones del sistema que permita o bien reportar el promedio histórico por años, o bien reportar el promedio histórico por meses. Esto se detalla más adelante.
 
     Todas las estaciones se caracterizan por un nombre y las coordenadas latitud y longitud donde se encuentra. Implemente las clases, constructores y métodos que considere necesario para realizar lo siguiente:
 
-    a) Crear el sistema de registro/informes que permita almacenar la temperatura promedio de cada mes del año en los últimos N años.
+    1. Crear el sistema de registro/informes que permita almacenar la temperatura promedio de cada mes del año en los últimos N años.
 
-    b) Registrar (almacenar) una temperatura de un mes y año recibidos por parámetro.
+    2. Registrar (almacenar) una temperatura de un mes y año recibidos por parámetro.
 
-    c) Devolver la temperatura de un determinado mes y año recibidos por parámetro.
+    3. Devolver la temperatura de un determinado mes y año recibidos por parámetro.
 
-    d) Devolver un String que concatena el mes y año en que se registró la mayor temperatura. Nota: Suponga que ya estarán registradas las temperaturas de todos los meses y años. 
+    4. Devolver un String que concatena el mes y año en que se registró la mayor temperatura. Nota: Suponga que ya estarán registradas las temperaturas de todos los meses y años. 
     
-    e) Devolver un string con el nombre de la estación, sus coordenadas y los promedios mensuales o anuales según corresponda: 
+    5. Devolver un string con el nombre de la estación, sus coordenadas y los promedios mensuales o anuales según corresponda: 
 
-        a. La versión del sistema que reporta por años deberá calcular el promedio para cada año (el promedio del año A se calcula usando los datos mensuales de ese año).
-            Ej: "La Plata (34,921 S-57,955 O): Αño 2020: 23,8 °C; Año 2021: 26,1 °C; Αñο 2022: 25,3 °C."
+        1. La versión del sistema que reporta por años deberá calcular el promedio para cada año (el promedio del año A se calcula usando los datos mensuales de ese año).
 
-        b. La versión del sistema que reporta por meses deberá calcular el promedio para cada mes (el promedio del mes M se calcula usando los datos de ese mes de todos los años).
-            Ej: "La Plata (34,921 S-57,955 O): Enero: 28,2 °C; Febrero: 26,8 °C; Marzo: 24.3 °C....." Nota: Suponga que ya estarán registradas las temperaturas de todos los meses y años.
+            `Ej: "La Plata (34,921 S-57,955 O): Αño 2020: 23,8 °C; Año 2021: 26,1 °C; Αñο 2022: 25,3 °C."`
 
-    f) Realice un programa principal que cree un Sistema con informe anual para los últimos 3 años. Cargue todas las temperaturas (para todos los meses y años). Informe los promedios anuales, y el mes y año en que se registró la mayor temperatura.
+        2. La versión del sistema que reporta por meses deberá calcular el promedio para cada mes (el promedio del mes M se calcula usando los datos de ese mes de todos los años).
+
+            `Ej: "La Plata (34,921 S-57,955 O): Enero: 28,2 °C; Febrero: 26,8 °C; Marzo: 24.3 °C....." Nota: Suponga que ya estarán registradas las temperaturas de todos los meses y años.`
+
+    6. Realice un programa principal que cree un Sistema con informe anual para los últimos 3 años. Cargue todas las temperaturas (para todos los meses y años). Informe los promedios anuales, y el mes y año en que se registró la mayor temperatura.
 
     Luego cree un Sistema con informe mensual para los últimos 4 años. Cargue todas las temperaturas (para todos los meses y años). Informe los promedios mensuales, y el mes y año en que se registró la mayor temperatura.
 
@@ -416,16 +415,270 @@ END.
 
     c. Escriba un programa que instancie un subsidio de estadía y un subsidio de bienes, establezca todos los datos necesarios para cada uno de ellos y muestre por consola la representación String de cada uno.
 
-    [Instanciacion de Objetos](/Finales/javas/2023-2-ProgPrincipal.java)
+    ```java
+    package ejerciciofinal;
 
-    [Subsidio](/Finales/javas/2023-2-Subsidio.java)
+    public class ProgPrincipal {
+           public static void main(String[] args) {
+            
+            SubsidioDeEstadia subEstadia = new SubsidioDeEstadia("Juan", "Carlos", "1/1/1", "Barilo", 2, 2, 2);
+            
+            Bien b1 = new Bien("Bien 1", 1, 1);
+            Bien b2 = new Bien("Bien 2", 2, 2);
+            Bien b3 = new Bien("Bien 3", 3, 3);
+            
+            SubsidioDeBien subBien = new SubsidioDeBien("Carlo", "Magno", "1/1/1", 3);
+            subBien.agregarBien(b1);
+            subBien.agregarBien(b2);
+            subBien.agregarBien(b3);
+            
+            System.out.println(subEstadia.representacionSubsidio());
+            System.err.println("");
+            System.err.println("");
+            System.out.println(subBien.representacionSubsidio());        
+        }
+    }
+    ```
 
-    [Subsidio de Estadia](/Finales/javas/2023-2-SubsidioDeEstadia.java)
+    ```java
+    package ejerciciofinal;
 
-    [Subsidio de Bien](/Finales/javas/2023-2-SubsidioDeBien.java)
+    public abstract class Subsidio {
+        
+        private String nombreInvestigador;
+        private String nombrePlanTrabajo;
+        private String fechaSolicitud;
+        
+        
+        public Subsidio(String nombreInvestigador, String nombrePlanTrabajo, String fechaSolicitud){
+            this.nombreInvestigador = nombreInvestigador;
+            this.nombrePlanTrabajo = nombrePlanTrabajo;
+            this.fechaSolicitud = fechaSolicitud;
+        }
 
-    [Bien](/Finales/javas/2023-2-Bien.java)
+        public String getNombreInvestigador() {
+            return nombreInvestigador;
+        }
 
+        public void setNombreInvestigador(String nombreInvestigador) {
+            this.nombreInvestigador = nombreInvestigador;
+        }
+
+        public String getNombrePlanTrabajo() {
+            return nombrePlanTrabajo;
+        }
+
+        public void setNombrePlanTrabajo(String nombrePlanTrabajo) {
+            this.nombrePlanTrabajo = nombrePlanTrabajo;
+        }
+
+        public String getFechaSolicitud() {
+            return fechaSolicitud;
+        }
+
+        public void setFechaSolicitud(String fechaSolicitud) {
+            this.fechaSolicitud = fechaSolicitud;
+        }
+        
+        public abstract double montoTotalSubsidio();
+        
+        public abstract String representacionSubsidio(); 
+    }
+    ```
+
+    ```java
+    public class ejerciciofinal {
+
+    public class SubsidioDeBien extends Subsidio{
+        private Bien [] bienes;
+        private int dimLogica;
+        private int maxBienes;
+        
+        
+        public SubsidioDeBien(String nombreInvestigador, String nombrePlanTrabajo, String fechaSolicitud, 
+                int totalBienes) {
+            super(nombreInvestigador, nombrePlanTrabajo, fechaSolicitud);
+        
+            this.dimLogica = 0;
+            this.maxBienes = totalBienes;
+            this.bienes = new Bien [maxBienes];
+        }
+        
+        
+        public void agregarBien(Bien bien){
+            this.bienes[this.getDimLogica()] = bien;
+            this.setDimLogica(this.getDimLogica() + 1);
+        }
+        
+        public int getDimLogica() {
+            return dimLogica;
+        }
+        
+        public void setDimLogica(int dimLogica) {
+            this.dimLogica = dimLogica;
+        }
+        
+        public int getMaxBienes() {
+            return maxBienes;
+        }
+        
+        public void setMaxBienes(int maxBienes) {
+            this.maxBienes = maxBienes;
+        }
+
+        @Override
+        public double montoTotalSubsidio() {
+            
+            double total = 0;
+            for (int i = 0; i < this.getDimLogica(); i++){
+                total += this.bienes[i].costoFinal();
+            }
+            
+            return total;
+        }
+
+        @Override
+        public String representacionSubsidio() {
+            String representacion = "NOMBRE DEL INVESTIGADOR: " + super.getNombreInvestigador() + " \n" +
+                    "PLAN DE TRABAJO: " + super.getNombrePlanTrabajo() + " \n" +
+                    "FECHA DE SOLICITUD: " + super.getFechaSolicitud() + " \n";
+            
+            for (int i = 0; i < this.getDimLogica(); i++) {
+                representacion+= this.bienes[i].representacionBien();
+            }
+            
+            representacion += "MONTO TOTAL SUBSIDIO: " + this.montoTotalSubsidio() + " \n";
+            
+            return representacion;
+            
+        }    
+    }
+    ```
+
+    ```java
+    package ejerciciofinal;
+
+    public class SubsidioDeEstadia extends Subsidio{
+
+        private String lugarDestino;
+        private double costoPasajes;
+        private int cantDiasEstadia;
+        private double costoHotelDia;
+
+        public SubsidioDeEstadia(String nombreInvestigador, String nombrePlanTrabajo, String fechaSolicitud, 
+                String lugarDestino, double costoPasaje, int cantDiasEstadia, double costoHotelDia) {
+            super(nombreInvestigador, nombrePlanTrabajo, fechaSolicitud);
+            this.lugarDestino = lugarDestino;
+            this.costoPasajes = costoHotelDia;
+            this.cantDiasEstadia = cantDiasEstadia;
+            this.costoHotelDia = costoHotelDia;
+        }
+
+        public String getLugarDestino() {
+            return lugarDestino;
+        }
+
+        public void setLugarDestino(String lugarDestino) {
+            this.lugarDestino = lugarDestino;
+        }
+
+        public double getCostoPasajes() {
+            return costoPasajes;
+        }
+
+        public void setCostoPasajes(double costoPasajes) {
+            this.costoPasajes = costoPasajes;
+        }
+
+        public int getCantDiasEstadia() {
+            return cantDiasEstadia;
+        }
+
+        public void setCantDiasEstadia(int cantDiasEstadia) {
+            this.cantDiasEstadia = cantDiasEstadia;
+        }
+
+        public double getCostoHotelDia() {
+            return costoHotelDia;
+        }
+
+        public void setCostoHotelDia(double costoHotelDia) {
+            this.costoHotelDia = costoHotelDia;
+        }
+        
+        @Override
+        public double montoTotalSubsidio() {
+            return this.getCostoPasajes() + this.getCantDiasEstadia() * this.getCostoHotelDia();
+        }
+
+        @Override
+        public String representacionSubsidio() {
+            String representacion = "NOMBRE DEL INVESTIGADOR: " + super.getNombreInvestigador() + " \n" +
+                    "PLAN DE TRABAJO: " + super.getNombrePlanTrabajo() + " \n" +
+                    "FECHA DE SOLICITUD: " + super.getFechaSolicitud() + " \n" +
+                    "LUGAR DE DESTINO: " + this.getLugarDestino() + " \n" +
+                    "COSTO PASAJES: " + this.getCostoPasajes() + " \n" +
+                    "CANTIDAD DE DÍAS: " + this.getCantDiasEstadia() + " \n" +
+                    "COSTO DE HOTEL POR DÍA: " + this.getCostoHotelDia() + " \n";
+                    
+            return representacion;
+        } 
+    }
+
+    ```
+
+    ```java
+    package ProgPrincipal;
+
+    public class Bien {
+        private String descripcion;
+        private int cant;
+        private double costoUnidad;
+        
+        public Bien(String descripcion, int cant, double costo){
+            this.descripcion = descripcion;
+            this.cant = cant;
+            this.costoUnidad = costo;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        public void setDescripcion(String descripcion) {
+            this.descripcion = descripcion;
+        }
+
+        public int getCant() {
+            return cant;
+        }
+
+        public void setCant(int cant) {
+            this.cant = cant;
+        }
+
+        public double getCostoUnidad() {
+            return costoUnidad;
+        }
+
+        public void setCostoUnidad(double costo) {
+            this.costoUnidad = costo;
+        }
+        
+        public double costoFinal(){
+            return this.getCostoUnidad() * this.getCant();
+        }
+        
+        public String representacionBien() {
+            String representacion = "Descripcion: "+ this.getDescripcion() +" | " +
+                    "Cantidad: " + this.getCant() +" | " +
+                    "Costo por unidad: " + this.getCostoUnidad() +
+                    " \n";
+            
+            return representacion;
+        }
+    }
+    ```
 
 3. **Una agencia de apuestas de partidos de fútbol desea un sistema para manejar las apuestas que realizan sus clientes, los partidos que usa para las apuestas y todo lo necesario para pagar a los clientes ganadores.**
 
@@ -869,3 +1122,176 @@ Ambos robots jugadores juegan simultáneamente y durante el juego tiene cinco in
 El robot perdedor se debe posicionar en la esquina (25,25) y depositar todas las flores juntadas por él. 
 > Notas: Los robots jugadores se posicionan inicialmente en (21,21), (22,22) y el robot fiscalizador en la esquina (23,23).
 
+### Final Taller de programación - Módulo Concurrente - 04/06-2024
+Cuatro robots deben jugar a un juego de esconder objetos (flores y papeles) y encontrarlos. Hay dos equipos (Equipo FLOR y Equipo PAPEL). En cada equipo hay un robot "escondedor" y un robot "buscador". El robot "escondedor" debe depositar dos objetos (el escondedor del equipo FLOR deja dos flores, el escondedor del equipo PAPEL deja dos papeles) en dos esquinas al azar (no importa si por azar sale la misma esquina) dentro del área (1,1,5,5) (inicialmente vacía).
+
+Los buscadores deben comenzar con la búsqueda de los objetos del equipo contrario una vez que han sido depositados (el buscador del equipo PAPEL debe buscar las flores, el buscador del equipo FLOR debe buscar los papeles) hasta que uno de ellos encuentre lo buscado. Para ello, cada buscador elige una esquina al azar (distinta para cada uno) y se dirige a ella para ver si encuentra el objeto buscado (si lo encuentra lo toma), luego vuelve a su esquina de inicio. El juego continúa de la misma manera hasta que uno de los dos robots buscadores encuentre los dos objetos que le corresponde encontrar.
+
+Para coordinarse y conocer sobre la terminación del juego, contarán con la ayuda de un fiscalizador, quien además informará el equipo ganador.
+
+El fiscalizador comienza en (6,5). Los robots del Equipo FLOR comienzan en (6,1) y (6,2). Los robots del Equipo PAPEL comienzan en (6,3) y (6,4).
+
+```pascal
+programa final_040624
+procesos
+  proceso EnviarIds
+  comenzar
+    EnviarMensaje(2, robotFlorBuscador)
+    EnviarMensaje(4, robotPapelBuscador)
+  fin
+  proceso EsconderFlores
+  variables
+    avIni, caIni, avenida, calle: numero
+  comenzar
+    avIni:= PosAv
+    caIni:= PosCa
+    repetir 2
+      Random(avenida, 1, 5)
+      Random(calle, 1, 5)
+      BloquearEsquina(avenida, calle)
+      Pos(avenida, calle)
+      depositarFlor
+      Pos(avIni, caIni)
+      LiberarEsquina(avenida, calle)  
+  fin
+  proceso EsconderPapeles
+  variables
+    avIni, caIni, avenida, calle: numero
+  comenzar
+    avIni:= PosAv
+    caIni:= PosCa
+    repetir 2
+      Random(avenida, 1, 5)
+      Random(calle, 1, 5)
+      BloquearEsquina(avenida, calle)
+      Pos(avenida, calle)
+      depositarPapel
+      Pos(avIni, caIni)
+      LiberarEsquina(avenida, calle)
+  fin  
+  proceso BuscarFlor(ES flor: numero)
+  variables
+    avIni, caIni, avenida, calle: numero
+  comenzar
+    avIni:= PosAv
+    caIni:= PosCa
+    Random(avenida, 1, 5)
+    Random(calle, 1, 5)
+    BloquearEsquina(avenida, calle)
+    Pos(avenida, calle)
+    si HayFlorEnLaEsquina
+      tomarFlor
+      flor:= flor + 1
+    Pos(avIni, caIni)
+    LiberarEsquina(avenida, calle)
+  fin
+  proceso BuscarPapel(ES papel: numero)
+  variables
+    avIni, caIni, avenida, calle: numero
+  comenzar
+    avIni:= PosAv
+    caIni:= PosCa
+    Random(avenida, 1, 5)
+    Random(calle, 1, 5)
+    BloquearEsquina(avenida, calle)
+    Pos(avenida, calle)
+    si HayPapelEnLaEsquina
+      tomarPapel
+      papel:= papel + 1
+    Pos(avIni, caIni)
+    LiberarEsquina(avenida, calle)    
+  fin
+areas
+  areaCompartida: AreaC(1, 1, 5, 5)
+  areaFlorEscondedor: AreaP(6, 1, 6, 1)
+  areaFlorBuscador: AreaP(6, 2, 6, 2)
+  areaPapelEscondedor: AreaP(6, 3, 6, 3)
+  areaPapelBuscador: AreaP(6, 4, 6, 4)
+  areaFisco: AreaP(6, 5, 6, 5)
+
+robots
+  robot florEscondedor
+  variables
+    id: numero
+  comenzar
+    mientras HayFlorEnLaEsquina
+      tomarFlor
+    EsconderFlores
+    EnviarMensaje(0, robotPapelBuscador)
+  fin
+  robot florBuscador
+  variables
+    id, n: numero
+    papeles: numero
+  comenzar
+    papeles:= 0
+    RecibirMensaje(id, robotFisco)
+    RecibirMensaje(n, robotPapelEscondedor)
+    mientras (papeles < 2)
+      BuscarPapel(papeles)
+    si (papeles = 2)
+      EnviarMensaje(id, robotFisco) 
+  fin
+  robot papelEscondedor
+  variables
+    id: numero
+  comenzar
+    mientras HayPapelEnLaEsquina
+      tomarPapel
+    EsconderPapeles
+    EnviarMensaje(0, robotFlorBuscador)
+  fin
+  robot papelBuscador
+  variables
+    id, n: numero
+    flores: numero
+  comenzar
+    flores:= 0
+    RecibirMensaje(id, robotFisco)
+    RecibirMensaje(n, robotFlorEscondedor)
+    mientras (flores < 2)
+      BuscarFlor(flores)
+    si (flores = 2)
+      EnviarMensaje(id, robotFisco)
+  fin
+  robot fiscalizador
+  variables
+    id: numero
+    cantFlorBuscador, cantPapelBuscador: numero
+  comenzar
+    cantFlorBuscador:= 0
+    cantPapelBuscador:= 0
+    EnviarIds
+    RecibirMensaje(id, *)
+    si (id = 2)
+      Informar('Gano_equipo_flor',id)
+    sino
+      Informar('Gano_equipo_Papel', id)
+    RecibirMensaje(id, *)
+  fin
+
+variables
+  robotFlorEscondedor: florEscondedor
+  robotFlorBuscador: florBuscador
+  robotPapelEscondedor: papelEscondedor
+  robotPapelBuscador: papelBuscador
+  robotFisco: fiscalizador
+
+comenzar
+  AsignarArea(robotFlorEscondedor, areaFlorEscondedor)
+  AsignarArea(robotFlorEscondedor, areaCompartida)
+  AsignarArea(robotFlorBuscador, areaFlorBuscador)
+  AsignarArea(robotFlorBuscador, areaCompartida)
+  AsignarArea(robotPapelEscondedor, areaPapelEscondedor)
+  AsignarArea(robotPapelEscondedor, areaCompartida)
+  AsignarArea(robotPapelBuscador, areaPapelBuscador)
+  AsignarArea(robotPapelBuscador, areaCompartida)
+  AsignarArea(robotFisco, areaFisco)
+  Iniciar(robotFlorEscondedor, 6, 1)
+  Iniciar(robotFlorBuscador, 6, 2)
+  Iniciar(robotPapelEscondedor, 6, 3)
+  Iniciar(robotPapelBuscador, 6, 4)
+  Iniciar(robotFisco, 6, 5)
+fin
+
+```
